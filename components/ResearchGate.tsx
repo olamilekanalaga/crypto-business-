@@ -19,14 +19,14 @@ export default function ResearchGate({
         size={32}
         style={{ margin: "28px 0", color: "var(--green)" }}
       />
-      <h1>Your research stays in your local workspace.</h1>
+      <h1>Open your browser workspace.</h1>
       <p className="muted" style={{ margin: "24px 0" }}>
-        This hosted version lets you explore the opportunity concept. Your saved
-        businesses, evidence and private notes are available in the local app.
-        Online research storage and sign-in are not connected yet.
+        Collect public Binance assets and save notes directly on this device.
+        Download and import JSON backups to move them between devices. Existing
+        SQLite business graphs and evidence records remain in the local app.
       </p>
-      <Link className="button primary" href="/">
-        <ArrowLeft size={16} /> Explore the opportunity map
+      <Link className="button primary" href="/discover">
+        <ArrowLeft size={16} /> Open browser database
       </Link>
       <p style={{ marginTop: 24 }}>
         <a

@@ -10,11 +10,21 @@ The asset universe is a starting point. This is not a trading or investment tool
 
 ## Animated opportunity explorer
 
+### Browser-only Binance workspace
+
+Open `/discover` on the Vercel site or locally. **Fetch Binance Spot** calls the official public endpoint directly from your browser without a key, credentials, Python server or hosted database. Successful responses are validated and saved with their original JSON in IndexedDB. Browse deduplicated Binance base assets, all associated pairs, active/inactive states, and listings absent from the latest snapshot. Each asset can have an editable, explicitly unverified research note.
+
+**Download backup** saves every retained snapshot and saved note as a portable JSON file. **Import JSON** accepts either this backup (merging without deleting existing snapshots/notes) or an original Binance `exchangeInfo` response. Imported raw responses get an import date, not a claimed extraction date. Invalid snapshots and duplicate pair identifiers are rejected while existing data is retained. **Download original JSON** preserves the latest response text unchanged.
+
+Browser storage belongs to this device, browser and site origin; it does not sync automatically. Backups are the way to transfer data between devices. Clearing browser storage can remove local copies. Fetching runs while the page is open. If Binance disallows cross-origin requests or the user's network blocks access, open the official endpoint, save its JSON and import the file. Opening a URL in a tab does not by itself establish CORS access. Live browser-to-Binance access has not been demonstrated from this restricted development environment; browser tests use explicit synthetic API responses.
+
+The browser workspace currently includes Binance discovery and notes. CoinGecko enrichment, relational research entities and the full SQLite graph remain in the existing local terminal; this feature does not silently migrate those records. On Vercel, `/research` also opens the browser workspace. The legacy server RPC remains disabled on Vercel because this path does not need it.
+
 The homepage explains how complementary products can unlock a new use, change user behaviour and create measurable economic activity. Select a step in the Huma × Kamino example, play or pause the walkthrough, compare business needs, and explore a hypothetical share of attributable net revenue. The example combines supplied research notes with linked official documentation about the integration. Economic outcomes remain illustrative: there are no verified financial results or promised compensation. See [case provenance and hosting limits](docs/HOSTED_VISUAL_PREVIEW.md).
 
 The interface uses a dark theme, responsive layouts and reduced-motion support. Open `/research` for the existing local terminal; existing `/?view=…`, asset, business, Anatomy and Network routes remain available locally.
 
-On Vercel, the homepage is an interactive concept preview. It makes no research API requests, uploads no SQLite records and does not offer cloud saves. Private research routes show a clear explanation and API requests are disabled. Hosting the working research workspace later requires authenticated access, a supported backend runtime and durable storage. To test this boundary locally, set `BD_ORACLE_PREVIEW=1` when building and starting Next.js. No API keys are needed for the visual preview.
+On Vercel, the homepage is an interactive concept preview with a link to the browser workspace. It uploads no SQLite records and does not offer cloud saves. Legacy SQLite routes explain the distinction and their server API requests are disabled. A shared, continuously refreshed server database remains an optional future deployment path. To test the Vercel boundary locally, set `BD_ORACLE_PREVIEW=1` when building and starting Next.js. No API keys are needed for the visual preview or browser-only Binance collection.
 
 ## Product vision update — extended in place
 

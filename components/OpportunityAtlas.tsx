@@ -12,6 +12,7 @@ import {
   ChevronRight,
   CircleHelp,
   Compass,
+  Database,
   ExternalLink,
   GitBranch,
   Layers3,
@@ -294,7 +295,9 @@ export default function OpportunityAtlas({
         <div className={styles.railLabel}>THE RESEARCH FOUNDATION</div>
         <div className={styles.foundation}>
           <span>
-            <ScanLine size={16} /> Discover assets
+            <Link href="/discover">
+              <ScanLine size={16} /> Discover Binance assets ↗
+            </Link>
           </span>
           <ChevronRight size={13} />
           <span>
@@ -308,6 +311,12 @@ export default function OpportunityAtlas({
         {!hosted && (
           <Link href="/research" className={styles.workspaceLink}>
             <BookOpen size={17} /> Open research terminal{" "}
+            <ArrowUpRight size={15} />
+          </Link>
+        )}
+        {hosted && (
+          <Link href="/discover" className={styles.workspaceLink}>
+            <Database size={17} /> Open browser workspace{" "}
             <ArrowUpRight size={15} />
           </Link>
         )}
@@ -476,8 +485,7 @@ export default function OpportunityAtlas({
                       </span>
                       <small>NEW USE</small>
                       <strong>
-                        Borrow against{" "}
-                        <br />
+                        Borrow against <br />
                         the position
                       </strong>
                       <p>Existing asset → borrowing utility</p>
@@ -897,7 +905,7 @@ export default function OpportunityAtlas({
             </span>
             <span>
               {hosted
-                ? "Interactive concept preview · research storage not connected"
+                ? "Browser workspace available · no server storage"
                 : "Illustrative case · your research terminal remains separate"}
             </span>
           </footer>
@@ -907,8 +915,9 @@ export default function OpportunityAtlas({
               <p>
                 This hosted view lets you explore the concept. Your existing
                 local research terminal retains the CEX collectors, evidence
-                entry and stored business network. A hosted research backend has
-                not been connected.
+                entry and stored business network. Public Binance discovery and
+                notes are available in the browser workspace. The full SQLite
+                graph remains in the local terminal.
               </p>
               <a
                 href="https://github.com/olamilekanalaga/crypto-business-/blob/feat/personal-economic-intelligence-terminal/README.md#run-locally"
