@@ -168,10 +168,12 @@ export default function BrowserDiscovery() {
       const text = await f.text();
       const backup = importWorkspace(text);
       if (backup) {
+        const merged = mergeWorkspace(workspace, backup);
         await persist(
-          mergeWorkspace(workspace, backup),
+          merged,
           "Backup merged; existing snapshots and notes retained.",
         );
+        if (selected) setDraft(Object.hasOwn(merged.notes, selected) ? merged.notes[selected] : "");
         setPage(0);
       } else await addRaw(text, "file");
     } catch (e) {

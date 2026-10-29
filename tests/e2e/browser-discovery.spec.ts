@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { readFileSync } from "node:fs";
 const endpoint = "https://data-api.binance.vision/api/v3/exchangeInfo";
 const raw = (symbols: string[]) =>
   JSON.stringify({
@@ -73,6 +74,11 @@ test("browser collection keeps snapshots, deduplicates assets and exports portab
   await expect(
     phone.getByRole("textbox", { name: "Research note · unverified" }),
   ).toHaveValue(/Investigate payment demand/);
+  const incoming = JSON.parse(readFileSync(file!, "utf8"));
+  incoming.notes.BTC = "Additional imported evidence";
+  await phone.getByLabel("Import Binance JSON or workspace backup").setInputFiles({name:"merged.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(incoming))});
+  await expect(phone.getByRole("textbox", { name: "Research note · unverified" })).toHaveValue(/Investigate payment demand[\s\S]*Additional imported evidence/);
+  await expect(phone.getByRole("button",{name:"Download backup",exact:true})).toBeEnabled();
   expect(
     await phone.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
