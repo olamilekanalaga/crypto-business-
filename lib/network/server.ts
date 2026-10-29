@@ -1,7 +1,12 @@
 import { spawn } from "node:child_process";
 import { createHash, timingSafeEqual } from "node:crypto";
 import { Pool } from "pg";
-import { Graph, emptyGraph, validateGraph } from "./model";
+import {
+  Graph,
+  emptyGraph,
+  validateGraph,
+  recordResearchHistory,
+} from "./model";
 export class NetworkError extends Error {
   constructor(
     message: string,
@@ -91,7 +96,7 @@ export function rpc(action: string, data: unknown = {}): Promise<unknown> {
   });
 }
 let pool: Pool | undefined;
-function postgres() {
+export function postgres() {
   if (!process.env.DATABASE_URL)
     throw new NetworkError(
       "Connect persistent Postgres before enabling server research.",
@@ -120,7 +125,13 @@ export async function loadGraph(): Promise<Graph> {
     : emptyGraph();
 }
 export async function saveGraph(graph: Graph): Promise<Graph> {
-  const valid = validateGraph(graph);
+  const previous = await loadGraph();
+  if (previous.revision !== graph.revision)
+    throw new NetworkError(
+      "Network revision conflict. Reload before saving.",
+      409,
+    );
+  const valid = recordResearchHistory(previous, validateGraph(graph));
   if (!usePostgres())
     return validateGraph(await rpc("network_save", { document: valid }));
   const next = { ...valid, revision: valid.revision + 1 };

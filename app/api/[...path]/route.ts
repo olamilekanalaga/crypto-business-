@@ -1,3 +1,4 @@
+import { usdcAPI } from "@/lib/usdc/server";
 import { networkAPI, networkPath } from "@/lib/network/api";
 import { spawn } from "node:child_process";
 import path from "node:path";
@@ -101,6 +102,7 @@ export async function POST(
   context: { params: Promise<{ path: string[] }> },
 ) {
   const { path: networkSegments } = await context.params;
+  if (networkSegments[0] === "usdc") return usdcAPI(req, networkSegments);
   if (networkPath(networkSegments)) return networkAPI(req, networkSegments);
   if (process.env.VERCEL === "1" || process.env.BD_ORACLE_PREVIEW === "1")
     return NextResponse.json(
@@ -148,6 +150,7 @@ export async function GET(
   context: { params: Promise<{ path: string[] }> },
 ) {
   const { path } = await context.params;
+  if (path[0] === "usdc") return usdcAPI(req, path);
   if (networkPath(path)) return networkAPI(req, path);
   return NextResponse.json({ error: "Unknown operation" }, { status: 404 });
 }

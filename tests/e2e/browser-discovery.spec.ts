@@ -20,7 +20,7 @@ test("browser collection keeps snapshots, deduplicates assets and exports portab
   await page.route(endpoint, (r) =>
     r.fulfill({ contentType: "application/json", body: response }),
   );
-  await page.goto("/discover");
+  await page.goto("/discovery-history");
   await page
     .getByRole("button", { name: "Fetch Binance Spot", exact: true })
     .click();
@@ -71,7 +71,7 @@ test("browser collection keeps snapshots, deduplicates assets and exports portab
   const other = await browser.newContext();
   const phone = await other.newPage();
   await phone.setViewportSize({ width: 320, height: 844 });
-  await phone.goto("http://127.0.0.1:3100/discover");
+  await phone.goto("http://127.0.0.1:3100/discovery-history");
   await phone
     .getByLabel("Import Binance JSON or workspace backup")
     .setInputFiles(file!);
@@ -111,7 +111,7 @@ test("browser collection keeps snapshots, deduplicates assets and exports portab
 test("blocked fetch and malformed imports preserve browser data with raw-file fallback", async ({
   page,
 }) => {
-  await page.goto("/discover");
+  await page.goto("/discovery-history");
   await page
     .getByLabel("Import Binance JSON or workspace backup")
     .setInputFiles({

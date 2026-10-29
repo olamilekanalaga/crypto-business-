@@ -169,3 +169,7 @@ Open `/network` (also `/opportunities`) for stored business research, interactiv
 Network research works in browser storage immediately, with separate JSON backups. Optional private server APIs support local SQLite and hosted Postgres, with revision conflict protection. OpenAI analysis is opt-in and server-only; rules require no API key. Hosted storage, credentials and automated collection jobs are not automatically provisioned.
 
 See [Network handoff and setup](docs/NETWORK_HANDOFF.md) for endpoint contracts, source provenance, privacy, Postgres setup and remaining limitations.
+
+## Current USDC directory
+
+The homepage now uses the strict verified Binance Spot USDC universe. See [USDC directory setup and limitations](docs/USDC_DIRECTORY.md). Historical discovery remains at `/discovery-history`; network candidates are restricted to current verified USDC members.

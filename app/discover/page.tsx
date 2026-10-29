@@ -1,4 +1,4 @@
-import BrowserDiscovery from "@/components/BrowserDiscovery";
+import Directory from "@/components/usdc/Directory";
 export default function DiscoverPage() {
-  return <BrowserDiscovery />;
+  return <Directory />;
 }

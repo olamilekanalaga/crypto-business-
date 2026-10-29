@@ -1,5 +1,5 @@
 import Terminal from "@/components/Terminal";
-import BrowserDiscovery from "@/components/BrowserDiscovery";
+import Directory from "@/components/usdc/Directory";
 import ResearchGate from "@/components/ResearchGate";
 
 export default async function Page({
@@ -14,5 +14,5 @@ export default async function Page({
         <Terminal />
       </ResearchGate>
     );
-  return <BrowserDiscovery />;
+  return <Directory />;
 }

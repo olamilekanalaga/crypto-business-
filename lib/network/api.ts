@@ -1,3 +1,9 @@
+import { loadServerRegistry } from "@/lib/usdc/server";
+import {
+  eligibleBusinessIds,
+  scopeGraph,
+  withAnalysisFacts,
+} from "@/lib/usdc/scope";
 import { z } from "zod";
 import {
   authorize,
@@ -34,7 +40,10 @@ export async function networkAPI(req: Request, path: string[]) {
           process.env.BDO_AI_ENABLED === "1" &&
           !!process.env.OPENAI_API_KEY &&
           !!process.env.OPENAI_MODEL,
-        automatedJobs: "Not configured by this deployment",
+        automatedJobs:
+          process.env.CRON_SECRET && process.env.DATABASE_URL
+            ? "Daily Binance USDC job configured; inspect registry errors for execution status"
+            : "Daily job installed but persistent storage / CRON_SECRET not configured",
         quality,
         collectors: {
           binance:
@@ -45,6 +54,8 @@ export async function networkAPI(req: Request, path: string[]) {
       });
     }
     const g = await loadGraph();
+    const registry = await loadServerRegistry();
+    const scoped = withAnalysisFacts(scopeGraph(g, registry));
     if (req.method === "GET") {
       if (area === "network") return json(g);
       if (area === "businesses") {
@@ -53,21 +64,21 @@ export async function networkAPI(req: Request, path: string[]) {
             q = (url.searchParams.get("q") || "").toLowerCase(),
             sector = url.searchParams.get("sector");
           return json(
-            g.businesses.filter(
+            scoped.businesses.filter(
               (b) =>
                 b.name.toLowerCase().includes(q) &&
                 (!sector || b.sectors.includes(sector)),
             ),
           );
         }
-        const b = g.businesses.find((b) => b.id === id);
+        const b = scoped.businesses.find((b) => b.id === id);
         if (!b) throw new NetworkError("Business not found", 404);
         return json(
           action === "network"
             ? {
                 business: b,
-                relationships: businessNetwork(g, id),
-                businesses: g.businesses,
+                relationships: businessNetwork(scoped, id),
+                businesses: scoped.businesses,
                 sources: g.sources,
               }
             : {
@@ -77,7 +88,7 @@ export async function networkAPI(req: Request, path: string[]) {
         );
       }
       if (area === "relationships") {
-        const r = allRelationships(g).find((r) => r.id === id);
+        const r = allRelationships(scoped).find((r) => r.id === id);
         if (!r) throw new NetworkError("Relationship not found", 404);
         return json({
           ...r,
@@ -106,9 +117,19 @@ export async function networkAPI(req: Request, path: string[]) {
         if (input.revision !== g.revision)
           throw new NetworkError("Revision conflict. Reload research.", 409);
         return json(
-          await saveGraph(
-            reviewRelationship(g, id, input.review, input.note, input.saved),
-          ),
+          await saveGraph({
+            ...g,
+            relationships: [
+              ...g.relationships.filter((r) => r.id !== id),
+              ...reviewRelationship(
+                scoped,
+                id,
+                input.review,
+                input.note,
+                input.saved,
+              ).relationships.filter((r) => r.id === id),
+            ],
+          }),
         );
       }
       if (area === "research" && id === "analyze") {
@@ -118,7 +139,11 @@ export async function networkAPI(req: Request, path: string[]) {
           .parse(body);
         if (input.revision !== g.revision)
           throw new NetworkError("Revision conflict", 409);
-        return json(await saveGraph(await analyze(g, input.businessId)));
+        return json(
+          await saveGraph(
+            await analyze(g, input.businessId, eligibleBusinessIds(registry)),
+          ),
+        );
       }
     }
     throw new NetworkError("Unknown network operation", 404);

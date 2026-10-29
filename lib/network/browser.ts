@@ -1,4 +1,9 @@
-import { Graph, validateGraph, emptyGraph } from "./model";
+import {
+  Graph,
+  validateGraph,
+  emptyGraph,
+  recordResearchHistory,
+} from "./model";
 const DB = "bd-oracle-network",
   STORE = "workspace";
 function open(): Promise<IDBDatabase> {
@@ -39,7 +44,10 @@ export async function writeNetwork(graph: Graph): Promise<Graph> {
           throw new Error(
             "Network changed in another tab. Reload before saving; your draft is still here.",
           );
-        next = validateGraph({ ...graph, revision: graph.revision + 1 });
+        next = recordResearchHistory(
+          get.result ? validateGraph(get.result) : emptyGraph(),
+          { ...graph, revision: graph.revision + 1 },
+        );
         store.put(next, "current");
       } catch (e) {
         problem = e as Error;

@@ -83,10 +83,47 @@ export const relationshipSchema = z
     saved: z.boolean(),
   })
   .strict();
+export const analysisSchema = z
+  .object({
+    businessId: id,
+    observedAt: z.iso.datetime({ offset: true }),
+    fingerprint: z.string().regex(/^[a-f0-9]{64}$/),
+    model: z.string().max(200),
+    description: text,
+    customers: text,
+    economicModel: text,
+    products: z.array(text).max(15),
+    needs: z.array(factSchema).max(15),
+    capabilities: z.array(factSchema).max(15),
+    sourceIds: refs,
+    gaps: z.array(text).min(1).max(15),
+  })
+  .strict();
+export const historySchema = z
+  .object({
+    at: z.iso.datetime({ offset: true }),
+    kind: z.enum(["business", "source", "relationship"]),
+    id: z.string(),
+    before: z.string().max(100000),
+    after: z.string().max(100000),
+  })
+  .strict();
 export const graphSchema = z
   .object({
     format: z.literal("bd-oracle-network-v1"),
     revision: z.number().int().nonnegative(),
+    analyses: z.array(analysisSchema).max(10000).optional(),
+    analysisCache: z
+      .array(
+        z.object({
+          businessId: id,
+          fingerprint: z.string().regex(/^[a-f0-9]{64}$/),
+          observedAt: z.iso.datetime({ offset: true }),
+        }),
+      )
+      .max(10000)
+      .optional(),
+    history: z.array(historySchema).max(20000).optional(),
     businesses: z.array(businessSchema).max(2000),
     sources: z.array(sourceSchema).max(10000),
     relationships: z.array(relationshipSchema).max(10000),
@@ -108,6 +145,15 @@ export const graphSchema = z
       )
         error("Confirmed findings require confirmed evidence");
     };
+    for (const a of g.analyses || []) {
+      if (!businesses.has(a.businessId))
+        error("Analysis references missing business");
+      check(a.sourceIds);
+      for (const f of [...a.needs, ...a.capabilities]) {
+        check(f.sourceIds);
+        if (f.status !== "hypothesis") error("AI findings remain hypotheses");
+      }
+    }
     for (const b of g.businesses) {
       for (const facts of [b.needs, b.capabilities])
         if (new Set(facts.map((f) => f.code)).size !== facts.length)
@@ -167,5 +213,69 @@ export function mergeGraph(current: Graph, incoming: Graph): Graph {
     businesses: merge(current.businesses, incoming.businesses),
     sources: merge(current.sources, incoming.sources),
     relationships: merge(current.relationships, incoming.relationships),
+    analyses: [
+      ...new Map(
+        [...(current.analyses || []), ...(incoming.analyses || [])].map((a) => [
+          JSON.stringify(a),
+          a,
+        ]),
+      ).values(),
+    ],
+    analysisCache: [
+      ...new Map(
+        [
+          ...(current.analysisCache || []),
+          ...(incoming.analysisCache || []),
+        ].map((a) => [JSON.stringify(a), a]),
+      ).values(),
+    ],
+    history: [
+      ...new Map(
+        [...(current.history || []), ...(incoming.history || [])].map((a) => [
+          JSON.stringify(a),
+          a,
+        ]),
+      ).values(),
+    ],
   });
+}
+
+export function recordResearchHistory(previous: Graph, next: Graph): Graph {
+  const history = [
+    ...new Map(
+      [...(previous.history || []), ...(next.history || [])].map((h) => [
+        JSON.stringify(h),
+        h,
+      ]),
+    ).values(),
+  ];
+  for (const [kind, before, after] of [
+    ["business", previous.businesses, next.businesses],
+    ["source", previous.sources, next.sources],
+    ["relationship", previous.relationships, next.relationships],
+  ] as const) {
+    const old = new Map(before.map((r) => [r.id, JSON.stringify(r)]));
+    for (const row of after) {
+      const a = JSON.stringify(row),
+        b = old.get(row.id);
+      if (b && a !== b)
+        history.push({
+          at: new Date().toISOString(),
+          kind,
+          id: row.id,
+          before: b,
+          after: a,
+        });
+    }
+    for (const row of before)
+      if (!after.some((r) => r.id === row.id))
+        history.push({
+          at: new Date().toISOString(),
+          kind,
+          id: row.id,
+          before: JSON.stringify(row),
+          after: "null",
+        });
+  }
+  return validateGraph({ ...next, history });
 }

@@ -252,7 +252,7 @@ test("dedicated asset/business anatomy and network expand stored relationships w
   await expect(page.locator(".anatomy-inspector")).not.toContainText(
     "Evidence last checked: Not recorded",
   );
-  await page.goto(`/network?node=${root}`);
+  await page.goto(`/network/local?node=${root}`);
   await expect(
     page.getByRole("combobox", { name: "Network depth", exact: true }),
   ).toHaveValue("2");

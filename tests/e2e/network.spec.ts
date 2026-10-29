@@ -1,3 +1,8 @@
+import {
+  networkRegistry,
+  putBrowser,
+  seedServerRegistry,
+} from "./usdc-fixtures";
 import { test, expect } from "@playwright/test";
 import seed from "../../data-library/network-research.json";
 import { validateGraph, mergeGraph } from "../../lib/network/model";
@@ -59,6 +64,7 @@ test("Huma → Kamino → Why, automatic Morpho hypothesis, saved review and mob
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
+  await putBrowser(page, await networkRegistry());
   await page.goto("/network");
   await page.getByLabel("Search businesses").fill("Huma");
   await page
@@ -135,6 +141,7 @@ test("Huma → Kamino → Why, automatic Morpho hypothesis, saved review and mob
 test("private REST endpoints persist local research, protect stale writes and keep AI optional", async ({
   request,
 }) => {
+  await seedServerRegistry(request);
   const initial = await request.get("/api/network/workspace");
   expect(initial.status()).toBe(200);
   const current = await initial.json();
@@ -229,6 +236,7 @@ test("hosted private access fails closed and OpenAI output remains an unverified
             finish_reason: "stop",
             message: {
               content: JSON.stringify({
+                businessAnalysis: null,
                 suggestions: [
                   {
                     targetId: "chainlink",
@@ -252,6 +260,7 @@ test("hosted private access fails closed and OpenAI output remains an unverified
       Response.json({
         choices: [{ finish_reason: "length", message: { content: "{}" } }],
       });
+    expect(await analyze(result, "morpho")).toEqual(result); // Cached output must bypass the failing provider.
     await expect(analyze(validateGraph(seed), "morpho")).rejects.toThrow(
       /incomplete/,
     );
@@ -269,6 +278,7 @@ test("network backups transfer researched businesses and reject conflicting reco
   page,
   browser,
 }) => {
+  await putBrowser(page, await networkRegistry());
   await page.goto("/network/research");
   await page
     .getByText("Add a business and evidence", { exact: true })
@@ -299,7 +309,9 @@ test("network backups transfer researched businesses and reject conflicting reco
     })
     .click();
   await page.getByText("Add an economic relationship", { exact: true }).click();
-  await page.getByRole("combobox", { name: "Business A", exact: true }).selectOption("morpho");
+  await page
+    .getByRole("combobox", { name: "Business A", exact: true })
+    .selectOption("morpho");
   await page
     .getByRole("combobox", { name: "Business B", exact: true })
     .selectOption("chainlink");
@@ -328,6 +340,7 @@ test("network backups transfer researched businesses and reject conflicting reco
   const graph = JSON.parse(raw.toString());
   const context = await browser.newContext();
   const other = await context.newPage();
+  await putBrowser(other, await networkRegistry());
   await other.goto("/network");
   await expect(
     other.getByRole("button", {
@@ -342,7 +355,7 @@ test("network backups transfer researched businesses and reject conflicting reco
   });
   await expect(
     other.getByRole("button", { name: /Fixture lender/ }),
-  ).toBeVisible();
+  ).toHaveCount(0);
   graph.businesses[0].name = "Conflicting name";
   await other.getByLabel("Import network JSON").setInputFiles({
     name: "conflict.json",

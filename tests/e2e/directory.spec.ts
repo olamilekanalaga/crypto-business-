@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 test("home directory counts distinct tokens, preserves totals across filters and renders local logos", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/discovery-history");
   await expect(
     page.getByRole("heading", { name: "Your crypto data directory." }),
   ).toBeVisible();
@@ -57,7 +57,7 @@ test("home directory counts distinct tokens, preserves totals across filters and
     path: "/tmp/bd-directory-mobile.png",
     fullPage: true,
   });
-  await page.goto("/discover");
+  await page.goto("/discovery-history");
   await expect(
     page.getByRole("region", { name: "Directory totals" }).locator("strong"),
   ).toHaveText(["3", "2", "1"]);

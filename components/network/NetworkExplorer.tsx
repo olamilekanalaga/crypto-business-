@@ -1,5 +1,13 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { readRegistry } from "@/lib/usdc/browser";
+import { emptyRegistry, Registry } from "@/lib/usdc/model";
+import {
+  scopeGraph,
+  prepareProjects,
+  withAnalysisFacts,
+} from "@/lib/usdc/scope";
+import { getConnection } from "@/lib/usdc/connection";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
@@ -32,6 +40,7 @@ export default function NetworkExplorer({
   initialView?: string;
   initialFocus?: string;
 }) {
+  const [registry, setRegistry] = useState<Registry>(emptyRegistry);
   const [g, setGraph] = useState<Graph>(emptyGraph),
     [ready, setReady] = useState(false),
     [busy, setBusy] = useState(false),
@@ -52,9 +61,16 @@ export default function NetworkExplorer({
     [sourceStatus, setSourceStatus] = useState("");
   const whyRef = useRef<HTMLElement>(null),
     importRef = useRef<HTMLInputElement>(null);
-  const relationships = useMemo(() => allRelationships(g), [g]),
+  const eligibleGraph = useMemo(
+    () => withAnalysisFacts(scopeGraph(g, registry)),
+    [g, registry],
+  );
+  const relationships = useMemo(
+      () => allRelationships(eligibleGraph),
+      [eligibleGraph],
+    ),
     relationship = relationships.find((r) => r.id === selected),
-    business = g.businesses.find((b) => b.id === focus);
+    business = eligibleGraph.businesses.find((b) => b.id === focus);
   const noteDirty = !!relationship && note !== relationship.note;
   const editorDirty = editorOpen && jsonDraft !== JSON.stringify(g, null, 2);
   const dirty = noteDirty || editorDirty;
@@ -63,8 +79,44 @@ export default function NetworkExplorer({
     readNetwork()
       .then(async (graph) => {
         if (!active) return;
-        if (!graph.revision && !graph.businesses.length)
-          graph = await writeNetwork(validateGraph(researchLibrary));
+        const connection = getConnection();
+        let universe = await readRegistry();
+        if (connection.mode === "server") {
+          const headers = { Authorization: `Bearer ${connection.token}` };
+          const [networkResponse, registryResponse] = await Promise.all([
+            fetch("/api/network/workspace", { headers, cache: "no-store" }),
+            fetch("/api/usdc/workspace", { headers, cache: "no-store" }),
+          ]);
+          if (!networkResponse.ok || !registryResponse.ok)
+            throw new Error(
+              "Server workspace could not be opened. Return to the directory to unlock it.",
+            );
+          graph = validateGraph(await networkResponse.json());
+          universe = await registryResponse.json();
+          setMode("server");
+          setToken(connection.token);
+        }
+        const prepared = prepareProjects(graph, universe);
+        if (JSON.stringify(prepared) !== JSON.stringify(graph)) {
+          if (connection.mode === "browser")
+            graph = await writeNetwork(prepared);
+          else {
+            const response = await fetch("/api/network/workspace", {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${connection.token}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(prepared),
+            });
+            if (!response.ok)
+              throw new Error(
+                "Could not save identified project research subjects",
+              );
+            graph = validateGraph(await response.json());
+          }
+        }
+        if (active) setRegistry(universe);
         if (active) {
           setGraph(graph);
           const query = new URLSearchParams(window.location.search);
@@ -154,9 +206,19 @@ export default function NetworkExplorer({
   async function review(review: Relationship["review"], saved: boolean) {
     if (!relationship) return;
     try {
-      await persist(
-        reviewRelationship(g, relationship.id, review, note, saved),
-      );
+      await persist({
+        ...g,
+        relationships: [
+          ...g.relationships.filter((r) => r.id !== relationship.id),
+          ...reviewRelationship(
+            eligibleGraph,
+            relationship.id,
+            review,
+            note,
+            saved,
+          ).relationships.filter((r) => r.id === relationship.id),
+        ],
+      });
     } catch {}
   }
   const scoped = (
@@ -166,7 +228,7 @@ export default function NetworkExplorer({
           (r) => (r.a === focus || r.b === focus) && r.review !== "rejected",
         )
   ).filter((r) => filter === "all" || r.status === filter);
-  const businesses = g.businesses.filter(
+  const businesses = eligibleGraph.businesses.filter(
     (b) =>
       (!search ||
         `${b.name} ${b.summary}`
@@ -202,7 +264,7 @@ export default function NetworkExplorer({
       </p>
       <div className={styles.stats}>
         <div>
-          <strong>{ready ? g.businesses.length : "—"}</strong>
+          <strong>{ready ? eligibleGraph.businesses.length : "—"}</strong>
           <span>Researched businesses / products</span>
         </div>
         <div>
@@ -229,9 +291,10 @@ export default function NetworkExplorer({
       <p className={styles.legend}>
         Solid lines: documented relationships. Dashed lines: research
         hypotheses. Matching is rule-based unless a result is explicitly marked
-        AI. The initial four records are a sourced research library, not a
-        complete market scan. Rule matching displays up to 500 candidates per
-        workspace; missing results do not prove that no relationship exists.
+        AI. Partner nodes are restricted to verified assets in your current
+        active Binance Spot USDC registry. Archived research remains stored.
+        Rule matching displays up to 500 candidates per workspace; missing
+        results do not prove that no relationship exists.
       </p>
       {error && (
         <p className={styles.message} role="alert">
@@ -265,7 +328,11 @@ export default function NetworkExplorer({
                   onChange={(e) => setSector(e.target.value)}
                 >
                   <option value="all">All industries</option>
-                  {[...new Set(g.businesses.flatMap((b) => b.sectors))]
+                  {[
+                    ...new Set(
+                      eligibleGraph.businesses.flatMap((b) => b.sectors),
+                    ),
+                  ]
                     .sort()
                     .map((s) => (
                       <option key={s}>{s}</option>
@@ -487,7 +554,7 @@ export default function NetworkExplorer({
                       aria-label="Business network graph"
                     >
                       <NetworkGraph
-                        businesses={g.businesses}
+                        businesses={eligibleGraph.businesses}
                         relationships={scoped}
                         focus={focus}
                         onFocus={navigate}
@@ -549,7 +616,9 @@ export default function NetworkExplorer({
                                 }),
                               ),
                             );
-                            setNotice("Analysis complete; any returned hypotheses are ready for review.");
+                            setNotice(
+                              "Analysis complete; any returned hypotheses are ready for review.",
+                            );
                           } catch (e) {
                             setError((e as Error).message);
                           } finally {
@@ -760,6 +829,7 @@ export default function NetworkExplorer({
                     );
                     setGraph(next);
                     setMode("server");
+                    setRegistry(await request("usdc/workspace"));
                     setSelected(null);
                     setNotice(
                       "Private server workspace opened. Browser research remains on this device.",
@@ -780,6 +850,7 @@ export default function NetworkExplorer({
                   try {
                     setGraph(await readNetwork());
                     setMode("browser");
+                    setRegistry(await readRegistry());
                     setToken("");
                     setSelected(null);
                     setNotice("Browser workspace opened.");

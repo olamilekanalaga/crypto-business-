@@ -86,6 +86,9 @@ def dispatch(db, request):
     action = request.get('action')
     data = request.get('data') or {}
     if not isinstance(data,dict): raise ValueError('Invalid data')
+    if action in ('usdc_load','usdc_save'):
+        from .usdc_store import dispatch_usdc
+        return dispatch_usdc(db,action,data)
     if action in ('network_load','network_save','network_ai_reserve'):
         from .network_store import dispatch_network
         return dispatch_network(db,action,data)

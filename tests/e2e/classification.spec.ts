@@ -43,7 +43,7 @@ test("USDC scope intersects availability; sourced product categories survive old
   page,
   browser,
 }) => {
-  await page.goto("/discover");
+  await page.goto("/discovery-history");
   await page
     .getByLabel("Import Binance JSON or workspace backup")
     .setInputFiles({
@@ -143,7 +143,7 @@ test("USDC scope intersects availability; sourced product categories survive old
     viewport: { width: 320, height: 844 },
   });
   const phone = await other.newPage();
-  await phone.goto("http://127.0.0.1:3100/discover");
+  await phone.goto("http://127.0.0.1:3100/discovery-history");
   const legacy = { ...saved };
   delete legacy.classifications;
   await phone
