@@ -1,0 +1,190 @@
+export type Status = "confirmed" | "inference" | "hypothesis" | "unknown";
+export type Entity = {
+  id: number;
+  kind: "asset" | "organisation" | "product";
+  name: string;
+  created_at: string;
+  findings?: number;
+};
+export type Evidence = {
+  id: number;
+  title: string;
+  url: string;
+  source_type: string;
+  observed_at: string;
+  published_at?: string;
+  original_text: string;
+  interpretation: string;
+  verification: Status;
+};
+export type Claim = {
+  id: number;
+  entity_id: number;
+  field: string;
+  statement: string;
+  status: Status;
+  evidence_id: number | null;
+  observed_at: string;
+  evidence_title?: string;
+  evidence_url?: string;
+  original_text?: string;
+  interpretation?: string;
+  name?: string;
+};
+export type Opportunity = {
+  id: number;
+  entity_id: number | null;
+  entity_name?: string;
+  title: string;
+  friction: string;
+  proposed_solution: string;
+  buyer: string;
+  next_step: string;
+  stage: "hypothesis" | "investigating" | "supported" | "dismissed";
+  evidence_id: number | null;
+};
+export type Relationship = {
+  id: number;
+  a_id: number;
+  b_id: number;
+  a_name: string;
+  b_name: string;
+  type: string;
+  a_provides: string;
+  b_provides: string;
+  reason: string;
+  a_value: string;
+  b_value: string;
+  money: string;
+  observed_at: string;
+  announcement_date?: string;
+  status: Status;
+  evidence: Evidence[];
+};
+export type Quality = {
+  extraction_status: string;
+  total_trading_pairs_retrieved: number | null;
+  unique_base_assets: number | null;
+  historical_assets: number;
+  matched_coingecko_assets: number;
+  enriched_assets: number;
+  unresolved_assets: number;
+  ambiguous_identifiers: number;
+  candidate_only_assets: number;
+  duplicate_symbols: number | null;
+  duplicate_coingecko_tickers: { ticker: string; identities: number }[];
+  shared_verified_identities: {
+    identity_id: string;
+    exchange_assets: number;
+  }[];
+  active_pairs: number;
+  inactive_pairs: number;
+  unavailable_pairs: number;
+  failed_api_requests: number;
+  last_successful_refresh: string | null;
+  latest_attempt: null | {
+    status: string;
+    error: string | null;
+    started_at: string;
+    raw_path?: string;
+    sha256?: string;
+  };
+  recent_failures: {
+    url: string;
+    observed_at: string;
+    status: number | null;
+    error: string;
+  }[];
+  definitions: Record<string, string>;
+};
+export type Overview = {
+  quality: Quality;
+  entities: Entity[];
+  evidence: Evidence[];
+  opportunities: Opportunity[];
+  recent_claims: Claim[];
+  relationships: Relationship[];
+  businesses: Entity[];
+};
+export type Asset = {
+  id: number;
+  exchange: string;
+  code: string;
+  identity_id: string | null;
+  match_status: string;
+  candidates: { id: string; name: string }[];
+  pair_count: number;
+  active_pairs: number;
+  project_name?: string;
+  last_seen: string;
+  first_seen: string;
+  match_evidence_id?: number;
+};
+export type Listing = {
+  symbol: string;
+  exchange: string;
+  quote_asset: string;
+  status: string;
+  available: number;
+  spot_allowed: number;
+  last_seen: string;
+};
+export type Link = {
+  id: number;
+  from_id: number;
+  to_id: number;
+  from_name: string;
+  to_name: string;
+  from_kind: string;
+  to_kind: string;
+  type: string;
+  status: Status;
+  observed_at?: string;
+  evidence_url?: string;
+};
+export type Activity = {
+  id: number;
+  product_id: number;
+  name: string;
+  enables: string;
+  actor: string;
+  status: Status;
+  evidence_id: number | null;
+  observed_at: string;
+  evidence_title?: string;
+  evidence_url?: string;
+};
+export type Detail = Entity & {
+  activities: Activity[];
+  identity_evidence?: Evidence | null;
+  identity_reviews?: {
+    id: number;
+    identity_id: string;
+    action: string;
+    reviewed_at: string;
+  }[];
+  verified_contracts?: {
+    id: number;
+    network: string;
+    address: string;
+    evidence_url: string;
+    evidence_title: string;
+    original_text: string;
+    observed_at: string;
+  }[];
+  claims: Claim[];
+  links: Link[];
+  asset?: Asset;
+  listings?: Listing[];
+  identity?: {
+    id: string;
+    name: string;
+    ticker: string;
+    enriched_at?: string;
+    source_url?: string;
+    platforms: Record<string, string>;
+    profile: Record<string, unknown> | null;
+  };
+  relationships: Relationship[];
+  opportunities: Opportunity[];
+};
