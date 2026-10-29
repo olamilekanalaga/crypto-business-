@@ -35,6 +35,10 @@ import {
   Terminal as TerminalIcon,
   X,
 } from "lucide-react";
+import ResearchFrameworks from "./ResearchFrameworks";
+import IntelligenceReview from "./IntelligenceReview";
+import UnresolvedRelationships from "./UnresolvedRelationships";
+import AssetAnatomy from "./AssetAnatomy";
 import Workspace, { Badge, researchFields } from "./Workspace";
 import { api, date, number } from "./api";
 import type {
@@ -48,6 +52,9 @@ import type {
 } from "./types";
 
 type View =
+  | "network"
+  | "frameworks"
+  | "intelligence"
   | "anatomy"
   | "overview"
   | "assets"
@@ -64,17 +71,38 @@ const nav: { view: View; name: string; icon: typeof Boxes }[] = [
   { view: "businesses", name: "Business explorer", icon: Globe },
   { view: "anatomy", name: "Business Anatomy", icon: Network },
   { view: "flow", name: "Economic flow", icon: GitBranch },
-  { view: "relationships", name: "Relationships", icon: Network },
+  { view: "network", name: "Economic Network", icon: Network },
+  { view: "relationships", name: "Relationship records", icon: Network },
 ];
 const personal: { view: View; name: string; icon: typeof Boxes }[] = [
   { view: "opportunities", name: "My opportunities", icon: Lightbulb },
   { view: "workspace", name: "Research workspace", icon: BookOpen },
+  { view: "frameworks", name: "Research frameworks", icon: GitBranch },
+  { view: "intelligence", name: "Intelligence review", icon: ShieldCheck },
   { view: "unresolved", name: "Unresolved queue", icon: HelpCircle },
 ];
 const headings: Record<
   View,
   { label: string; title: string; description: string }
 > = {
+  network: {
+    label: "ECONOMIC NETWORK",
+    title: "Follow the connections across businesses.",
+    description:
+      "Expand recorded relationships beyond one business, while keeping each claim and its evidence visible.",
+  },
+  frameworks: {
+    label: "REUSABLE RESEARCH QUESTIONS",
+    title: "Different businesses. Different needs.",
+    description:
+      "Refine dependency frameworks without turning category assumptions into facts.",
+  },
+  intelligence: {
+    label: "OPTIONAL INTELLIGENCE · HUMAN REVIEW",
+    title: "Suggestions stay separate from facts.",
+    description:
+      "Inspect structured proposals and retain only editable research hypotheses. No external model is connected.",
+  },
   anatomy: {
     label: "BD ORACLE · BUSINESS DEPENDENCY & OPPORTUNITY GRAPH",
     title: "What keeps this business alive?",
@@ -197,8 +225,16 @@ function EntityLink({
   );
 }
 
-export default function Terminal({ entityId }: { entityId?: string }) {
-  const [view, setView] = useState<View>("overview"),
+export default function Terminal({
+  entityId,
+  dedicatedAnatomy = false,
+  initialView = "overview",
+}: {
+  entityId?: string;
+  dedicatedAnatomy?: boolean;
+  initialView?: View;
+}) {
+  const [view, setView] = useState<View>(initialView),
     [overview, setOverview] = useState<Overview | null>(null),
     [detail, setDetail] = useState<Detail | null>(null);
   const [error, setError] = useState(""),
@@ -324,7 +360,7 @@ export default function Terminal({ entityId }: { entityId?: string }) {
           <LockKeyhole size={12} /> PERSONAL INTELLIGENCE
         </div>
         <nav aria-label="Main navigation">
-          <p className="nav-label">EXPLORE THE ECONOMY</p>
+          <p className="nav-label">DISCOVER & EXPLORE</p>
           {nav.map((n) => (
             <button
               key={n.view}
@@ -431,7 +467,11 @@ export default function Terminal({ entityId }: { entityId?: string }) {
               </div>
               <h1>
                 {entityId
-                  ? detail?.identity?.name || detail?.name || "Research profile"
+                  ? dedicatedAnatomy
+                    ? "Business Anatomy"
+                    : detail?.identity?.name ||
+                      detail?.name ||
+                      "Research profile"
                   : h.title}
               </h1>
               <p>
@@ -468,13 +508,46 @@ export default function Terminal({ entityId }: { entityId?: string }) {
             overview && (
               <>
                 {entityId && detail ? (
-                  <DetailPage
-                    detail={detail}
-                    overview={overview}
-                    onSaved={saved}
-                  />
+                  dedicatedAnatomy ? (
+                    <>
+                      <Link
+                        className="text-button"
+                        href={`${detail.kind === "asset" ? "/assets/" : "/businesses/"}${detail.id}`}
+                      >
+                        Return to {detail.name} research
+                        <ArrowUpRight size={14} />
+                      </Link>
+                      {detail.kind === "asset" ? (
+                        <AssetAnatomy assetId={detail.id} />
+                      ) : (
+                        <Anatomy
+                          overview={overview}
+                          initialEntityId={detail.id}
+                          onSaved={saved}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <DetailPage
+                      detail={detail}
+                      overview={overview}
+                      onSaved={saved}
+                    />
+                  )
                 ) : (
                   <>
+                    {view === "frameworks" && <ResearchFrameworks />}
+                    {view === "intelligence" && (
+                      <IntelligenceReview overview={overview} />
+                    )}
+                    {view === "unresolved" && <UnresolvedRelationships />}
+                    {view === "network" && (
+                      <Anatomy
+                        overview={overview}
+                        onSaved={saved}
+                        scope="network"
+                      />
+                    )}
                     {view === "anatomy" && (
                       <Anatomy overview={overview} onSaved={saved} />
                     )}
@@ -512,7 +585,7 @@ export default function Terminal({ entityId }: { entityId?: string }) {
                               <Link
                                 className="business-card"
                                 key={b.id}
-                                href={"/businesses/" + b.id}
+                                href={"/businesses/" + b.id + "/anatomy"}
                               >
                                 <span className="entity-symbol">
                                   <Globe size={20} />
@@ -902,6 +975,12 @@ function OverviewPage({
               {o.recent_claims.slice(0, 4).map((c) => (
                 <div key={c.id}>
                   <Badge status={c.status} />
+                  {c.proposal_origin && (
+                    <span className="small muted">
+                      {" "}
+                      · Reviewed imported hypothesis
+                    </span>
+                  )}
                   <p>{c.statement}</p>
                   <span className="small muted">
                     {c.name} · {date(c.observed_at)}
@@ -1319,6 +1398,15 @@ function EconomicFlow({ detail }: { detail: Detail }) {
               <h3>{flowLabels[index]}</h3>
               {claim ? (
                 <>
+                  {claim.proposal_origin && (
+                    <p className="notice illustrative">
+                      Human-reviewed imported suggestion · declared provider{" "}
+                      {claim.proposal_origin.provider} /{" "}
+                      {claim.proposal_origin.model}. Reported confidence{" "}
+                      {claim.proposal_origin.confidence}; still a research
+                      hypothesis.
+                    </p>
+                  )}
                   <p>{claim.statement}</p>
                   <Badge status={claim.status} />
                   <SourceLink url={claim.evidence_url}>Evidence</SourceLink>
@@ -1402,6 +1490,14 @@ function ClaimCard({ claim }: { claim: Claim }) {
         <Badge status={claim.status} />
         <span className="small muted">{date(claim.observed_at)}</span>
       </div>
+      {claim.proposal_origin && (
+        <p className="notice illustrative">
+          Human-reviewed imported suggestion · declared provider{" "}
+          {claim.proposal_origin.provider} / {claim.proposal_origin.model}.
+          Reported confidence {claim.proposal_origin.confidence}; still a
+          research hypothesis.
+        </p>
+      )}
       <p>{claim.statement}</p>
       {claim.evidence_url ? (
         <details>
@@ -1430,12 +1526,17 @@ function DetailPage({
   onSaved: () => void;
 }) {
   const [tab, setTab] = useState(
-      d.kind === "asset" ? "research" : "business anatomy",
+      typeof window !== "undefined" &&
+        new URLSearchParams(window.location.search).get("tab") === "research"
+        ? "research"
+        : d.kind === "asset"
+          ? "research"
+          : "business anatomy",
     ),
     [resolveError, setResolveError] = useState("");
   const tabs = [
     "research",
-    ...(d.asset ? [] : ["business anatomy"]),
+    "business anatomy",
     "economic flow",
     "connections",
     ...(d.asset ? ["listings", "identity"] : []),
@@ -1471,6 +1572,13 @@ function DetailPage({
           <div className="detail-title">
             <h2>{d.name}</h2>
             <span className="count-pill">{d.kind}</span>
+            <Link
+              className="text-button"
+              href={`${d.kind === "asset" ? "/assets/" : "/businesses/"}${d.id}/anatomy`}
+            >
+              Open Business Anatomy
+              <ArrowUpRight size={14} />
+            </Link>
             {d.asset && <Badge status={d.asset.match_status} />}
           </div>
           <p>
@@ -1487,7 +1595,7 @@ function DetailPage({
                 d.claims.some((c) => c.field === f),
               ).length
             }
-            <small> / 15 questions</small>
+            <small> / {Object.keys(researchFields).length} questions</small>
           </strong>
         </div>
       </div>
@@ -1502,9 +1610,16 @@ function DetailPage({
           </button>
         ))}
       </div>
-      {tab === "business anatomy" && (
-        <Anatomy overview={overview} initialEntityId={d.id} onSaved={onSaved} />
-      )}
+      {tab === "business anatomy" &&
+        (d.kind === "asset" ? (
+          <AssetAnatomy assetId={d.id} />
+        ) : (
+          <Anatomy
+            overview={overview}
+            initialEntityId={d.id}
+            onSaved={onSaved}
+          />
+        ))}
       {tab === "research" && (
         <>
           {d.kind === "product" && (

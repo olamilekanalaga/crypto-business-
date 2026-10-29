@@ -74,6 +74,10 @@ export default function AnatomyForms({
     const values: Record<string, unknown> = Object.fromEntries(
       new FormData(form),
     );
+    if (values.evidence_checked_at)
+      values.evidence_checked_at = new Date(
+        String(values.evidence_checked_at) + "Z",
+      ).toISOString();
     if (values.observed_at)
       values.observed_at = new Date(
         String(values.observed_at) + "Z",
@@ -253,6 +257,18 @@ export default function AnatomyForms({
               })),
             ])}
             {area(
+              "source_context",
+              "What the source provides or needs",
+              "Describe this endpoint’s relevant capability or need.",
+              true,
+            )}
+            {area(
+              "target_context",
+              "What the target provides or needs",
+              "Describe this endpoint’s relevant capability or need.",
+              true,
+            )}
+            {area(
               "explanation",
               "Why this connection exists",
               "Describe the need, what moves between the actors, and why it matters economically.",
@@ -275,7 +291,7 @@ export default function AnatomyForms({
                       value: "yes",
                       label: "Yes · confirmed evidence required",
                     },
-                    ...(relation !== "pays_for"
+                    ...(!["pays_for", "earns_from"].includes(relation)
                       ? [
                           {
                             value: "no",
@@ -286,6 +302,20 @@ export default function AnatomyForms({
                   ]
                 : []),
             ])}
+            {select("money_direction", "Money flow direction", [
+              { value: "unknown", label: "Unknown / not established" },
+              ...(actuality === "existing"
+                ? [
+                    { value: "source_to_target", label: "Source pays target" },
+                    { value: "target_to_source", label: "Target pays source" },
+                    { value: "none", label: "No payment" },
+                  ]
+                : []),
+            ])}
+            <label className="field">
+              Evidence last checked (UTC) · optional
+              <input name="evidence_checked_at" type="datetime-local" />
+            </label>
             {select("status", "Evidence status", [
               { value: "hypothesis", label: "Hypothesis" },
               { value: "inference", label: "Reasonable inference" },

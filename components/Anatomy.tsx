@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { api, date } from "./api";
 import { Badge } from "./Workspace";
+import ResearchFrameworks from "./ResearchFrameworks";
 import AnatomyForms from "./AnatomyForms";
 import {
   anatomyLenses,
@@ -63,20 +64,38 @@ export default function Anatomy({
   overview,
   initialEntityId,
   onSaved,
+  scope = "anatomy",
 }: {
   overview: Overview;
   initialEntityId?: number;
   onSaved: () => void;
+  scope?: "anatomy" | "network";
 }) {
   const [mode, setMode] = useState<"research" | "illustration">("research"),
-    [center, setCenter] = useState<number | undefined>(),
+    [center, setCenter] = useState<number | undefined>(() => {
+      const n = Number(new URLSearchParams(window.location.search).get("node"));
+      return Number.isSafeInteger(n) && n > 0 ? n : undefined;
+    }),
+    [depth, setDepth] = useState(() => {
+      const d = Number(
+        new URLSearchParams(window.location.search).get("depth"),
+      );
+      return scope === "network" && Number.isInteger(d) && d >= 1 && d <= 3
+        ? d
+        : scope === "network"
+          ? 2
+          : 1;
+    }),
+    [claimError, setClaimError] = useState(""),
     [filters, setFilters] = useState(initialFilters),
     [data, setData] = useState<AnatomyData | null>(null),
     [loading, setLoading] = useState(true),
     [error, setError] = useState(""),
     [revision, setRevision] = useState(0),
     [search, setSearch] = useState(""),
-    [selection, setSelection] = useState<string | null>(null),
+    [selection, setSelection] = useState<string | null>(() =>
+      new URLSearchParams(window.location.search).get("edge"),
+    ),
     [trail, setTrail] = useState<number[]>([]),
     [entry, setEntry] = useState(false),
     [claims, setClaims] = useState<Claim[]>([]);
@@ -96,6 +115,8 @@ export default function Anatomy({
           ? { entity_id: initialEntityId }
           : {}),
       ...filters,
+      scope,
+      depth,
     })
       .then((result) => {
         if (active) setData(result);
@@ -112,17 +133,23 @@ export default function Anatomy({
     return () => {
       active = false;
     };
-  }, [mode, center, initialEntityId, filters, revision]);
+  }, [mode, center, initialEntityId, filters, revision, scope, depth]);
   const central = data?.nodes.find((n) => n.id === data.center_id);
   useEffect(() => {
     let active = true;
     setClaims([]);
+    setClaimError("");
     if (mode === "research" && central?.entity_id)
       api<Detail>("detail", { id: central.entity_id })
         .then((d) => {
           if (active) setClaims(d.claims);
         })
-        .catch(() => {});
+        .catch((e) => {
+          if (active)
+            setClaimError(
+              "Business research could not be loaded: " + e.message,
+            );
+        });
     return () => {
       active = false;
     };
@@ -151,16 +178,21 @@ export default function Anatomy({
   const selected = data?.edges.find((e) => String(e.id) === selection) || null;
   useEffect(() => {
     if (selected)
-      document
-        .getElementById("anatomy-connection-details")
-        ?.scrollIntoView({
-          behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
-            .matches
-            ? "auto"
-            : "smooth",
-          block: "start",
-        });
+      document.getElementById("anatomy-connection-details")?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+        block: "start",
+      });
   }, [selected?.id]);
+  useEffect(() => {
+    if (mode === "research" && data?.center_id && data.center_id > 0) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("node", String(data.center_id));
+      if (scope === "network") url.searchParams.set("depth", String(depth));
+      window.history.replaceState(null, "", url.pathname + url.search);
+    }
+  }, [mode, data?.center_id, scope, depth]);
   const sourceNodes = data?.catalog || [];
   const visibleCatalog = sourceNodes.filter((n) =>
     (n.name + " " + n.kind).toLowerCase().includes(search.toLowerCase()),
@@ -302,6 +334,33 @@ export default function Anatomy({
             </button>
           )}
         </div>
+        {scope === "network" && mode === "research" && (
+          <div className="network-depth">
+            <label className="field">
+              Network depth
+              <select
+                value={depth}
+                onChange={(e) => setDepth(Number(e.target.value))}
+              >
+                <option value={1}>1 hop · direct relationships</option>
+                <option value={2}>2 hops · connected businesses</option>
+                <option value={3}>3 hops · wider network</option>
+              </select>
+            </label>
+            <button
+              className="button secondary"
+              disabled={depth >= 3}
+              onClick={() => setDepth((d) => Math.min(3, d + 1))}
+            >
+              Expand network
+              <ArrowRight size={14} />
+            </button>
+            <span className="small muted">
+              Only stored edges are expanded. Paths do not prove a direct
+              business relationship.
+            </span>
+          </div>
+        )}
         <div className="anatomy-controls">
           <label className="field">
             Centre node
@@ -422,6 +481,11 @@ export default function Anatomy({
             </p>
           )}
       </section>
+      {claimError && (
+        <p className="notice error" role="alert">
+          {claimError}
+        </p>
+      )}
       {central && (
         <>
           <div className="anatomy-context">
@@ -430,10 +494,24 @@ export default function Anatomy({
               {central.description ||
                 "A researcher-created business record. A node alone does not verify an operating business."}
             </p>
+            <Link
+              className="source-link"
+              href={
+                scope === "network"
+                  ? `/anatomy?node=${central.id}`
+                  : `/network?node=${central.id}`
+              }
+              style={{ marginRight: 16 }}
+            >
+              {scope === "network"
+                ? "Open focused Business Anatomy"
+                : "Explore wider Economic Network"}
+              <ArrowUpRight size={13} />
+            </Link>
             {central.entity_id && (
               <Link
                 className="source-link"
-                href={"/businesses/" + central.entity_id}
+                href={"/businesses/" + central.entity_id + "?tab=research"}
               >
                 Open full business research
                 <ArrowUpRight size={13} />
@@ -457,7 +535,11 @@ export default function Anatomy({
           )}
           {data && (
             <ResearchQuestions
-              edges={data.edges}
+              edges={data.edges.filter(
+                (e) =>
+                  e.source_id === data.center_id ||
+                  e.target_id === data.center_id,
+              )}
               claims={supplierClaims}
               centerId={data.center_id!}
               inspect={(id) => setSelection(String(id))}
@@ -573,6 +655,12 @@ export default function Anatomy({
               </button>
             ))}
           </div>
+        </details>
+      )}
+      {mode === "research" && central?.entity_id && (
+        <details className="framework-drawer">
+          <summary>Investigate this business with a research framework</summary>
+          <ResearchFrameworks compact />
         </details>
       )}
       {entry && mode === "research" && (
@@ -745,6 +833,29 @@ function EdgeInspector({
         <span>{e.lens} lens</span>
         <span>{e.provenance.replaceAll("_", " ")}</span>
       </div>
+      <div className="exchange-grid">
+        <div>
+          <span className="eyebrow">{e.source_name} · PROVIDES OR NEEDS</span>
+          <p>{e.source_context || "Not yet recorded for this endpoint."}</p>
+        </div>
+        <div>
+          <span className="eyebrow">{e.target_name} · PROVIDES OR NEEDS</span>
+          <p>{e.target_context || "Not yet recorded for this endpoint."}</p>
+        </div>
+      </div>
+      {e.proposal_origin && (
+        <div className="notice illustrative">
+          <span>
+            <strong>
+              Human-reviewed imported suggestion — still a hypothesis.
+            </strong>{" "}
+            Declared provider/model: {e.proposal_origin.provider} /{" "}
+            {e.proposal_origin.model}. Reported confidence:{" "}
+            {e.proposal_origin.confidence}. This score does not verify the
+            relationship. Reviewer note: {e.proposal_origin.reviewer_note}
+          </span>
+        </div>
+      )}
       <h3>Why this connection matters</h3>
       <p className="edge-explanation">{e.explanation}</p>
       <div className="exchange-grid">
@@ -760,6 +871,20 @@ function EdgeInspector({
       <div className="relationship-meta">
         <span>
           Money changes hands: <strong>{e.money}</strong>
+        </span>
+        <span>
+          Money flow:{" "}
+          {e.money_direction === "source_to_target"
+            ? `${e.source_name} pays ${e.target_name}`
+            : e.money_direction === "target_to_source"
+              ? `${e.target_name} pays ${e.source_name}`
+              : e.money_direction === "none"
+                ? "No payment recorded"
+                : "Payer and recipient not established"}
+        </span>
+        <span>
+          Evidence last checked:{" "}
+          {e.evidence_checked_at ? date(e.evidence_checked_at) : "Not recorded"}
         </span>
         {e.observed_at && <span>Observed {date(e.observed_at)}</span>}
       </div>

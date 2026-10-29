@@ -1,0 +1,284 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bd-oracle.local/schemas/intelligence-proposal",
+  "title": "BD Oracle imported intelligence proposal",
+  "description": "A suggested finding, relationship or research question. Provider/model/confidence are declared metadata, not verification. Human acceptance creates only an editable research hypothesis. This schema performs no model calls.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "provider",
+    "model",
+    "kind",
+    "confidence",
+    "explanation",
+    "evidence_gaps",
+    "source_ids",
+    "payload"
+  ],
+  "properties": {
+    "provider": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "kind": {
+      "enum": [
+        "connection",
+        "finding",
+        "research_question"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Informational declared confidence; never a verified fact indicator."
+    },
+    "explanation": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 20000
+    },
+    "evidence_gaps": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 20000
+    },
+    "source_ids": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9223372036854775807
+      },
+      "uniqueItems": true
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "connection"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_id",
+              "target_id",
+              "relation",
+              "essentiality",
+              "lens",
+              "source_value",
+              "target_value"
+            ],
+            "properties": {
+              "source_id": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9223372036854775807
+              },
+              "target_id": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9223372036854775807
+              },
+              "relation": {
+                "enum": [
+                  "needs_to_operate",
+                  "needs_to_grow",
+                  "pays_for",
+                  "earns_from",
+                  "provides_to",
+                  "integrates_with",
+                  "partners_with",
+                  "depends_on",
+                  "could_benefit_from",
+                  "competes_with"
+                ]
+              },
+              "essentiality": {
+                "enum": [
+                  "essential",
+                  "optional",
+                  "unknown"
+                ]
+              },
+              "lens": {
+                "enum": [
+                  "oxygen",
+                  "blood",
+                  "brain",
+                  "legs",
+                  "food",
+                  "other"
+                ]
+              },
+              "source_value": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20000
+              },
+              "target_value": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20000
+              },
+              "source_context": {
+                "type": "string",
+                "maxLength": 20000
+              },
+              "target_context": {
+                "type": "string",
+                "maxLength": 20000
+              }
+            }
+          },
+          "source_ids": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "finding"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "entity_id",
+              "field",
+              "statement"
+            ],
+            "properties": {
+              "entity_id": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9223372036854775807
+              },
+              "field": {
+                "enum": [
+                  "what_it_does",
+                  "product_service",
+                  "customers",
+                  "actor_wants",
+                  "demand_behaviour",
+                  "problem_solved",
+                  "customer_exchange",
+                  "payment_flow",
+                  "revenue_model",
+                  "suppliers",
+                  "distribution",
+                  "recurring_consumption",
+                  "depends_on",
+                  "dependents",
+                  "new_activity",
+                  "actor",
+                  "want",
+                  "behaviour",
+                  "problem",
+                  "provider",
+                  "transaction",
+                  "value",
+                  "next_actor"
+                ]
+              },
+              "statement": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20000
+              }
+            }
+          },
+          "source_ids": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "research_question"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "entity_id",
+              "field",
+              "question"
+            ],
+            "properties": {
+              "entity_id": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9223372036854775807
+              },
+              "field": {
+                "enum": [
+                  "what_it_does",
+                  "product_service",
+                  "customers",
+                  "actor_wants",
+                  "demand_behaviour",
+                  "problem_solved",
+                  "customer_exchange",
+                  "payment_flow",
+                  "revenue_model",
+                  "suppliers",
+                  "distribution",
+                  "recurring_consumption",
+                  "depends_on",
+                  "dependents",
+                  "new_activity",
+                  "actor",
+                  "want",
+                  "behaviour",
+                  "problem",
+                  "provider",
+                  "transaction",
+                  "value",
+                  "next_actor"
+                ]
+              },
+              "question": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20000
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$comment": "The server additionally checks existing node/entity/evidence identifiers, semantic edge constraints and human review. Model-supplied status, payment, provenance or verification fields are not accepted."
+}

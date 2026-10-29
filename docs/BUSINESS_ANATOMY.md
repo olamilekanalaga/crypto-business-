@@ -106,3 +106,11 @@ The original Binance/CoinGecko extraction status is unchanged: this environment 
 SQLite stores the graph; React Flow draws it. A graph response returns the chosen node’s immediate filtered neighbourhood, with limits of 500 nodes, 500 connections, 5,000 catalogue entries and 100 historical edges. Totals/truncation flags describe bounded results. The canvas displays at most 40 nodes and tells you to use the centre selector and connection list to explore further. A large bounded view is not an exhaustive industry map.
 
 No LLM, document-analysis service, background reasoning engine, automatic company matcher or opportunity recommendation engine is running. No model API key or paid graph database is required. A later model integration could extract proposed functions and suggest editable, source-linked hypotheses, but those proposals would still need the same economic explanation, explicit uncertainty and real-world validation before being treated as opportunities.
+
+## Product vision extension
+
+Dedicated routes now resolve an asset’s evidence-labelled associations before opening an organisation/product map. Open `/assets/<id>/anatomy` or `/businesses/<id>/anatomy`; original profiles remain intact. `/network` explores up to three hops of stored connections with the same evidence and uncertainty controls. Integrates with, Depends on and Earns from are first-class connection types, without changing the meaning of original integration records.
+
+The inspector now separates endpoint needs/provisions, reciprocal value, payment direction, observation date and explicit evidence-check date. Unknown review dates remain unknown. Source confirmation does not automatically verify a proposed economic interpretation.
+
+Research frameworks provide editable generic questions for lending, games, wallets and data providers. They create no business facts or graph edges. A disabled optional intelligence interface accepts structured, source-linked proposals separately from the knowledge graph. Human review can edit and retain a proposal only as a hypothesis; origin, confidence, original content and review changes remain attributable. See [PRODUCT_VISION_UPDATE.md](PRODUCT_VISION_UPDATE.md) and the structured proposal schema for the current boundary. No live LLM integration or autonomous opportunity engine is running.

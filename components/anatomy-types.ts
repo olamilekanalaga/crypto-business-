@@ -1,4 +1,4 @@
-import type { Evidence, Status } from "./types";
+import type { Evidence, Status, ProposalOrigin } from "./types";
 export type AnatomyKind =
   "organisation" | "product" | "need" | "capability" | "actor" | "resource";
 export type AnatomyNode = {
@@ -8,6 +8,7 @@ export type AnatomyNode = {
   name: string;
   description: string;
   created_at: string;
+  distance?: number;
 };
 export type AnatomyEdge = {
   id: number | string;
@@ -21,6 +22,12 @@ export type AnatomyEdge = {
   lens: string;
   status: Status;
   explanation: string;
+  source_context?: string;
+  target_context?: string;
+  money_direction?:
+    "source_to_target" | "target_to_source" | "none" | "unknown";
+  evidence_checked_at?: string | null;
+  proposal_origin?: ProposalOrigin | null;
   source_value: string;
   target_value: string;
   money: "yes" | "no" | "unknown";
@@ -51,6 +58,8 @@ export type AnatomyEdge = {
   }[];
 };
 export type AnatomyData = {
+  scope?: string;
+  depth?: number;
   center_id: number | null;
   catalog: AnatomyNode[];
   nodes: AnatomyNode[];
@@ -76,6 +85,9 @@ export const relationLabels: Record<string, string> = {
   needs_to_operate: "Needs to operate",
   needs_to_grow: "Needs to grow",
   pays_for: "Pays for",
+  earns_from: "Earns from",
+  integrates_with: "Integrates with",
+  depends_on: "Depends on",
   provides_to: "Provides to",
   partners_with: "Partners with",
   could_benefit_from: "Could benefit from",

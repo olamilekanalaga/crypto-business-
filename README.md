@@ -8,6 +8,19 @@ The asset universe is a starting point. This is not a trading or investment tool
 
 [Business Anatomy preview](docs/images/anatomy-desktop.png) · [Desktop preview](docs/images/terminal-desktop.png) · [Mobile preview](docs/images/terminal-mobile.png)
 
+## Product vision update — extended in place
+
+The existing collectors, listings, identity matches and research records are preserved. The Binance connector, ingestion, CoinGecko enrichment, HTTP transport and quality reporting files are unchanged; [the inspection audit](docs/VISION_UPDATE_AUDIT.md) records their source fingerprints and the baseline database state.
+
+- **Discover → Anatomy:** open `/assets/<id>/anatomy` to inspect the separately researched product/operator associations and their evidence. A verified CoinGecko identity does not establish a company. Open `/businesses/<id>/anatomy` for a dedicated map; original asset and business research pages remain available.
+- **Economic Network:** `/network` expands actual stored connections to one, two or three hops, with evidence, dependency, lens and direction filters. Relevance ordering and visible limits reduce clutter. A path between businesses does not assert a direct relationship.
+- **Economic explanations:** record what each endpoint provides or needs, why the connection makes sense, value to each side, explicit payment direction, evidence gaps and a separately recorded source-check date. Source observation is not silently treated as verification.
+- **Research frameworks:** editable lending, game, wallet and data-provider frameworks contain questions only. They never assign dependencies to a business or insert edges. The research workspace also includes a question about new problems a business creates for other actors.
+- **Optional intelligence boundary:** a disabled-by-default Python provider interface and [structured proposal schema](docs/intelligence-proposal.schema.json) prepare for later extraction/reasoning adapters. Imported proposals stay in a separate queue. Human review can edit the explanation, gaps and finding/value text; acceptance retains a hypothesis, never a verified fact. Original suggestions, sources, declared provider/model, confidence and edits remain inspectable. No external model is connected or called.
+- **Unresolved:** review unconfirmed relationships as well as asset identities.
+
+See [the product update handoff](docs/PRODUCT_VISION_UPDATE.md) for completed scope, remaining work, external API dependencies and validation. The original CEX live-data blocker has not been replaced with a fictional dataset.
+
 ## Run locally
 
 Requirements: Python 3.12+, Node.js 20.9+ (Node.js 22 or 24 recommended), npm, and SQLite support in Python. Python uses only its standard library. No model API, paid hosting, or separate API server is required.
@@ -74,7 +87,7 @@ The coin index is cached for one day; detail responses are cached for seven days
 - **Asset discovery:** searchable, paginated Binance base assets, trading pairs, status, and identity resolution.
 - **Business explorer:** separate organisation and product records, with research pages. A business can exist without a token. Business pages open Business Anatomy; the Research tab retains the detailed economic questions.
 - **Business Anatomy:** click through organisations, products, needs, capabilities, actors and resources. Distinguish essential dependencies, growth needs, existing relationships and potential connections. Inspect the economic explanation, both sides’ value, sources, evidence gaps and certainty. See the [Business Anatomy guide](docs/BUSINESS_ANATOMY.md).
-- **Research workspace:** record all fifteen economic questions, distinct business activities, source excerpts, interpretations, hypotheses, and organisation/product/asset associations.
+- **Research workspace:** record all sixteen economic questions, distinct business activities, source excerpts, interpretations, hypotheses, and organisation/product/asset associations.
 - **Economic flow:** Actor → Want → Behaviour → Problem → Provider → Transaction → Value → Next actor. Every step is a separate finding; unknown steps stay empty.
 - **Relationships:** record what both businesses provide, what each gains, why the relationship exists, whether payment is known, dates, evidence, and certainty.
 - **My opportunities:** capture friction, how you might help, a possible buyer, and the next research step. Update stages as you investigate.

@@ -1,8 +1,8 @@
 # Data quality report
 
-Generated: 2026-10-29T02:51:24.190973+00:00
+Generated: 2026-10-29T03:47:09.893754+00:00
 
-- generated_at: 2026-10-29T02:51:24.190973+00:00
+- generated_at: 2026-10-29T03:47:09.893754+00:00
 - extraction_status: no_successful_extraction
 - total_trading_pairs_retrieved: Not available
 - unique_base_assets: Not available

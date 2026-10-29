@@ -19,6 +19,7 @@ export const researchFields: Record<string, string> = {
   depends_on: "Which businesses does it depend on?",
   dependents: "Which businesses depend on it?",
   new_activity: "What new economic activity emerges?",
+  new_problems: "What new problems does this business create for other actors?",
 };
 const flowFields: Record<string, string> = {
   actor: "Actor",

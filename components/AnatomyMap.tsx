@@ -69,6 +69,7 @@ export default function AnatomyMap({
     const central = data.nodes.find((n) => n.id === data.center_id);
     const others = data.nodes
       .filter((n) => n.id !== data.center_id)
+      .sort((a, b) => (a.distance ?? 1) - (b.distance ?? 1))
       .slice(0, 39);
     const ids = new Set([data.center_id, ...others.map((n) => n.id)]);
     const list = central ? [central, ...others] : others;

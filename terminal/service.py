@@ -7,7 +7,7 @@ from .db import now, rows
 from .report import quality
 
 STATUSES = ('confirmed','inference','hypothesis','unknown')
-FIELDS = ('what_it_does','product_service','customers','actor_wants','demand_behaviour','problem_solved','customer_exchange','payment_flow','revenue_model','suppliers','distribution','recurring_consumption','depends_on','dependents','new_activity','actor','want','behaviour','problem','provider','transaction','value','next_actor')
+FIELDS = ('what_it_does','product_service','customers','actor_wants','demand_behaviour','problem_solved','customer_exchange','payment_flow','revenue_model','suppliers','distribution','recurring_consumption','depends_on','dependents','new_activity','new_problems','actor','want','behaviour','problem','provider','transaction','value','next_actor')
 REL_TYPES = ('customer/provider','integration','partnership','distribution','investment','liquidity provision','infrastructure dependency','competition','ecosystem membership')
 
 def required(data, key, maximum=20000):
@@ -50,6 +50,8 @@ def detail(db, identifier):
     item = entity(db,identifier)
     item['claims'] = rows(db,'''SELECT c.*,e.title AS evidence_title,e.url AS evidence_url,e.original_text,e.interpretation FROM claims c
     LEFT JOIN evidence e ON e.id=c.evidence_id WHERE entity_id=? ORDER BY c.id DESC''',(item['id'],))
+    from .intelligence import annotate_proposals
+    annotate_proposals(db,item['claims'],record_type='claim')
     item['links'] = rows(db,'''SELECT l.*,a.name AS from_name,a.kind AS from_kind,b.name AS to_name,b.kind AS to_kind,e.url AS evidence_url
     FROM entity_links l JOIN entities a ON a.id=l.from_id JOIN entities b ON b.id=l.to_id LEFT JOIN evidence e ON e.id=l.evidence_id
     WHERE from_id=? OR to_id=?''',(item['id'],item['id']))
@@ -84,14 +86,23 @@ def dispatch(db, request):
     action = request.get('action')
     data = request.get('data') or {}
     if not isinstance(data,dict): raise ValueError('Invalid data')
-    if action in ('anatomy','save_graph_node','save_graph_edge','retract_graph_edge'):
+    if action in ('anatomy','asset_anatomy','unresolved_graph','save_graph_node','save_graph_edge','retract_graph_edge'):
         from .anatomy import dispatch_anatomy
         return dispatch_anatomy(db,action,data)
+    if action in ('taxonomy','save_framework'):
+        from .taxonomy import dispatch_taxonomy
+        return dispatch_taxonomy(db,action,data)
+    if action in ('intelligence_status','import_proposal','list_proposals','review_proposal'):
+        from .intelligence import dispatch_intelligence
+        return dispatch_intelligence(db,action,data)
     if action=='overview':
+        from .intelligence import annotate_proposals
+        recent_claims=rows(db,'SELECT c.*,e.name FROM claims c JOIN entities e ON e.id=c.entity_id ORDER BY c.id DESC LIMIT 8')
+        annotate_proposals(db,recent_claims,record_type='claim')
         return {'quality':quality(db), 'entities':rows(db,'SELECT * FROM entities ORDER BY kind,name'),
                 'evidence':rows(db,'SELECT * FROM evidence ORDER BY id DESC LIMIT 1000'),
                 'opportunities':rows(db,'SELECT o.*,e.name AS entity_name FROM opportunities o LEFT JOIN entities e ON e.id=o.entity_id ORDER BY o.id DESC'),
-                'recent_claims':rows(db,'SELECT c.*,e.name FROM claims c JOIN entities e ON e.id=c.entity_id ORDER BY c.id DESC LIMIT 8'),
+                'recent_claims':recent_claims,
                 'relationships':relationships(db),
                 'businesses':rows(db,"SELECT e.*,(SELECT count(*) FROM claims c WHERE c.entity_id=e.id) AS findings FROM entities e WHERE kind IN ('organisation','product') ORDER BY name")}
     if action=='assets':

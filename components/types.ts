@@ -17,7 +17,17 @@ export type Evidence = {
   interpretation: string;
   verification: Status;
 };
+export type ProposalOrigin = {
+  id: number;
+  provider: string;
+  model: string;
+  confidence: number;
+  source_ids: number[];
+  reviewer_note: string;
+  metadata_assurance?: string;
+};
 export type Claim = {
+  proposal_origin?: ProposalOrigin;
   id: number;
   entity_id: number;
   field: string;

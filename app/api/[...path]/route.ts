@@ -3,8 +3,22 @@ import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-const reads = new Set(["overview", "assets", "detail", "quality", "anatomy"]);
+const reads = new Set([
+  "overview",
+  "assets",
+  "detail",
+  "quality",
+  "anatomy",
+  "asset_anatomy",
+  "unresolved_graph",
+  "taxonomy",
+  "intelligence_status",
+  "list_proposals",
+]);
 const writes = new Set([
+  "save_framework",
+  "import_proposal",
+  "review_proposal",
   "save_graph_node",
   "save_graph_edge",
   "retract_graph_edge",

@@ -3460,3 +3460,295 @@ pre {
 .sidebar-bottom {
   flex-shrink: 0;
 }
+/* Vision update: connected research and optional hypothesis review. */
+.network-depth,
+.framework-toolbar {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 18px 0;
+  padding: 17px;
+  background: #f4f8ec;
+  border: 1px solid #e1e9d5;
+  border-radius: 7px;
+}
+.network-depth .field {
+  min-width: 220px;
+}
+.network-depth .small {
+  flex-basis: 100%;
+  line-height: 1.8;
+}
+.framework-toolbar > .field {
+  flex: 1;
+  min-width: 220px;
+}
+.framework-questions > h3 {
+  font-size: 20px;
+  margin: 24px 0 10px;
+}
+.framework-questions > p {
+  font-size: 12px;
+  color: #849574;
+  margin-bottom: 14px;
+  line-height: 1.9;
+}
+.framework-questions ul {
+  list-style: none;
+  margin: 22px 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.framework-questions li {
+  padding: 18px;
+  border: 1px solid #e3ead7;
+  background: #f8faf3;
+  border-radius: 7px;
+}
+.framework-questions li p {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #7c9366;
+  line-height: 1.9;
+}
+.framework-editor {
+  margin-top: 25px;
+}
+.framework-question-editor {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+}
+.framework-question-editor .field {
+  min-width: 0;
+}
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11px;
+  color: #91a07b;
+}
+.checkbox-field input {
+  accent-color: #587949;
+  width: 15px;
+  height: 15px;
+}
+.framework-question-editor > .icon-button {
+  justify-self: end;
+}
+.framework-drawer {
+  margin-bottom: 22px;
+}
+.framework-drawer > summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: #81976b;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fff;
+  margin-bottom: 12px;
+}
+.proposal-import > summary,
+.proposal-edit > summary {
+  font-size: 12px;
+  cursor: pointer;
+  color: #6b8754;
+  line-height: 1.8;
+}
+.proposal-import > p {
+  margin: 15px 0;
+  line-height: 1.9;
+}
+.proposal-import .research-form {
+  margin-top: 20px;
+}
+.proposal-card {
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+}
+.proposal-card h3 {
+  font-size: 15px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+.proposal-payload > div {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 20px;
+  border-bottom: 1px solid #edf1e5;
+  padding: 12px 0;
+  font-size: 12px;
+}
+.proposal-payload dt {
+  color: #9ba98a;
+  text-transform: capitalize;
+  font-size: 10px;
+}
+.proposal-payload dd {
+  margin: 0;
+  color: #71895f;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.9;
+}
+.proposal-review {
+  border-top: 1px solid var(--line);
+  margin-top: 20px;
+  padding-top: 20px;
+}
+.proposal-review > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+.proposal-edit {
+  padding: 17px;
+  background: #f7faf1;
+  border: 1px solid #e4ecd7;
+  border-radius: 7px;
+  margin-bottom: 20px;
+}
+.proposal-edit > .field {
+  margin: 16px 0;
+}
+.unresolved-edge-list > article {
+  padding: 19px 0;
+  border-top: 1px solid var(--line);
+}
+.unresolved-edge-list > article > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.unresolved-edge-list strong {
+  font-size: 13px;
+  font-weight: 500;
+  color: #718b5d;
+}
+.unresolved-edge-list p {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #98a78a;
+  margin: 12px 0;
+}
+.association-path {
+  color: #8fa17b;
+  margin-top: 13px;
+  line-height: 1.8;
+}
+.association-path summary {
+  cursor: pointer;
+  font-size: 10px;
+}
+.association-path p {
+  font-size: 10px;
+  margin: 9px 0;
+}
+.sidebar nav button {
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+.proposal-card .relationship-evidence {
+  margin-top: 15px;
+}
+.research-frameworks .notice {
+  margin-top: 20px;
+}
+@media (max-width: 900px) {
+  .framework-questions ul {
+    grid-template-columns: 1fr;
+  }
+  .framework-question-editor {
+    grid-template-columns: 1fr;
+  }
+  .proposal-payload > div {
+    grid-template-columns: 120px 1fr;
+    gap: 12px;
+  }
+  .network-depth .field {
+    min-width: 180px;
+    flex: 1;
+  }
+}
+@media (max-width: 640px) {
+  .framework-toolbar {
+    gap: 12px;
+    padding: 14px;
+  }
+  .framework-toolbar > .field {
+    min-width: 100%;
+  }
+  .network-depth {
+    padding: 14px;
+  }
+  .network-depth > .field {
+    width: 100%;
+    min-width: 0;
+  }
+  .network-depth > .button {
+    font-size: 10px;
+  }
+  .network-depth .small {
+    font-size: 9px;
+  }
+  .framework-toolbar .button {
+    font-size: 10px;
+  }
+  .framework-questions > h3 {
+    font-size: 18px;
+  }
+  .framework-questions li {
+    padding: 16px;
+  }
+  .framework-question-editor {
+    padding: 14px;
+    gap: 14px;
+  }
+  .proposal-payload > div {
+    grid-template-columns: 1fr;
+    gap: 7px;
+    font-size: 11px;
+  }
+  .proposal-card h3 {
+    font-size: 14px;
+  }
+  .proposal-review .button {
+    font-size: 10px;
+    white-space: normal;
+    min-height: 42px;
+  }
+  .proposal-card .section-head {
+    align-items: flex-start;
+  }
+  .proposal-card .section-head > div {
+    min-width: 0;
+  }
+  .proposal-card .section-head h3 {
+    overflow-wrap: anywhere;
+  }
+  .unresolved-edge-list > article > div {
+    align-items: flex-start;
+    gap: 13px;
+  }
+  .unresolved-edge-list strong {
+    font-size: 12px;
+  }
+  .business-card .relationship-evidence summary {
+    font-size: 10px;
+    line-height: 1.8;
+  }
+  .proposal-edit {
+    padding: 13px;
+  }
+}
