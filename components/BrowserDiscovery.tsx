@@ -277,8 +277,8 @@ export default function BrowserDiscovery() {
   return (
     <main className={styles.page}>
       <header className={styles.header}>
-        <Link href="/opportunities">
-          <ArrowLeft size={17} /> Opportunity atlas
+        <Link href="/network">
+          <ArrowLeft size={17} /> BD Oracle · Business network
         </Link>
         <span>
           <Database size={15} /> BROWSER WORKSPACE
@@ -572,6 +572,16 @@ export default function BrowserDiscovery() {
                         </article>
                       ))}
                     </div>
+                    <Link
+                      className="button secondary"
+                      href={`/network?search=${encodeURIComponent(selectedClassification?.project || selected)}`}
+                    >
+                      Search business network →
+                    </Link>
+                    <p>
+                      Search uses the candidate project name; it does not verify
+                      a token-to-business identity.
+                    </p>
                     <ProductClassification
                       key={selected + JSON.stringify(selectedClassification)}
                       value={selectedClassification}

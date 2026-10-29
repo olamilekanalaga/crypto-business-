@@ -86,6 +86,9 @@ def dispatch(db, request):
     action = request.get('action')
     data = request.get('data') or {}
     if not isinstance(data,dict): raise ValueError('Invalid data')
+    if action in ('network_load','network_save','network_ai_reserve'):
+        from .network_store import dispatch_network
+        return dispatch_network(db,action,data)
     if action in ('anatomy','asset_anatomy','unresolved_graph','save_graph_node','save_graph_edge','retract_graph_edge'):
         from .anatomy import dispatch_anatomy
         return dispatch_anatomy(db,action,data)

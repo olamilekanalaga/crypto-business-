@@ -1,0 +1,245 @@
+.page {
+  max-width: 1440px;
+  padding: 28px 28px 90px;
+  margin: auto;
+  color: var(--ink);
+}
+.nav,
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.nav {
+  justify-content: space-between;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 36px;
+}
+.nav a {
+  color: var(--green);
+  padding: 10px 0;
+}
+.page h1 {
+  font-size: clamp(30px, 5vw, 54px);
+  margin: 16px 0;
+}
+.page h2 {
+  font-size: 23px;
+  margin: 14px 0;
+}
+.page h3 {
+  font-size: 16px;
+  margin: 18px 0 10px;
+}
+.page p {
+  line-height: 1.7;
+  color: var(--muted);
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 24px 0;
+}
+.stats div,
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  min-width: 0;
+}
+.stats strong {
+  display: block;
+  font-size: 30px;
+  color: var(--green);
+}
+.stats span,
+.badge {
+  font-size: 12px;
+  color: var(--muted);
+}
+.layout {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+  align-items: start;
+}
+.businesses {
+  display: grid;
+  gap: 8px;
+  max-height: 560px;
+  overflow: auto;
+  margin-top: 16px;
+}
+.businesses button {
+  text-align: left;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-recessed);
+}
+.businesses button[aria-pressed="true"] {
+  border-color: var(--green);
+  background: #153b30;
+}
+.businesses small {
+  display: block;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.graph {
+  height: 440px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin: 18px 0;
+  overflow: hidden;
+}
+.legend {
+  font-size: 12px;
+  color: var(--muted);
+}
+.links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+.links button {
+  padding: 15px;
+  border: 1px solid var(--line);
+  background: var(--surface-recessed);
+  text-align: left;
+  border-radius: 9px;
+}
+.links button strong {
+  display: block;
+  margin-bottom: 8px;
+}
+.links button:hover {
+  border-color: var(--green);
+}
+.why {
+  margin-top: 20px;
+  padding: 22px;
+  border: 1px solid var(--green);
+  border-radius: 12px;
+  scroll-margin-top: 20px;
+}
+.why dt {
+  color: var(--green);
+  font-size: 12px;
+  margin-top: 14px;
+}
+.why dd {
+  margin: 6px 0;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.why li {
+  margin: 8px 0;
+  color: var(--muted);
+}
+.source {
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+.source a {
+  color: var(--green);
+  text-decoration: underline;
+}
+.source blockquote {
+  border-left: 2px solid var(--line);
+  padding-left: 12px;
+  margin: 14px 0;
+  font-size: 13px;
+}
+.page label {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 12px 0;
+}
+.page input,
+.page select,
+.page textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  background: var(--surface-recessed);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 6px;
+  font-size: 16px;
+}
+.page textarea {
+  min-height: 100px;
+}
+.page button {
+  min-height: 44px;
+}
+.message {
+  padding: 14px;
+  border: 1px solid var(--line);
+  margin: 15px 0;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+.toolbar {
+  margin: 24px 0;
+}
+.forms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.page summary {
+  cursor: pointer;
+  padding: 12px 0;
+}
+@media (max-width: 850px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .businesses {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-height: 240px;
+  }
+  .forms {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 500px) {
+  .page {
+    padding: 18px 14px 70px;
+  }
+  .panel {
+    padding: 14px;
+  }
+  .stats {
+    gap: 8px;
+  }
+  .stats div {
+    padding: 12px;
+  }
+  .stats strong {
+    font-size: 24px;
+  }
+  .stats span {
+    font-size: 10px;
+  }
+  .links {
+    grid-template-columns: 1fr;
+  }
+  .graph {
+    height: 360px;
+  }
+  .actions > button {
+    white-space: normal;
+  }
+}

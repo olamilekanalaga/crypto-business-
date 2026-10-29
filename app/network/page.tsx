@@ -1,9 +1,4 @@
-import ResearchGate from "@/components/ResearchGate";
-import Terminal from "@/components/Terminal";
-export default function EconomicNetworkPage() {
-  return (
-    <ResearchGate>
-      <Terminal initialView="network" />
-    </ResearchGate>
-  );
+import NetworkExplorer from "@/components/network/NetworkExplorer";
+export default function Page() {
+  return <NetworkExplorer />;
 }

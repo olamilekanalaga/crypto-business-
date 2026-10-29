@@ -1,5 +1,4 @@
-import OpportunityAtlas from "@/components/OpportunityAtlas";
-import { isHostedPreview } from "@/components/ResearchGate";
+import NetworkExplorer from "@/components/network/NetworkExplorer";
 export default function Page() {
-  return <OpportunityAtlas hosted={isHostedPreview()} />;
+  return <NetworkExplorer />;
 }

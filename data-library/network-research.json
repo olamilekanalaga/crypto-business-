@@ -1,0 +1,207 @@
+{
+  "format": "bd-oracle-network-v1",
+  "revision": 0,
+  "businesses": [
+    {
+      "id": "huma",
+      "name": "Huma Finance",
+      "kind": "product",
+      "summary": "Payment-financing products. Its PST asset has documented uses across other financial applications.",
+      "sectors": [
+        "Payments",
+        "RWA",
+        "Yield"
+      ],
+      "chains": [
+        "Solana"
+      ],
+      "products": [
+        "Huma 2.0 / PST"
+      ],
+      "needs": [
+        {
+          "code": "collateral_lending",
+          "text": "borrowing utility for holders of financing positions.",
+          "status": "inference",
+          "sourceIds": [
+            "huma-integrations"
+          ]
+        }
+      ],
+      "capabilities": [
+        {
+          "code": "yield_asset",
+          "text": "PST positions usable in other financial products.",
+          "status": "confirmed",
+          "sourceIds": [
+            "huma-integrations"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "huma-integrations",
+        "huma-overview"
+      ]
+    },
+    {
+      "id": "kamino",
+      "name": "Kamino Finance",
+      "kind": "product",
+      "summary": "Lending infrastructure that supports borrowing against eligible collateral, including the documented PST integration.",
+      "sectors": [
+        "Lending"
+      ],
+      "chains": [
+        "Solana"
+      ],
+      "products": [
+        "Huma Market"
+      ],
+      "needs": [],
+      "capabilities": [
+        {
+          "code": "collateral_lending",
+          "text": "collateralised borrowing infrastructure.",
+          "status": "confirmed",
+          "sourceIds": [
+            "huma-integrations"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "huma-integrations"
+      ]
+    },
+    {
+      "id": "morpho",
+      "name": "Morpho",
+      "kind": "product",
+      "summary": "Infrastructure for isolated lending markets pairing collateral with a loan asset.",
+      "sectors": [
+        "Lending",
+        "Infrastructure"
+      ],
+      "chains": [],
+      "products": [
+        "Morpho Blue"
+      ],
+      "needs": [
+        {
+          "code": "price_oracle",
+          "text": "pricing of collateral against loan assets.",
+          "status": "confirmed",
+          "sourceIds": [
+            "morpho-markets"
+          ]
+        }
+      ],
+      "capabilities": [
+        {
+          "code": "collateral_lending",
+          "text": "isolated lending markets.",
+          "status": "confirmed",
+          "sourceIds": [
+            "morpho-markets"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "morpho-markets"
+      ]
+    },
+    {
+      "id": "chainlink",
+      "name": "Chainlink",
+      "kind": "product",
+      "summary": "Onchain data feeds that applications can use to price assets and financial positions.",
+      "sectors": [
+        "Infrastructure",
+        "Oracle"
+      ],
+      "chains": [],
+      "products": [
+        "Data Feeds"
+      ],
+      "needs": [],
+      "capabilities": [
+        {
+          "code": "price_oracle",
+          "text": "onchain asset pricing data.",
+          "status": "confirmed",
+          "sourceIds": [
+            "chainlink-feeds"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "chainlink-feeds"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "huma-integrations",
+      "title": "Huma: integrations",
+      "url": "https://docs.huma.finance/products/huma-2.0/integrations",
+      "observedAt": "2026-10-29T12:00:00Z",
+      "excerpt": "Borrowing USDC or USDS against their deposited PST.",
+      "interpretation": "Official documentation supports PST collateral use on Kamino. It does not establish an introducer agreement, incremental revenue or present market balances.",
+      "status": "confirmed"
+    },
+    {
+      "id": "morpho-markets",
+      "title": "Morpho: variable rate markets",
+      "url": "https://docs.morpho.org/learn/concepts/blue/",
+      "observedAt": "2026-10-29T12:00:00Z",
+      "excerpt": "Oracle: Smart contract address pricing the collateral against the loan asset.",
+      "interpretation": "Collateral pricing is a required market parameter. A particular oracle supplier must be checked market by market.",
+      "status": "confirmed"
+    },
+    {
+      "id": "chainlink-feeds",
+      "title": "Chainlink: data feeds",
+      "url": "https://docs.chain.link/data-feeds",
+      "observedAt": "2026-10-29T12:00:00Z",
+      "excerpt": "Asset prices, proof of reserves, NAV, and interest rates",
+      "interpretation": "Chainlink provides onchain data for financial applications. The cited page does not establish a commercial relationship with every lending protocol.",
+      "status": "confirmed"
+    },
+    {
+      "id": "huma-overview",
+      "title": "Huma: product overview",
+      "url": "https://docs.huma.finance/products/huma-2.0/overview",
+      "observedAt": "2026-10-29T12:00:00Z",
+      "excerpt": "by deploying capital into various PayFi applications.",
+      "interpretation": "The product overview describes payment-financing activity. This record makes no current yield, revenue or TVL assertion.",
+      "status": "confirmed"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "huma-kamino-pst",
+      "a": "huma",
+      "b": "kamino",
+      "type": "integration",
+      "reason": "Huma documents that PST can be deposited in the Kamino Huma Market to borrow stablecoins. This adds borrowing utility to an existing financing position.",
+      "aProvides": "PST positions held by users.",
+      "bProvides": "Collateralised borrowing infrastructure.",
+      "aValue": "Additional use for PST. Adoption growth remains unmeasured.",
+      "bValue": "Potential borrowing activity. Incremental net revenue remains unmeasured.",
+      "moneyFlow": "The source describes HUMA participant incentives. Direct payment between the businesses and introducer compensation are unknown.",
+      "status": "confirmed",
+      "provenance": "manual",
+      "sourceIds": [
+        "huma-integrations"
+      ],
+      "gaps": [
+        "Check current collateral parameters, liquidity and liquidation risk.",
+        "Measure incremental users, borrowing, net revenue and incentive costs."
+      ],
+      "observedAt": "2026-10-29T12:00:00Z",
+      "confidence": null,
+      "review": "accepted",
+      "note": "Verified scope: documented product integration, not a paying-customer or referral contract.",
+      "saved": false
+    }
+  ]
+}

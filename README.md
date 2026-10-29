@@ -161,3 +161,11 @@ npm run test:e2e
 The browser suite starts its own local server on port 3100 and creates a fresh temporary database by default. `E2E_DATA_DIR` selects a specific disposable directory; `E2E_REUSE_SERVER=1` explicitly permits reusing a server already pointed at that same isolated directory. Never reuse a server or directory containing your real research data. Set `CHROMIUM_PATH` if Chromium is not installed at `/usr/bin/chromium`.
 
 The original foundation passed the checks recorded in [verification evidence](docs/VERIFICATION.md). Consult that record and the final handoff for the latest graph-extension validation results. Tests use isolated fixture data, not a claimed live extraction. See [architecture](docs/ARCHITECTURE.md) for the model and [handoff](docs/HANDOFF.md) for operations, limitations, backup, and next steps.
+
+## BD Oracle economic network
+
+Open `/network` (also `/opportunities`) for stored business research, interactive relationships, evidence and transparent rule matching. The directory remains `/`; the previous case-study walkthrough moved to `/walkthrough`. The original SQLite network remains `/network/local`.
+
+Network research works in browser storage immediately, with separate JSON backups. Optional private server APIs support local SQLite and hosted Postgres, with revision conflict protection. OpenAI analysis is opt-in and server-only; rules require no API key. Hosted storage, credentials and automated collection jobs are not automatically provisioned.
+
+See [Network handoff and setup](docs/NETWORK_HANDOFF.md) for endpoint contracts, source provenance, privacy, Postgres setup and remaining limitations.

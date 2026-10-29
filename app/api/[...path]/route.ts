@@ -1,7 +1,9 @@
+import { networkAPI, networkPath } from "@/lib/network/api";
 import { spawn } from "node:child_process";
 import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 export const runtime = "nodejs";
+export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 const reads = new Set([
   "overview",
@@ -98,6 +100,8 @@ export async function POST(
   req: NextRequest,
   context: { params: Promise<{ path: string[] }> },
 ) {
+  const { path: networkSegments } = await context.params;
+  if (networkPath(networkSegments)) return networkAPI(req, networkSegments);
   if (process.env.VERCEL === "1" || process.env.BD_ORACLE_PREVIEW === "1")
     return NextResponse.json(
       { error: "Research storage is not connected to this hosted preview." },
@@ -137,4 +141,13 @@ export async function POST(
       { status: 500 },
     );
   }
+}
+
+export async function GET(
+  req: NextRequest,
+  context: { params: Promise<{ path: string[] }> },
+) {
+  const { path } = await context.params;
+  if (networkPath(path)) return networkAPI(req, path);
+  return NextResponse.json({ error: "Unknown operation" }, { status: 404 });
 }
