@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   description:
     "A personal research instrument for understanding the economic machine behind crypto businesses.",
   robots: { index: false, follow: false },
+  icons: { icon: "/oracle.svg" },
 };
 export default function RootLayout({
   children,

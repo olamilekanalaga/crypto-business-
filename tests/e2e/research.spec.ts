@@ -480,7 +480,7 @@ test("synthetic asset discovery opens listings, resolves identity with evidence,
 test("desktop and mobile layouts remain usable without horizontal page overflow", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/research");
   await expect(
     page.getByRole("heading", { name: "See the business behind the asset." }),
   ).toBeVisible();

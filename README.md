@@ -6,7 +6,15 @@ The asset universe is a starting point. This is not a trading or investment tool
 
 **Extraction status:** the implementation attempted the official Binance and CoinGecko APIs in the build environment. Both were blocked by the environment proxy with `403 Forbidden` before an upstream response was received. There is no successful live extraction or fabricated replacement dataset. [Observed data-quality report](docs/QUALITY_REPORT.md) records the actual outcome. Run the collectors from a machine whose network permits those APIs to populate the real universe.
 
-[Business Anatomy preview](docs/images/anatomy-desktop.png) · [Desktop preview](docs/images/terminal-desktop.png) · [Mobile preview](docs/images/terminal-mobile.png)
+[Opportunity explorer](docs/images/opportunity-desktop.png) · [Mobile preview](docs/images/opportunity-mobile.png) · [Earlier Business Anatomy preview](docs/images/anatomy-desktop.png)
+
+## Animated opportunity explorer
+
+The homepage explains how complementary products can unlock a new use, change user behaviour and create measurable economic activity. Select a step in the Huma × Kamino example, play or pause the walkthrough, compare business needs, and explore a hypothetical share of attributable net revenue. The example combines supplied research notes with linked official documentation about the integration. Economic outcomes remain illustrative: there are no verified financial results or promised compensation. See [case provenance and hosting limits](docs/HOSTED_VISUAL_PREVIEW.md).
+
+The interface uses a dark theme, responsive layouts and reduced-motion support. Open `/research` for the existing local terminal; existing `/?view=…`, asset, business, Anatomy and Network routes remain available locally.
+
+On Vercel, the homepage is an interactive concept preview. It makes no research API requests, uploads no SQLite records and does not offer cloud saves. Private research routes show a clear explanation and API requests are disabled. Hosting the working research workspace later requires authenticated access, a supported backend runtime and durable storage. To test this boundary locally, set `BD_ORACLE_PREVIEW=1` when building and starting Next.js. No API keys are needed for the visual preview.
 
 ## Product vision update — extended in place
 
@@ -34,7 +42,7 @@ python -m terminal init
 npm run dev
 ```
 
-Open **http://127.0.0.1:3000**. Keep the server bound to loopback. For a production-mode local build:
+Open **http://127.0.0.1:3000** for the opportunity explorer or **http://127.0.0.1:3000/research** for your research workspace. Keep the server bound to loopback. For a production-mode local build:
 
 ```bash
 npm run build

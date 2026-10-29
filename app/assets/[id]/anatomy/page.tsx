@@ -1,3 +1,4 @@
+import ResearchGate from "@/components/ResearchGate";
 import Terminal from "@/components/Terminal";
 export default async function AssetAnatomyPage({
   params,
@@ -5,5 +6,9 @@ export default async function AssetAnatomyPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  return <Terminal entityId={id} dedicatedAnatomy />;
+  return (
+    <ResearchGate>
+      <Terminal entityId={id} dedicatedAnatomy />
+    </ResearchGate>
+  );
 }

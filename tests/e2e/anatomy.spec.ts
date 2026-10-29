@@ -122,7 +122,7 @@ test("Business Anatomy records evidence-aware connections and traverses business
   expect(businessNode).toBeTruthy();
   expect(initial.edges).toEqual([]); // A business record does not generate dependencies.
 
-  await page.goto("/");
+  await page.goto("/research");
   await page
     .getByRole("button", { name: "Business Anatomy", exact: true })
     .click();

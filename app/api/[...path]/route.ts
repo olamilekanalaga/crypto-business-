@@ -98,6 +98,11 @@ export async function POST(
   req: NextRequest,
   context: { params: Promise<{ path: string[] }> },
 ) {
+  if (process.env.VERCEL === "1" || process.env.BD_ORACLE_PREVIEW === "1")
+    return NextResponse.json(
+      { error: "Research storage is not connected to this hosted preview." },
+      { status: 403 },
+    );
   if (!localRequest(req))
     return NextResponse.json(
       { error: "This terminal accepts same-origin local requests only." },
