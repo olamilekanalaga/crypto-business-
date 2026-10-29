@@ -277,3 +277,118 @@
     font-size: 9px;
   }
 }
+.filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.scopeNote {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 18px 0;
+  line-height: 1.8;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 9px;
+}
+.tags small {
+  background: #20342c;
+  color: #b5e5ca;
+  border: 1px solid #385044;
+  border-radius: 4px;
+  padding: 4px 7px;
+  font-size: 10px;
+}
+.reviewLabel {
+  display: block;
+  color: #b9ad82;
+  font-size: 10px;
+  margin-top: 8px;
+}
+.classification {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 24px 0;
+  margin-bottom: 24px;
+}
+.classification p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 12px 0;
+}
+.classification label {
+  margin: 14px 0;
+}
+.classification fieldset {
+  margin: 20px 0;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  min-width: 0;
+}
+.classification legend {
+  font-size: 12px;
+  color: var(--muted);
+}
+.categoryChoices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+}
+.categoryChoices label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  min-height: 38px;
+  font-size: 12px;
+}
+.categoryChoices input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--green);
+  padding: 0;
+  flex-shrink: 0;
+}
+.classificationMeta a {
+  color: var(--green);
+  text-decoration: underline;
+}
+.classification .actions {
+  margin-bottom: 0;
+  gap: 8px;
+}
+.list > button > div {
+  min-width: 0;
+}
+.list > button > span {
+  min-width: 85px;
+}
+@media (max-width: 800px) {
+  .filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .categoryChoices {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 500px) {
+  .filters {
+    grid-template-columns: 1fr;
+  }
+  .categoryChoices label {
+    min-height: 44px;
+  }
+  .list > button {
+    align-items: flex-start;
+  }
+  .classification .actions {
+    flex-direction: column;
+  }
+  .classification .actions button {
+    width: 100%;
+    white-space: normal;
+  }
+}

@@ -12,6 +12,12 @@ The asset universe is a starting point. This is not a trading or investment tool
 
 ### Browser-only Binance workspace
 
+Discovery now defaults to **USDC-only** quote pairs. Quote, availability, product category, review status and search filters intersect at the pair level. An active USDT pair never makes an inactive USDC pair pass the active-USDC filter. Full raw snapshots and every quote pair remain in your backups; counters identify the current filtered scope.
+
+Product classification supports multiple tags: Yield, Staking, Meme, Blockchain, Infrastructure, RWA, NFT, Lending, DEX, Gaming, Payments, Stablecoin, Oracle, Data, AI, DePIN, Wallet, Privacy, Interoperability and Other. Eleven source-linked ticker candidates supply research starting points, explicitly marked **Needs review**. They do not verify project identities or describe token payouts. Everything else remains **Unclassified** until researched. Save a project/product name, tags, explanation and source URL; marking a classification reviewed requires those fields. You can also save an explicitly unclassified override to suppress a candidate.
+
+Saved classifications persist in IndexedDB and JSON backups alongside notes and raw history. Old v1 backups without classifications remain supported. Conflicting classifications on the same asset stop a backup merge without changing the workspace; export both copies and reconcile the conflict first. Bundled unsaved suggestions are part of the application, not personalized research records in a backup.
+
 Open `/discover` on the Vercel site or locally. **Fetch Binance Spot** calls the official public endpoint directly from your browser without a key, credentials, Python server or hosted database. Successful responses are validated and saved with their original JSON in IndexedDB. Browse deduplicated Binance base assets, all associated pairs, active/inactive states, and listings absent from the latest snapshot. Each asset can have an editable, explicitly unverified research note.
 
 **Download backup** saves every retained snapshot and saved note as a portable JSON file. **Import JSON** accepts either this backup (merging without deleting existing snapshots/notes) or an original Binance `exchangeInfo` response. Imported raw responses get an import date, not a claimed extraction date. Invalid snapshots and duplicate pair identifiers are rejected while existing data is retained. **Download original JSON** preserves the latest response text unchanged.

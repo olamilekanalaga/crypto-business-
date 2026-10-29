@@ -15,6 +15,12 @@ import {
   type Workspace,
 } from "@/lib/browser-discovery";
 import styles from "./BrowserDiscovery.module.css";
+import ProductClassification from "./ProductClassification";
+import {
+  CATEGORIES,
+  productFor,
+  type Classification,
+} from "@/lib/product-classification";
 
 export default function BrowserDiscovery() {
   const [workspace, setWorkspace] = useState<Workspace>(emptyWorkspace);
@@ -27,6 +33,10 @@ export default function BrowserDiscovery() {
     [page, setPage] = useState(0);
   const [selected, setSelected] = useState<string | null>(null),
     [draft, setDraft] = useState("");
+  const [quote, setQuote] = useState("USDC");
+  const [category, setCategory] = useState("all");
+  const [review, setReview] = useState("all");
+  const [classificationDirty, setClassificationDirty] = useState(false);
   const file = useRef<HTMLInputElement>(null);
   const detailRef = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -47,7 +57,8 @@ export default function BrowserDiscovery() {
   }, []);
   const noteFor = (code: string) =>
     Object.hasOwn(workspace.notes, code) ? workspace.notes[code] : "";
-  const dirty = selected !== null && draft !== noteFor(selected);
+  const dirty =
+    classificationDirty || (selected !== null && draft !== noteFor(selected));
   useEffect(() => {
     if (!dirty) return;
     const warn = (event: BeforeUnloadEvent) => {
@@ -80,22 +91,75 @@ export default function BrowserDiscovery() {
       result.set(p.baseAsset, [...(result.get(p.baseAsset) || []), p]);
     return [...result.entries()].sort(([a], [b]) => a.localeCompare(b));
   }, [pairs]);
-  const visible = groups.filter(
-    ([asset, items]) =>
-      (asset.toLowerCase().includes(search.toLowerCase()) ||
-        items.some((p) =>
-          p.symbol.toLowerCase().includes(search.toLowerCase()),
-        )) &&
-      (filter === "all" ||
-        items.some((p) =>
-          filter === "active"
-            ? p.available && p.spot && p.status === "TRADING"
-            : !p.available || !p.spot || p.status !== "TRADING",
-        )),
-  );
+  const eligibleGroups = groups
+    .map(
+      ([asset, items]) =>
+        [
+          asset,
+          items.filter(
+            (p) =>
+              (quote === "all" || p.quoteAsset === quote) &&
+              (filter === "all" ||
+                (filter === "active"
+                  ? p.available && p.spot && p.status === "TRADING"
+                  : !p.available || !p.spot || p.status !== "TRADING")),
+          ),
+        ] as [string, Pair[]],
+    )
+    .filter(
+      ([asset, items]) =>
+        items.length &&
+        (asset.toLowerCase().includes(search.toLowerCase()) ||
+          items.some((p) =>
+            p.symbol.toLowerCase().includes(search.toLowerCase()),
+          )),
+    );
+  const visible = eligibleGroups.filter(([asset]) => {
+    const c = productFor(asset, workspace.classifications);
+    return (
+      (category === "all" ||
+        (category === "unclassified"
+          ? !c?.categories.length
+          : c?.categories.some((v) => v === category))) &&
+      (review === "all" ||
+        (review === "reviewed"
+          ? c?.status === "reviewed"
+          : c?.status !== "reviewed"))
+    );
+  });
+  const matchingPairs = visible
+    .flatMap(([, items]) => items)
+    .filter((p) => p.available);
+  const quoteOptions = [...new Set(pairs.map((p) => p.quoteAsset))].sort();
+  function changeFilter(change: () => void) {
+    change();
+    setPage(0);
+    setSelected(null);
+  }
+  const selectedClassification = selected
+    ? productFor(selected, workspace.classifications)
+    : undefined;
+  async function saveClassification(record: Classification) {
+    if (!selected) return;
+    setBusy(true);
+    setError("");
+    try {
+      await persist(
+        {
+          ...workspace,
+          classifications: { ...workspace.classifications, [selected]: record },
+        },
+        "Product classification saved.",
+      );
+      setPage(0);
+    } finally {
+      setBusy(false);
+    }
+  }
   const currentPairs = pairs.filter((p) => p.available);
-  const currentBases = new Set(currentPairs.map((p) => p.baseAsset)).size;
-  const selectedPairs = groups.find(([code]) => code === selected)?.[1] || [];
+  const currentBases = new Set(matchingPairs.map((p) => p.baseAsset)).size;
+  const selectedPairs =
+    eligibleGroups.find(([code]) => code === selected)?.[1] || [];
   async function persist(next: Workspace, message: string) {
     setWorkspace(next);
     try {
@@ -173,7 +237,10 @@ export default function BrowserDiscovery() {
           merged,
           "Backup merged; existing snapshots and notes retained.",
         );
-        if (selected) setDraft(Object.hasOwn(merged.notes, selected) ? merged.notes[selected] : "");
+        if (selected)
+          setDraft(
+            Object.hasOwn(merged.notes, selected) ? merged.notes[selected] : "",
+          );
         setPage(0);
       } else await addRaw(text, "file");
     } catch (e) {
@@ -186,9 +253,9 @@ export default function BrowserDiscovery() {
   function openAsset(code: string) {
     if (
       selected &&
-      draft !== noteFor(selected) &&
+      dirty &&
       !window.confirm(
-        "Leave this unsaved note? Choose Cancel to save it first.",
+        "Leave unsaved research or classification edits? Choose Cancel to save first.",
       )
     )
       return;
@@ -255,8 +322,8 @@ export default function BrowserDiscovery() {
       </div>
       {dirty && (
         <p role="status" className={styles.notice}>
-          Save your edited note before fetching, importing or downloading a
-          backup.
+          Save your research and category edits before fetching, importing or
+          downloading a backup.
         </p>
       )}
       <p className={styles.storage}>
@@ -276,22 +343,26 @@ export default function BrowserDiscovery() {
       )}
       <section className={styles.stats} aria-label="Snapshot data quality">
         <div>
-          <strong>{latest ? currentPairs.length.toLocaleString() : "—"}</strong>
-          <span>Pairs in latest snapshot</span>
+          <strong>
+            {latest ? matchingPairs.length.toLocaleString() : "—"}
+          </strong>
+          <span>
+            {quote === "all" ? "All quotes" : quote} pairs · matching filters
+          </span>
         </div>
         <div>
           <strong>{latest ? currentBases.toLocaleString() : "—"}</strong>
-          <span>Unique base assets</span>
+          <span>Current assets · matching filters</span>
         </div>
         <div>
           <strong>
             {latest
-              ? currentPairs
+              ? matchingPairs
                   .filter((p) => p.spot && p.status === "TRADING")
                   .length.toLocaleString()
               : "—"}
           </strong>
-          <span>Active Spot pairs</span>
+          <span>Active pairs · matching filters</span>
         </div>
         <div>
           <strong>{workspace.snapshots.length}</strong>
@@ -332,7 +403,8 @@ export default function BrowserDiscovery() {
             {latest.method === "fetch"
               ? "Latest snapshot fetched"
               : "Latest snapshot imported"}
-            : {new Date(latest.obtainedAt).toLocaleString()} · Binance
+            : {new Date(latest.obtainedAt).toLocaleString()} · Binance ·{" "}
+            {currentPairs.length.toLocaleString()} full snapshot pairs retained
           </span>
           <button
             className="text-button"
@@ -361,23 +433,83 @@ export default function BrowserDiscovery() {
         <>
           <div className={styles.filters}>
             <label>
+              Quote currency
+              <select
+                aria-label="Quote currency"
+                disabled={dirty || busy}
+                value={quote}
+                onChange={(e) => changeFilter(() => setQuote(e.target.value))}
+              >
+                <option value="USDC">USDC only</option>
+                <option value="all">All quote currencies</option>
+                {quoteOptions
+                  .filter((v) => v !== "USDC")
+                  .map((v) => (
+                    <option key={v} value={v}>
+                      {v}
+                    </option>
+                  ))}
+              </select>
+            </label>
+            <label>
+              Product category
+              <select
+                disabled={dirty || busy}
+                value={category}
+                onChange={(e) =>
+                  changeFilter(() => setCategory(e.target.value))
+                }
+              >
+                <option value="all">All product types</option>
+                <option value="unclassified">Unclassified</option>
+                {CATEGORIES.map((c) => (
+                  <option key={c} value={c}>
+                    {c} (
+                    {
+                      eligibleGroups.filter(([a]) =>
+                        productFor(
+                          a,
+                          workspace.classifications,
+                        )?.categories.includes(c),
+                      ).length
+                    }
+                    )
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Review status
+              <select
+                disabled={dirty || busy}
+                value={review}
+                onChange={(e) => changeFilter(() => setReview(e.target.value))}
+              >
+                <option value="all">Suggestions + reviewed</option>
+                <option value="reviewed">Reviewed by me only</option>
+                <option value="needs_review">
+                  Needs review / unclassified
+                </option>
+              </select>
+            </label>
+            <label>
               Search assets or pairs
               <input
                 value={search}
-                placeholder="BTC, ETH, BTCUSDT…"
+                placeholder="BTC, ETH, BTCUSDC…"
+                disabled={dirty || busy}
                 onChange={(e) => {
-                  setSearch(e.target.value);
-                  setPage(0);
+                  changeFilter(() => setSearch(e.target.value));
                 }}
               />
             </label>
             <label>
               Pair availability
               <select
+                disabled={dirty || busy}
                 value={filter}
                 onChange={(e) => {
-                  setFilter(e.target.value);
-                  setPage(0);
+                  changeFilter(() => setFilter(e.target.value));
                 }}
               >
                 <option value="all">All observed assets</option>
@@ -388,6 +520,15 @@ export default function BrowserDiscovery() {
               </select>
             </label>
           </div>
+          <p className={styles.scopeNote}>
+            Showing{" "}
+            {quote === "all"
+              ? "all quote currencies"
+              : `${quote}-quoted pairs only`}
+            . Product tags may overlap. Suggestions are ticker candidates, not
+            verified identities; unknown projects stay Unclassified. Filters
+            never delete your original snapshot.
+          </p>
           <div className={styles.columns}>
             <section className={styles.list} aria-label="Discovered assets">
               <p>{visible.length} assets · select one to investigate</p>
@@ -397,7 +538,25 @@ export default function BrowserDiscovery() {
                   className={selected === code ? styles.selected : ""}
                   onClick={() => openAsset(code)}
                 >
-                  <strong>{code}</strong>
+                  <div>
+                    <strong>{code}</strong>
+                    <div className={styles.tags}>
+                      {(productFor(code, workspace.classifications)?.categories
+                        .length
+                        ? productFor(code, workspace.classifications)!
+                            .categories
+                        : ["Unclassified"]
+                      ).map((c) => (
+                        <small key={c}>{c}</small>
+                      ))}
+                    </div>
+                    <small className={styles.reviewLabel}>
+                      {productFor(code, workspace.classifications)?.status ===
+                      "reviewed"
+                        ? "Reviewed by you"
+                        : "Needs review"}
+                    </small>
+                  </div>
                   <span>
                     {items.filter((p) => p.available).length} current pairs ·
                     Identity unresolved
@@ -441,6 +600,13 @@ export default function BrowserDiscovery() {
                     A token does not automatically identify an organisation.
                     Record what you find and the sources you want to check.
                   </p>
+                  <p>
+                    {selectedPairs.length} pairs in the selected
+                    quote/availability scope.{" "}
+                    {groups.find(([code]) => code === selected)?.[1].length ||
+                      0}{" "}
+                    total pairs retained.
+                  </p>
                   <div className={styles.pairs}>
                     {selectedPairs.map((p) => (
                       <article key={p.symbol}>
@@ -458,6 +624,17 @@ export default function BrowserDiscovery() {
                       </article>
                     ))}
                   </div>
+                  <ProductClassification
+                    key={selected + JSON.stringify(selectedClassification)}
+                    value={selectedClassification}
+                    saved={Object.hasOwn(
+                      workspace.classifications || {},
+                      selected,
+                    )}
+                    busy={busy}
+                    onSave={saveClassification}
+                    onDirty={setClassificationDirty}
+                  />
                   <label>
                     Research note · unverified
                     <textarea

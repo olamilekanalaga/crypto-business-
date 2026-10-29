@@ -1,3 +1,7 @@
+import {
+  validateClassification,
+  type Classification,
+} from "./product-classification";
 export const BINANCE_URL =
   "https://data-api.binance.vision/api/v3/exchangeInfo";
 export type Pair = {
@@ -18,11 +22,13 @@ export type Workspace = {
   format: "bd-oracle-browser-v1";
   snapshots: Snapshot[];
   notes: Record<string, string>;
+  classifications?: Record<string, Classification>;
 };
 export const emptyWorkspace = (): Workspace => ({
   format: "bd-oracle-browser-v1",
   snapshots: [],
   notes: {},
+  classifications: {},
 });
 
 export function parsePairs(raw: string): Pair[] {
@@ -99,7 +105,18 @@ export function importWorkspace(text: string): Workspace | null {
       throw new Error("Invalid research note.");
     notes[key] = value;
   }
-  return { format: "bd-oracle-browser-v1", snapshots, notes };
+  const classifications: Record<string, Classification> = Object.create(null);
+  if (input.classifications !== undefined) {
+    if (
+      !input.classifications ||
+      typeof input.classifications !== "object" ||
+      Array.isArray(input.classifications)
+    )
+      throw new Error("Invalid classifications backup.");
+    for (const [asset, record] of Object.entries(input.classifications))
+      classifications[asset] = validateClassification(record);
+  }
+  return { format: "bd-oracle-browser-v1", snapshots, notes, classifications };
 }
 
 export function mergeWorkspace(
@@ -131,8 +148,23 @@ export function mergeWorkspace(
         "Merged note exceeds 20,000 characters. Shorten it before merging; existing data is unchanged.",
       );
   }
+  const classifications: Record<string, Classification> = Object.assign(
+    Object.create(null),
+    current.classifications || {},
+  );
+  for (const [asset, record] of Object.entries(
+    incoming.classifications || {},
+  )) {
+    const existing = classifications[asset];
+    if (existing && JSON.stringify(existing) !== JSON.stringify(record))
+      throw new Error(
+        `Classification conflict for ${asset}. Import cancelled; export both workspaces and reconcile the classification before merging.`,
+      );
+    classifications[asset] = record;
+  }
   return {
     format: "bd-oracle-browser-v1",
+    classifications,
     snapshots: [...snapshots.values()].sort(
       (a, b) => Date.parse(a.obtainedAt) - Date.parse(b.obtainedAt),
     ),

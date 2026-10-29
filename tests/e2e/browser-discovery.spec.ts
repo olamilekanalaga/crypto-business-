@@ -27,11 +27,14 @@ test("browser collection keeps snapshots, deduplicates assets and exports portab
   await expect(page.getByRole("status")).toContainText(
     "Binance refresh complete",
   );
+  await page.getByLabel("Quote currency", { exact: true }).selectOption("all");
   const assets = page.getByRole("region", { name: "Discovered assets" });
   await expect(
-    assets.getByRole("button", { name: /BTC 2 current pairs/ }),
+    assets.getByRole("button", { name: /BTC[\s\S]*2 current pairs/ }),
   ).toBeVisible();
-  await assets.getByRole("button", { name: /BTC 2 current pairs/ }).click();
+  await assets
+    .getByRole("button", { name: /BTC[\s\S]*2 current pairs/ })
+    .click();
   await page
     .getByRole("textbox", { name: "Research note · unverified" })
     .fill("Investigate payment demand. Source: https://example.com/research");
@@ -51,7 +54,10 @@ test("browser collection keeps snapshots, deduplicates assets and exports portab
     page.getByText("Unavailable in latest snapshot", { exact: true }),
   ).toBeVisible();
   await page.reload();
-  await assets.getByRole("button", { name: /BTC 1 current pairs/ }).click();
+  await page.getByLabel("Quote currency", { exact: true }).selectOption("all");
+  await assets
+    .getByRole("button", { name: /BTC[\s\S]*1 current pairs/ })
+    .click();
   await expect(
     page.getByRole("textbox", { name: "Research note · unverified" }),
   ).toHaveValue(/Investigate payment demand/);
@@ -70,15 +76,30 @@ test("browser collection keeps snapshots, deduplicates assets and exports portab
     .getByLabel("Import Binance JSON or workspace backup")
     .setInputFiles(file!);
   await expect(phone.getByRole("status")).toContainText("Backup merged");
-  await phone.getByRole("button", { name: /BTC 1 current pairs/ }).click();
+  await phone.getByLabel("Quote currency", { exact: true }).selectOption("all");
+  await phone
+    .getByRole("button", { name: /BTC[\s\S]*1 current pairs/ })
+    .click();
   await expect(
     phone.getByRole("textbox", { name: "Research note · unverified" }),
   ).toHaveValue(/Investigate payment demand/);
   const incoming = JSON.parse(readFileSync(file!, "utf8"));
   incoming.notes.BTC = "Additional imported evidence";
-  await phone.getByLabel("Import Binance JSON or workspace backup").setInputFiles({name:"merged.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(incoming))});
-  await expect(phone.getByRole("textbox", { name: "Research note · unverified" })).toHaveValue(/Investigate payment demand[\s\S]*Additional imported evidence/);
-  await expect(phone.getByRole("button",{name:"Download backup",exact:true})).toBeEnabled();
+  await phone
+    .getByLabel("Import Binance JSON or workspace backup")
+    .setInputFiles({
+      name: "merged.json",
+      mimeType: "application/json",
+      buffer: Buffer.from(JSON.stringify(incoming)),
+    });
+  await expect(
+    phone.getByRole("textbox", { name: "Research note · unverified" }),
+  ).toHaveValue(
+    /Investigate payment demand[\s\S]*Additional imported evidence/,
+  );
+  await expect(
+    phone.getByRole("button", { name: "Download backup", exact: true }),
+  ).toBeEnabled();
   expect(
     await phone.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -101,6 +122,7 @@ test("blocked fetch and malformed imports preserve browser data with raw-file fa
   await expect(page.getByRole("status")).toContainText(
     "original extraction time is unknown",
   );
+  await page.getByLabel("Quote currency", { exact: true }).selectOption("all");
   await page.route(endpoint, (r) => r.abort("failed"));
   await page
     .getByRole("button", { name: "Fetch Binance Spot", exact: true })
@@ -109,7 +131,7 @@ test("blocked fetch and malformed imports preserve browser data with raw-file fa
     "may be CORS",
   );
   await expect(
-    page.getByRole("button", { name: /ETH 1 current pairs/ }),
+    page.getByRole("button", { name: /ETH[\s\S]*1 current pairs/ }),
   ).toBeVisible();
   await page
     .getByLabel("Import Binance JSON or workspace backup")
@@ -122,10 +144,11 @@ test("blocked fetch and malformed imports preserve browser data with raw-file fa
     "Import failed",
   );
   await expect(
-    page.getByRole("button", { name: /ETH 1 current pairs/ }),
+    page.getByRole("button", { name: /ETH[\s\S]*1 current pairs/ }),
   ).toBeVisible();
   await page.reload();
+  await page.getByLabel("Quote currency", { exact: true }).selectOption("all");
   await expect(
-    page.getByRole("button", { name: /ETH 1 current pairs/ }),
+    page.getByRole("button", { name: /ETH[\s\S]*1 current pairs/ }),
   ).toBeVisible();
 });
