@@ -1,0 +1,1918 @@
+{
+  "0XBTC": {
+    "name": "0xBitcoin",
+    "logo": "/token-logos/0xbtc.png"
+  },
+  "1INCH": {
+    "name": "1inch Network",
+    "logo": "/token-logos/1inch.png"
+  },
+  "2GIVE": {
+    "name": "2Give",
+    "logo": "/token-logos/2give.png"
+  },
+  "AAVE": {
+    "name": "AAVE",
+    "logo": "/token-logos/aave.png"
+  },
+  "ABT": {
+    "name": "Arcblock",
+    "logo": "/token-logos/abt.png"
+  },
+  "ACT": {
+    "name": "Achain",
+    "logo": "/token-logos/act.png"
+  },
+  "ACTN": {
+    "name": "Action Coin",
+    "logo": "/token-logos/actn.png"
+  },
+  "ADA": {
+    "name": "Cardano",
+    "logo": "/token-logos/ada.png"
+  },
+  "ADD": {
+    "name": "ADD Token",
+    "logo": "/token-logos/add.png"
+  },
+  "ADX": {
+    "name": "AdEx",
+    "logo": "/token-logos/adx.png"
+  },
+  "AE": {
+    "name": "Aeternity",
+    "logo": "/token-logos/ae.png"
+  },
+  "AEON": {
+    "name": "Aeon",
+    "logo": "/token-logos/aeon.png"
+  },
+  "AEUR": {
+    "name": "Augmint Euro Token",
+    "logo": "/token-logos/aeur.png"
+  },
+  "AGI": {
+    "name": "SingularityNET",
+    "logo": "/token-logos/agi.png"
+  },
+  "AGRS": {
+    "name": "Agoras Tauchain",
+    "logo": "/token-logos/agrs.png"
+  },
+  "AION": {
+    "name": "Aion",
+    "logo": "/token-logos/aion.png"
+  },
+  "ALGO": {
+    "name": "Algorand",
+    "logo": "/token-logos/algo.png"
+  },
+  "AMB": {
+    "name": "Ambrosus",
+    "logo": "/token-logos/amb.png"
+  },
+  "AMP": {
+    "name": "HyperSpace (Synereo)",
+    "logo": "/token-logos/amp.png"
+  },
+  "AMPL": {
+    "name": "Ampleforth",
+    "logo": "/token-logos/ampl.png"
+  },
+  "ANKR": {
+    "name": "Ankr Network",
+    "logo": "/token-logos/ankr.png"
+  },
+  "ANT": {
+    "name": "Aragon",
+    "logo": "/token-logos/ant.png"
+  },
+  "APE": {
+    "name": "ApeCoin",
+    "logo": "/token-logos/ape.png"
+  },
+  "APPC": {
+    "name": "AppCoins",
+    "logo": "/token-logos/appc.png"
+  },
+  "ARDR": {
+    "name": "Ardor",
+    "logo": "/token-logos/ardr.png"
+  },
+  "ARG": {
+    "name": "Argentum",
+    "logo": "/token-logos/arg.png"
+  },
+  "ARK": {
+    "name": "Ark",
+    "logo": "/token-logos/ark.png"
+  },
+  "ARN": {
+    "name": "Aeron",
+    "logo": "/token-logos/arn.png"
+  },
+  "ARNX": {
+    "name": "Aeron",
+    "logo": "/token-logos/arnx.png"
+  },
+  "ARY": {
+    "name": "Block Array",
+    "logo": "/token-logos/ary.png"
+  },
+  "AST": {
+    "name": "AirSwap",
+    "logo": "/token-logos/ast.png"
+  },
+  "ATLAS": {
+    "name": "Star Atlas",
+    "logo": "/token-logos/atlas.png"
+  },
+  "ATM": {
+    "name": "ATMChain",
+    "logo": "/token-logos/atm.png"
+  },
+  "ATOM": {
+    "name": "Cosmos",
+    "logo": "/token-logos/atom.png"
+  },
+  "AUDR": {
+    "name": "AUDRamp",
+    "logo": "/token-logos/audr.png"
+  },
+  "AURY": {
+    "name": "Aurory",
+    "logo": "/token-logos/aury.png"
+  },
+  "AUTO": {
+    "name": "Cube",
+    "logo": "/token-logos/auto.png"
+  },
+  "AVAX": {
+    "name": "Avalanche",
+    "logo": "/token-logos/avax.png"
+  },
+  "AYWA": {
+    "name": "Aywa",
+    "logo": "/token-logos/aywa.png"
+  },
+  "BAB": {
+    "name": "Bitcoin Cash ABC",
+    "logo": "/token-logos/bab.png"
+  },
+  "BAL": {
+    "name": "Balancer",
+    "logo": "/token-logos/bal.png"
+  },
+  "BAND": {
+    "name": "Band Protocol",
+    "logo": "/token-logos/band.png"
+  },
+  "BAT": {
+    "name": "Basic Attention Token",
+    "logo": "/token-logos/bat.png"
+  },
+  "BAY": {
+    "name": "BitBay",
+    "logo": "/token-logos/bay.png"
+  },
+  "BCBC": {
+    "name": "BCBC",
+    "logo": "/token-logos/bcbc.png"
+  },
+  "BCC": {
+    "name": "BCC",
+    "logo": "/token-logos/bcc.png"
+  },
+  "BCD": {
+    "name": "Bitcoin Diamond",
+    "logo": "/token-logos/bcd.png"
+  },
+  "BCH": {
+    "name": "Bitcoin Cash",
+    "logo": "/token-logos/bch.png"
+  },
+  "BCIO": {
+    "name": "Blockchain.io",
+    "logo": "/token-logos/bcio.png"
+  },
+  "BCN": {
+    "name": "Bytecoin",
+    "logo": "/token-logos/bcn.png"
+  },
+  "BCO": {
+    "name": "BananaCoin",
+    "logo": "/token-logos/bco.png"
+  },
+  "BCPT": {
+    "name": "BlockMason Credit Protocol",
+    "logo": "/token-logos/bcpt.png"
+  },
+  "BDL": {
+    "name": "Bitdeal",
+    "logo": "/token-logos/bdl.png"
+  },
+  "BEAM": {
+    "name": "Beam",
+    "logo": "/token-logos/beam.png"
+  },
+  "BELA": {
+    "name": "Belacoin",
+    "logo": "/token-logos/bela.png"
+  },
+  "BIX": {
+    "name": "Bibox Token",
+    "logo": "/token-logos/bix.png"
+  },
+  "BLCN": {
+    "name": "BLCN",
+    "logo": "/token-logos/blcn.png"
+  },
+  "BLK": {
+    "name": "BlackCoin",
+    "logo": "/token-logos/blk.png"
+  },
+  "BLOCK": {
+    "name": "Blocknet",
+    "logo": "/token-logos/block.png"
+  },
+  "BLZ": {
+    "name": "Blazecoin",
+    "logo": "/token-logos/blz.png"
+  },
+  "BNB": {
+    "name": "Binance Coin",
+    "logo": "/token-logos/bnb.png"
+  },
+  "BNT": {
+    "name": "Bancor Network Token",
+    "logo": "/token-logos/bnt.png"
+  },
+  "BNTY": {
+    "name": "Bounty0x",
+    "logo": "/token-logos/bnty.png"
+  },
+  "BOOTY": {
+    "name": "Booty",
+    "logo": "/token-logos/booty.png"
+  },
+  "BOS": {
+    "name": "BOScoin",
+    "logo": "/token-logos/bos.png"
+  },
+  "BPT": {
+    "name": "Blockport",
+    "logo": "/token-logos/bpt.png"
+  },
+  "BQ": {
+    "name": "bitqy",
+    "logo": "/token-logos/bq.png"
+  },
+  "BRD": {
+    "name": "Bread",
+    "logo": "/token-logos/brd.png"
+  },
+  "BSD": {
+    "name": "BitSend",
+    "logo": "/token-logos/bsd.png"
+  },
+  "BSV": {
+    "name": "BitcoinSV",
+    "logo": "/token-logos/bsv.png"
+  },
+  "BTC": {
+    "name": "Bitcoin",
+    "logo": "/token-logos/btc.png"
+  },
+  "BTCD": {
+    "name": "BitcoinDark",
+    "logo": "/token-logos/btcd.png"
+  },
+  "BTCH": {
+    "name": "Bitcoin Hush",
+    "logo": "/token-logos/btch.png"
+  },
+  "BTCP": {
+    "name": "Bitcoin Private",
+    "logo": "/token-logos/btcp.png"
+  },
+  "BTCZ": {
+    "name": "BitcoinZ",
+    "logo": "/token-logos/btcz.png"
+  },
+  "BTDX": {
+    "name": "Bitcloud",
+    "logo": "/token-logos/btdx.png"
+  },
+  "BTG": {
+    "name": "Bitcoin Gold",
+    "logo": "/token-logos/btg.png"
+  },
+  "BTM": {
+    "name": "Bytom",
+    "logo": "/token-logos/btm.png"
+  },
+  "BTS": {
+    "name": "BitShares",
+    "logo": "/token-logos/bts.png"
+  },
+  "BTT": {
+    "name": "BitTorrent",
+    "logo": "/token-logos/btt.png"
+  },
+  "BTX": {
+    "name": "Bitcore",
+    "logo": "/token-logos/btx.png"
+  },
+  "BURST": {
+    "name": "Burst",
+    "logo": "/token-logos/burst.png"
+  },
+  "BZE": {
+    "name": "BZEdge",
+    "logo": "/token-logos/bze.png"
+  },
+  "CALL": {
+    "name": "Capital",
+    "logo": "/token-logos/call.png"
+  },
+  "CC": {
+    "name": "CoinCollect",
+    "logo": "/token-logos/cc.png"
+  },
+  "CDN": {
+    "name": "Canada eCoin",
+    "logo": "/token-logos/cdn.png"
+  },
+  "CDT": {
+    "name": "Blox",
+    "logo": "/token-logos/cdt.png"
+  },
+  "CHAIN": {
+    "name": "Chainmakers",
+    "logo": "/token-logos/chain.png"
+  },
+  "CHAT": {
+    "name": "ChatCoin",
+    "logo": "/token-logos/chat.png"
+  },
+  "CHIPS": {
+    "name": "CHIPS",
+    "logo": "/token-logos/chips.png"
+  },
+  "CHSB": {
+    "name": "SwissBorg",
+    "logo": "/token-logos/chsb.png"
+  },
+  "CHZ": {
+    "name": "Chiliz",
+    "logo": "/token-logos/chz.png"
+  },
+  "CIX": {
+    "name": "Cryptonetix",
+    "logo": "/token-logos/cix.png"
+  },
+  "CLAM": {
+    "name": "Clams",
+    "logo": "/token-logos/clam.png"
+  },
+  "CLOAK": {
+    "name": "Cloakcoin",
+    "logo": "/token-logos/cloak.png"
+  },
+  "CMM": {
+    "name": "Commercium",
+    "logo": "/token-logos/cmm.png"
+  },
+  "CMT": {
+    "name": "Comet",
+    "logo": "/token-logos/cmt.png"
+  },
+  "CND": {
+    "name": "Cindicator",
+    "logo": "/token-logos/cnd.png"
+  },
+  "CNX": {
+    "name": "Cryptonex",
+    "logo": "/token-logos/cnx.png"
+  },
+  "CNY": {
+    "name": "CNY",
+    "logo": "/token-logos/cny.png"
+  },
+  "COB": {
+    "name": "Cobinhood",
+    "logo": "/token-logos/cob.png"
+  },
+  "COLX": {
+    "name": "ColossusXT",
+    "logo": "/token-logos/colx.png"
+  },
+  "COMP": {
+    "name": "Compound",
+    "logo": "/token-logos/comp.png"
+  },
+  "COQUI": {
+    "name": "COQUI Cash",
+    "logo": "/token-logos/coqui.png"
+  },
+  "CRED": {
+    "name": "Verify",
+    "logo": "/token-logos/cred.png"
+  },
+  "CRPT": {
+    "name": "Crypterium",
+    "logo": "/token-logos/crpt.png"
+  },
+  "CRV": {
+    "name": "Curve DAO Token",
+    "logo": "/token-logos/crv.png"
+  },
+  "CRW": {
+    "name": "Crown",
+    "logo": "/token-logos/crw.png"
+  },
+  "CS": {
+    "name": "CREDITS",
+    "logo": "/token-logos/cs.png"
+  },
+  "CTR": {
+    "name": "Centra",
+    "logo": "/token-logos/ctr.png"
+  },
+  "CTXC": {
+    "name": "Cortex",
+    "logo": "/token-logos/ctxc.png"
+  },
+  "CVC": {
+    "name": "Civic",
+    "logo": "/token-logos/cvc.png"
+  },
+  "D": {
+    "name": "Denarius",
+    "logo": "/token-logos/d.png"
+  },
+  "DAI": {
+    "name": "Dai",
+    "logo": "/token-logos/dai.png"
+  },
+  "DASH": {
+    "name": "Dash",
+    "logo": "/token-logos/dash.png"
+  },
+  "DAT": {
+    "name": "Datum",
+    "logo": "/token-logos/dat.png"
+  },
+  "DATA": {
+    "name": "Streamr DATAcoin",
+    "logo": "/token-logos/data.png"
+  },
+  "DBC": {
+    "name": "DeepBrain Chain",
+    "logo": "/token-logos/dbc.png"
+  },
+  "DCN": {
+    "name": "Dentacoin",
+    "logo": "/token-logos/dcn.png"
+  },
+  "DCR": {
+    "name": "Decred",
+    "logo": "/token-logos/dcr.png"
+  },
+  "DEEZ": {
+    "name": "DeezNuts",
+    "logo": "/token-logos/deez.png"
+  },
+  "DENT": {
+    "name": "Dent",
+    "logo": "/token-logos/dent.png"
+  },
+  "DEW": {
+    "name": "DEW",
+    "logo": "/token-logos/dew.png"
+  },
+  "DGB": {
+    "name": "DigiByte",
+    "logo": "/token-logos/dgb.png"
+  },
+  "DGD": {
+    "name": "DigixDAO",
+    "logo": "/token-logos/dgd.png"
+  },
+  "DLT": {
+    "name": "Agrello",
+    "logo": "/token-logos/dlt.png"
+  },
+  "DNT": {
+    "name": "district0x",
+    "logo": "/token-logos/dnt.png"
+  },
+  "DOCK": {
+    "name": "Dock",
+    "logo": "/token-logos/dock.png"
+  },
+  "DOGE": {
+    "name": "Dogecoin",
+    "logo": "/token-logos/doge.png"
+  },
+  "DOT": {
+    "name": "Polkadot",
+    "logo": "/token-logos/dot.png"
+  },
+  "DRGN": {
+    "name": "Dragonchain",
+    "logo": "/token-logos/drgn.png"
+  },
+  "DROP": {
+    "name": "Dropil",
+    "logo": "/token-logos/drop.png"
+  },
+  "DTA": {
+    "name": "DATA",
+    "logo": "/token-logos/dta.png"
+  },
+  "DTH": {
+    "name": "Dether",
+    "logo": "/token-logos/dth.png"
+  },
+  "DTR": {
+    "name": "Dynamic Trading Rights",
+    "logo": "/token-logos/dtr.png"
+  },
+  "EBST": {
+    "name": "eBoost",
+    "logo": "/token-logos/ebst.png"
+  },
+  "ECA": {
+    "name": "Electra",
+    "logo": "/token-logos/eca.png"
+  },
+  "EDG": {
+    "name": "Edgeless",
+    "logo": "/token-logos/edg.png"
+  },
+  "EDO": {
+    "name": "Eidoo",
+    "logo": "/token-logos/edo.png"
+  },
+  "EDOGE": {
+    "name": "EtherDoge",
+    "logo": "/token-logos/edoge.png"
+  },
+  "ELA": {
+    "name": "Elastos",
+    "logo": "/token-logos/ela.png"
+  },
+  "ELEC": {
+    "name": "Electrify.Asia",
+    "logo": "/token-logos/elec.png"
+  },
+  "ELF": {
+    "name": "aelf",
+    "logo": "/token-logos/elf.png"
+  },
+  "ELIX": {
+    "name": "Elixir",
+    "logo": "/token-logos/elix.png"
+  },
+  "ELLA": {
+    "name": "Ellaism",
+    "logo": "/token-logos/ella.png"
+  },
+  "EMB": {
+    "name": "Emblem",
+    "logo": "/token-logos/emb.png"
+  },
+  "EMC": {
+    "name": "EmerCoin",
+    "logo": "/token-logos/emc.png"
+  },
+  "EMC2": {
+    "name": "Einsteinium",
+    "logo": "/token-logos/emc2.png"
+  },
+  "ENG": {
+    "name": "Enigma",
+    "logo": "/token-logos/eng.png"
+  },
+  "ENJ": {
+    "name": "Enjin Coin",
+    "logo": "/token-logos/enj.png"
+  },
+  "ENTRP": {
+    "name": "Hut34 Entropy",
+    "logo": "/token-logos/entrp.png"
+  },
+  "EON": {
+    "name": "EOS Network",
+    "logo": "/token-logos/eon.png"
+  },
+  "EOP": {
+    "name": "EOP",
+    "logo": "/token-logos/eop.png"
+  },
+  "EOS": {
+    "name": "EOS",
+    "logo": "/token-logos/eos.png"
+  },
+  "EQUA": {
+    "name": "EQUA",
+    "logo": "/token-logos/equa.png"
+  },
+  "ETC": {
+    "name": "Ethereum Classic",
+    "logo": "/token-logos/etc.png"
+  },
+  "ETH": {
+    "name": "Ethereum",
+    "logo": "/token-logos/eth.png"
+  },
+  "ETHOS": {
+    "name": "Ethos",
+    "logo": "/token-logos/ethos.png"
+  },
+  "ETN": {
+    "name": "Electroneum",
+    "logo": "/token-logos/etn.png"
+  },
+  "ETP": {
+    "name": "Metaverse ETP",
+    "logo": "/token-logos/etp.png"
+  },
+  "EUR": {
+    "name": "EUR",
+    "logo": "/token-logos/eur.png"
+  },
+  "EVX": {
+    "name": "Everex",
+    "logo": "/token-logos/evx.png"
+  },
+  "EXMO": {
+    "name": "EXMO",
+    "logo": "/token-logos/exmo.png"
+  },
+  "EXP": {
+    "name": "Expanse",
+    "logo": "/token-logos/exp.png"
+  },
+  "FAIR": {
+    "name": "Faircoin",
+    "logo": "/token-logos/fair.png"
+  },
+  "FCT": {
+    "name": "Factom",
+    "logo": "/token-logos/fct.png"
+  },
+  "FIDA": {
+    "name": "Bonfida",
+    "logo": "/token-logos/fida.png"
+  },
+  "FIL": {
+    "name": "Filecoin [IOU]",
+    "logo": "/token-logos/fil.png"
+  },
+  "FJC": {
+    "name": "Fujicoin",
+    "logo": "/token-logos/fjc.png"
+  },
+  "FLDC": {
+    "name": "Foldingcoin",
+    "logo": "/token-logos/fldc.png"
+  },
+  "FLO": {
+    "name": "FLO",
+    "logo": "/token-logos/flo.png"
+  },
+  "FLUX": {
+    "name": "Flux",
+    "logo": "/token-logos/flux.png"
+  },
+  "FSN": {
+    "name": "FUSION",
+    "logo": "/token-logos/fsn.png"
+  },
+  "FTC": {
+    "name": "Feathercoin",
+    "logo": "/token-logos/ftc.png"
+  },
+  "FUEL": {
+    "name": "Etherparty",
+    "logo": "/token-logos/fuel.png"
+  },
+  "FUN": {
+    "name": "FunFair",
+    "logo": "/token-logos/fun.png"
+  },
+  "GAME": {
+    "name": "GameCredits",
+    "logo": "/token-logos/game.png"
+  },
+  "GAS": {
+    "name": "Gas",
+    "logo": "/token-logos/gas.png"
+  },
+  "GBP": {
+    "name": "GBP",
+    "logo": "/token-logos/gbp.png"
+  },
+  "GBX": {
+    "name": "Globitex",
+    "logo": "/token-logos/gbx.png"
+  },
+  "GBYTE": {
+    "name": "Obyte",
+    "logo": "/token-logos/gbyte.png"
+  },
+  "GENERIC": {
+    "name": "GENERIC",
+    "logo": "/token-logos/generic.png"
+  },
+  "GIN": {
+    "name": "GINcoin",
+    "logo": "/token-logos/gin.png"
+  },
+  "GLXT": {
+    "name": "GLX Token",
+    "logo": "/token-logos/glxt.png"
+  },
+  "GMR": {
+    "name": "Gimmer",
+    "logo": "/token-logos/gmr.png"
+  },
+  "GMT": {
+    "name": "STEPN",
+    "logo": "/token-logos/gmt.png"
+  },
+  "GNO": {
+    "name": "Gnosis",
+    "logo": "/token-logos/gno.png"
+  },
+  "GNT": {
+    "name": "Golem",
+    "logo": "/token-logos/gnt.png"
+  },
+  "GOLD": {
+    "name": "Dragonereum Gold",
+    "logo": "/token-logos/gold.png"
+  },
+  "GRC": {
+    "name": "Gridcoin",
+    "logo": "/token-logos/grc.png"
+  },
+  "GRIN": {
+    "name": "Grin",
+    "logo": "/token-logos/grin.png"
+  },
+  "GRS": {
+    "name": "Groestlcoin",
+    "logo": "/token-logos/grs.png"
+  },
+  "GRT": {
+    "name": "The Graph",
+    "logo": "/token-logos/grt.png"
+  },
+  "GSC": {
+    "name": "Global Social Chain",
+    "logo": "/token-logos/gsc.png"
+  },
+  "GTO": {
+    "name": "Gifto",
+    "logo": "/token-logos/gto.png"
+  },
+  "GUP": {
+    "name": "Guppy",
+    "logo": "/token-logos/gup.png"
+  },
+  "GUSD": {
+    "name": "Gemini dollar",
+    "logo": "/token-logos/gusd.png"
+  },
+  "GVT": {
+    "name": "Genesis Vision",
+    "logo": "/token-logos/gvt.png"
+  },
+  "GXS": {
+    "name": "GXChain",
+    "logo": "/token-logos/gxs.png"
+  },
+  "GZR": {
+    "name": "Gizer",
+    "logo": "/token-logos/gzr.png"
+  },
+  "HIGHT": {
+    "name": "Highcoin",
+    "logo": "/token-logos/hight.png"
+  },
+  "HNS": {
+    "name": "Handshake",
+    "logo": "/token-logos/hns.png"
+  },
+  "HODL": {
+    "name": "HOdlcoin",
+    "logo": "/token-logos/hodl.png"
+  },
+  "HOT": {
+    "name": "Holo",
+    "logo": "/token-logos/hot.png"
+  },
+  "HPB": {
+    "name": "High Performance Blockchain",
+    "logo": "/token-logos/hpb.png"
+  },
+  "HSR": {
+    "name": "HShare",
+    "logo": "/token-logos/hsr.png"
+  },
+  "HT": {
+    "name": "HOTTO",
+    "logo": "/token-logos/ht.png"
+  },
+  "HTML": {
+    "name": "HTMLCOIN",
+    "logo": "/token-logos/html.png"
+  },
+  "HUC": {
+    "name": "Huntercoin",
+    "logo": "/token-logos/huc.png"
+  },
+  "HUSD": {
+    "name": "HUSD",
+    "logo": "/token-logos/husd.png"
+  },
+  "HUSH": {
+    "name": "Hush",
+    "logo": "/token-logos/hush.png"
+  },
+  "ICN": {
+    "name": "Iconomi",
+    "logo": "/token-logos/icn.png"
+  },
+  "ICP": {
+    "name": "Internet Computer",
+    "logo": "/token-logos/icp.png"
+  },
+  "ICX": {
+    "name": "ICON",
+    "logo": "/token-logos/icx.png"
+  },
+  "IGNIS": {
+    "name": "Ignis",
+    "logo": "/token-logos/ignis.png"
+  },
+  "ILK": {
+    "name": "Inlock Token",
+    "logo": "/token-logos/ilk.png"
+  },
+  "INK": {
+    "name": "Ink",
+    "logo": "/token-logos/ink.png"
+  },
+  "INS": {
+    "name": "Insolar",
+    "logo": "/token-logos/ins.png"
+  },
+  "ION": {
+    "name": "ION",
+    "logo": "/token-logos/ion.png"
+  },
+  "IOP": {
+    "name": "Internet of People",
+    "logo": "/token-logos/iop.png"
+  },
+  "IOST": {
+    "name": "IOStoken",
+    "logo": "/token-logos/iost.png"
+  },
+  "IOTX": {
+    "name": "IoTeX",
+    "logo": "/token-logos/iotx.png"
+  },
+  "IQ": {
+    "name": "Everipedia",
+    "logo": "/token-logos/iq.png"
+  },
+  "ITC": {
+    "name": "IoT Chain",
+    "logo": "/token-logos/itc.png"
+  },
+  "JNT": {
+    "name": "Jibrel Network",
+    "logo": "/token-logos/jnt.png"
+  },
+  "JPY": {
+    "name": "JPY",
+    "logo": "/token-logos/jpy.png"
+  },
+  "KCS": {
+    "name": "KuCoin Shares",
+    "logo": "/token-logos/kcs.png"
+  },
+  "KIN": {
+    "name": "Kin",
+    "logo": "/token-logos/kin.png"
+  },
+  "KLOWN": {
+    "name": "Ether Clown",
+    "logo": "/token-logos/klown.png"
+  },
+  "KMD": {
+    "name": "Komodo",
+    "logo": "/token-logos/kmd.png"
+  },
+  "KNC": {
+    "name": "Kyber Network",
+    "logo": "/token-logos/knc.png"
+  },
+  "KRB": {
+    "name": "Karbo",
+    "logo": "/token-logos/krb.png"
+  },
+  "KSM": {
+    "name": "Kusama",
+    "logo": "/token-logos/ksm.png"
+  },
+  "LBC": {
+    "name": "LBRY Credits",
+    "logo": "/token-logos/lbc.png"
+  },
+  "LEND": {
+    "name": "ETHLend",
+    "logo": "/token-logos/lend.png"
+  },
+  "LEO": {
+    "name": "Unus Sed LEO",
+    "logo": "/token-logos/leo.png"
+  },
+  "LINK": {
+    "name": "ChainLink",
+    "logo": "/token-logos/link.png"
+  },
+  "LKK": {
+    "name": "Lykke",
+    "logo": "/token-logos/lkk.png"
+  },
+  "LOOM": {
+    "name": "Loom Network",
+    "logo": "/token-logos/loom.png"
+  },
+  "LPT": {
+    "name": "Livepeer Token",
+    "logo": "/token-logos/lpt.png"
+  },
+  "LRC": {
+    "name": "Loopring",
+    "logo": "/token-logos/lrc.png"
+  },
+  "LSK": {
+    "name": "Lisk",
+    "logo": "/token-logos/lsk.png"
+  },
+  "LTC": {
+    "name": "Litecoin",
+    "logo": "/token-logos/ltc.png"
+  },
+  "LUN": {
+    "name": "Lunyr",
+    "logo": "/token-logos/lun.png"
+  },
+  "MAID": {
+    "name": "MaidSafeCoin",
+    "logo": "/token-logos/maid.png"
+  },
+  "MANA": {
+    "name": "Decentraland",
+    "logo": "/token-logos/mana.png"
+  },
+  "MATIC": {
+    "name": "Polygon",
+    "logo": "/token-logos/matic.png"
+  },
+  "MAX": {
+    "name": "MAX Token",
+    "logo": "/token-logos/max.png"
+  },
+  "MCAP": {
+    "name": "MCAP",
+    "logo": "/token-logos/mcap.png"
+  },
+  "MCO": {
+    "name": "Crypto.com",
+    "logo": "/token-logos/mco.png"
+  },
+  "MDA": {
+    "name": "Moeda Loyalty Points",
+    "logo": "/token-logos/mda.png"
+  },
+  "MDS": {
+    "name": "MediShares",
+    "logo": "/token-logos/mds.png"
+  },
+  "MED": {
+    "name": "Medibloc",
+    "logo": "/token-logos/med.png"
+  },
+  "MEETONE": {
+    "name": "MEET.ONE",
+    "logo": "/token-logos/meetone.png"
+  },
+  "MFT": {
+    "name": "Mainframe",
+    "logo": "/token-logos/mft.png"
+  },
+  "MIOTA": {
+    "name": "IOTA",
+    "logo": "/token-logos/miota.png"
+  },
+  "MITH": {
+    "name": "Mithril",
+    "logo": "/token-logos/mith.png"
+  },
+  "MKR": {
+    "name": "Maker",
+    "logo": "/token-logos/mkr.png"
+  },
+  "MLN": {
+    "name": "Melon",
+    "logo": "/token-logos/mln.png"
+  },
+  "MNX": {
+    "name": "MinexCoin",
+    "logo": "/token-logos/mnx.png"
+  },
+  "MNZ": {
+    "name": "MNZ",
+    "logo": "/token-logos/mnz.png"
+  },
+  "MOAC": {
+    "name": "MOAC",
+    "logo": "/token-logos/moac.png"
+  },
+  "MOD": {
+    "name": "Modum",
+    "logo": "/token-logos/mod.png"
+  },
+  "MONA": {
+    "name": "MonaCoin",
+    "logo": "/token-logos/mona.png"
+  },
+  "MSR": {
+    "name": "Masari",
+    "logo": "/token-logos/msr.png"
+  },
+  "MTH": {
+    "name": "Monetha",
+    "logo": "/token-logos/mth.png"
+  },
+  "MTL": {
+    "name": "Metal",
+    "logo": "/token-logos/mtl.png"
+  },
+  "MUSIC": {
+    "name": "Musicoin",
+    "logo": "/token-logos/music.png"
+  },
+  "MZC": {
+    "name": "MAZA",
+    "logo": "/token-logos/mzc.png"
+  },
+  "NANO": {
+    "name": "Nano",
+    "logo": "/token-logos/nano.png"
+  },
+  "NAS": {
+    "name": "Nebulas",
+    "logo": "/token-logos/nas.png"
+  },
+  "NAV": {
+    "name": "NavCoin",
+    "logo": "/token-logos/nav.png"
+  },
+  "NCASH": {
+    "name": "Nucleus Vision",
+    "logo": "/token-logos/ncash.png"
+  },
+  "NDZ": {
+    "name": "NDZ",
+    "logo": "/token-logos/ndz.png"
+  },
+  "NEBL": {
+    "name": "Neblio",
+    "logo": "/token-logos/nebl.png"
+  },
+  "NEO": {
+    "name": "NEO",
+    "logo": "/token-logos/neo.png"
+  },
+  "NEOS": {
+    "name": "Neoscoin",
+    "logo": "/token-logos/neos.png"
+  },
+  "NEU": {
+    "name": "Neumark",
+    "logo": "/token-logos/neu.png"
+  },
+  "NEXO": {
+    "name": "Nexo",
+    "logo": "/token-logos/nexo.png"
+  },
+  "NGC": {
+    "name": "NAGA",
+    "logo": "/token-logos/ngc.png"
+  },
+  "NIO": {
+    "name": "Autonio",
+    "logo": "/token-logos/nio.png"
+  },
+  "NKN": {
+    "name": "NKN",
+    "logo": "/token-logos/nkn.png"
+  },
+  "NLC2": {
+    "name": "NoLimitCoin",
+    "logo": "/token-logos/nlc2.png"
+  },
+  "NLG": {
+    "name": "Gulden",
+    "logo": "/token-logos/nlg.png"
+  },
+  "NMC": {
+    "name": "Namecoin",
+    "logo": "/token-logos/nmc.png"
+  },
+  "NMR": {
+    "name": "Numeraire",
+    "logo": "/token-logos/nmr.png"
+  },
+  "NPXS": {
+    "name": "Pundi X",
+    "logo": "/token-logos/npxs.png"
+  },
+  "NTBC": {
+    "name": "Note Blockchain",
+    "logo": "/token-logos/ntbc.png"
+  },
+  "NULS": {
+    "name": "Nuls",
+    "logo": "/token-logos/nuls.png"
+  },
+  "NXS": {
+    "name": "Nexus",
+    "logo": "/token-logos/nxs.png"
+  },
+  "NXT": {
+    "name": "NXT",
+    "logo": "/token-logos/nxt.png"
+  },
+  "OAX": {
+    "name": "OpenANX",
+    "logo": "/token-logos/oax.png"
+  },
+  "OK": {
+    "name": "OKCash",
+    "logo": "/token-logos/ok.png"
+  },
+  "OMG": {
+    "name": "OMG Network",
+    "logo": "/token-logos/omg.png"
+  },
+  "OMNI": {
+    "name": "Omni",
+    "logo": "/token-logos/omni.png"
+  },
+  "ONE": {
+    "name": "Harmony",
+    "logo": "/token-logos/one.png"
+  },
+  "ONG": {
+    "name": "SoMee.Social",
+    "logo": "/token-logos/ong.png"
+  },
+  "ONT": {
+    "name": "Ontology",
+    "logo": "/token-logos/ont.png"
+  },
+  "OOT": {
+    "name": "Utrum",
+    "logo": "/token-logos/oot.png"
+  },
+  "OST": {
+    "name": "OST",
+    "logo": "/token-logos/ost.png"
+  },
+  "OX": {
+    "name": "OX Fina",
+    "logo": "/token-logos/ox.png"
+  },
+  "OXT": {
+    "name": "Orchid",
+    "logo": "/token-logos/oxt.png"
+  },
+  "OXY": {
+    "name": "Oxygen",
+    "logo": "/token-logos/oxy.png"
+  },
+  "PART": {
+    "name": "Particl",
+    "logo": "/token-logos/part.png"
+  },
+  "PASC": {
+    "name": "Pascalcoin",
+    "logo": "/token-logos/pasc.png"
+  },
+  "PASL": {
+    "name": "Pascal Lite",
+    "logo": "/token-logos/pasl.png"
+  },
+  "PAX": {
+    "name": "PAX Token",
+    "logo": "/token-logos/pax.png"
+  },
+  "PAXG": {
+    "name": "PAX Gold",
+    "logo": "/token-logos/paxg.png"
+  },
+  "PAY": {
+    "name": "TenX",
+    "logo": "/token-logos/pay.png"
+  },
+  "PAYX": {
+    "name": "Paypex",
+    "logo": "/token-logos/payx.png"
+  },
+  "PINK": {
+    "name": "Pinkcoin",
+    "logo": "/token-logos/pink.png"
+  },
+  "PIRL": {
+    "name": "Pirl",
+    "logo": "/token-logos/pirl.png"
+  },
+  "PIVX": {
+    "name": "PIVX",
+    "logo": "/token-logos/pivx.png"
+  },
+  "PLR": {
+    "name": "Pillar",
+    "logo": "/token-logos/plr.png"
+  },
+  "POA": {
+    "name": "POA Network",
+    "logo": "/token-logos/poa.png"
+  },
+  "POE": {
+    "name": "Po.et",
+    "logo": "/token-logos/poe.png"
+  },
+  "POLIS": {
+    "name": "Polis",
+    "logo": "/token-logos/polis.png"
+  },
+  "POLY": {
+    "name": "Polymath Network",
+    "logo": "/token-logos/poly.png"
+  },
+  "POT": {
+    "name": "Potcoin",
+    "logo": "/token-logos/pot.png"
+  },
+  "POWR": {
+    "name": "Power Ledger",
+    "logo": "/token-logos/powr.png"
+  },
+  "PPC": {
+    "name": "Peercoin",
+    "logo": "/token-logos/ppc.png"
+  },
+  "PPP": {
+    "name": "PayPie",
+    "logo": "/token-logos/ppp.png"
+  },
+  "PPT": {
+    "name": "Populous",
+    "logo": "/token-logos/ppt.png"
+  },
+  "PRE": {
+    "name": "Presearch",
+    "logo": "/token-logos/pre.png"
+  },
+  "PRL": {
+    "name": "Oyster",
+    "logo": "/token-logos/prl.png"
+  },
+  "PUNGO": {
+    "name": "Pungo Token",
+    "logo": "/token-logos/pungo.png"
+  },
+  "PURA": {
+    "name": "Pura",
+    "logo": "/token-logos/pura.png"
+  },
+  "QASH": {
+    "name": "QASH",
+    "logo": "/token-logos/qash.png"
+  },
+  "QIWI": {
+    "name": "QIWI",
+    "logo": "/token-logos/qiwi.png"
+  },
+  "QLC": {
+    "name": "QLC Chain",
+    "logo": "/token-logos/qlc.png"
+  },
+  "QNT": {
+    "name": "Quant",
+    "logo": "/token-logos/qnt.png"
+  },
+  "QRL": {
+    "name": "Quantum Resistant Ledger",
+    "logo": "/token-logos/qrl.png"
+  },
+  "QSP": {
+    "name": "Quantstamp",
+    "logo": "/token-logos/qsp.png"
+  },
+  "QTUM": {
+    "name": "Qtum",
+    "logo": "/token-logos/qtum.png"
+  },
+  "R": {
+    "name": "Revain",
+    "logo": "/token-logos/r.png"
+  },
+  "RADS": {
+    "name": "Radium",
+    "logo": "/token-logos/rads.png"
+  },
+  "RAP": {
+    "name": "Rapture",
+    "logo": "/token-logos/rap.png"
+  },
+  "RAY": {
+    "name": "Raydium",
+    "logo": "/token-logos/ray.png"
+  },
+  "RCN": {
+    "name": "Rcoin",
+    "logo": "/token-logos/rcn.png"
+  },
+  "RDD": {
+    "name": "Reddcoin",
+    "logo": "/token-logos/rdd.png"
+  },
+  "RDN": {
+    "name": "Raiden Network Token",
+    "logo": "/token-logos/rdn.png"
+  },
+  "REN": {
+    "name": "Ren",
+    "logo": "/token-logos/ren.png"
+  },
+  "REP": {
+    "name": "Augur",
+    "logo": "/token-logos/rep.png"
+  },
+  "REPV2": {
+    "name": "Augur",
+    "logo": "/token-logos/repv2.png"
+  },
+  "REQ": {
+    "name": "Request",
+    "logo": "/token-logos/req.png"
+  },
+  "RHOC": {
+    "name": "RChain",
+    "logo": "/token-logos/rhoc.png"
+  },
+  "RIC": {
+    "name": "Riecoin",
+    "logo": "/token-logos/ric.png"
+  },
+  "RISE": {
+    "name": "Rise",
+    "logo": "/token-logos/rise.png"
+  },
+  "RLC": {
+    "name": "iExec RLC",
+    "logo": "/token-logos/rlc.png"
+  },
+  "RPX": {
+    "name": "RPX",
+    "logo": "/token-logos/rpx.png"
+  },
+  "RUB": {
+    "name": "RUB",
+    "logo": "/token-logos/rub.png"
+  },
+  "RVN": {
+    "name": "Ravencoin",
+    "logo": "/token-logos/rvn.png"
+  },
+  "RYO": {
+    "name": "Ryo Currency",
+    "logo": "/token-logos/ryo.png"
+  },
+  "SAFE": {
+    "name": "Safe",
+    "logo": "/token-logos/safe.png"
+  },
+  "SAFEMOON": {
+    "name": "SafeMoon",
+    "logo": "/token-logos/safemoon.png"
+  },
+  "SAI": {
+    "name": "Single Collateral DAI",
+    "logo": "/token-logos/sai.png"
+  },
+  "SALT": {
+    "name": "SALT",
+    "logo": "/token-logos/salt.png"
+  },
+  "SAN": {
+    "name": "Santiment Network Token",
+    "logo": "/token-logos/san.png"
+  },
+  "SAND": {
+    "name": "The Sandbox",
+    "logo": "/token-logos/sand.png"
+  },
+  "SBD": {
+    "name": "Steem Dollars",
+    "logo": "/token-logos/sbd.png"
+  },
+  "SBERBANK": {
+    "name": "SBERBANK",
+    "logo": "/token-logos/sberbank.png"
+  },
+  "SC": {
+    "name": "Siacoin",
+    "logo": "/token-logos/sc.png"
+  },
+  "SER": {
+    "name": "Serum",
+    "logo": "/token-logos/ser.png"
+  },
+  "SHIFT": {
+    "name": "Shift",
+    "logo": "/token-logos/shift.png"
+  },
+  "SIB": {
+    "name": "SIBCoin",
+    "logo": "/token-logos/sib.png"
+  },
+  "SIN": {
+    "name": "SINOVATE",
+    "logo": "/token-logos/sin.png"
+  },
+  "SKL": {
+    "name": "SKALE Network",
+    "logo": "/token-logos/skl.png"
+  },
+  "SKY": {
+    "name": "Skycoin",
+    "logo": "/token-logos/sky.png"
+  },
+  "SLR": {
+    "name": "Solarcoin",
+    "logo": "/token-logos/slr.png"
+  },
+  "SLS": {
+    "name": "SaluS",
+    "logo": "/token-logos/sls.png"
+  },
+  "SMART": {
+    "name": "SmartCash",
+    "logo": "/token-logos/smart.png"
+  },
+  "SNGLS": {
+    "name": "SingularDTV",
+    "logo": "/token-logos/sngls.png"
+  },
+  "SNM": {
+    "name": "SONM",
+    "logo": "/token-logos/snm.png"
+  },
+  "SNT": {
+    "name": "Status",
+    "logo": "/token-logos/snt.png"
+  },
+  "SNX": {
+    "name": "Synthetix",
+    "logo": "/token-logos/snx.png"
+  },
+  "SOC": {
+    "name": "All Sports",
+    "logo": "/token-logos/soc.png"
+  },
+  "SOL": {
+    "name": "Solana",
+    "logo": "/token-logos/sol.png"
+  },
+  "SPACEHBIT": {
+    "name": "HashBit Blockchain",
+    "logo": "/token-logos/spacehbit.png"
+  },
+  "SPANK": {
+    "name": "SpankChain",
+    "logo": "/token-logos/spank.png"
+  },
+  "SPHTX": {
+    "name": "SophiaTX",
+    "logo": "/token-logos/sphtx.png"
+  },
+  "SRN": {
+    "name": "Sirin Labs Token",
+    "logo": "/token-logos/srn.png"
+  },
+  "STAK": {
+    "name": "STRAKS",
+    "logo": "/token-logos/stak.png"
+  },
+  "START": {
+    "name": "Startcoin",
+    "logo": "/token-logos/start.png"
+  },
+  "STEEM": {
+    "name": "Steem",
+    "logo": "/token-logos/steem.png"
+  },
+  "STORJ": {
+    "name": "Storj",
+    "logo": "/token-logos/storj.png"
+  },
+  "STORM": {
+    "name": "Storm",
+    "logo": "/token-logos/storm.png"
+  },
+  "STOX": {
+    "name": "Stox",
+    "logo": "/token-logos/stox.png"
+  },
+  "STQ": {
+    "name": "Storiqa",
+    "logo": "/token-logos/stq.png"
+  },
+  "STRAT": {
+    "name": "Stratis",
+    "logo": "/token-logos/strat.png"
+  },
+  "STX": {
+    "name": "Stacks",
+    "logo": "/token-logos/stx.png"
+  },
+  "SUB": {
+    "name": "Substratum",
+    "logo": "/token-logos/sub.png"
+  },
+  "SUMO": {
+    "name": "Sumokoin",
+    "logo": "/token-logos/sumo.png"
+  },
+  "SUSHI": {
+    "name": "SushiSwap",
+    "logo": "/token-logos/sushi.png"
+  },
+  "SYS": {
+    "name": "Syscoin",
+    "logo": "/token-logos/sys.png"
+  },
+  "TAAS": {
+    "name": "TaaS",
+    "logo": "/token-logos/taas.png"
+  },
+  "TAU": {
+    "name": "Lamden",
+    "logo": "/token-logos/tau.png"
+  },
+  "TBX": {
+    "name": "Tokenbox",
+    "logo": "/token-logos/tbx.png"
+  },
+  "TEL": {
+    "name": "Telcoin",
+    "logo": "/token-logos/tel.png"
+  },
+  "TEN": {
+    "name": "Tokenomy",
+    "logo": "/token-logos/ten.png"
+  },
+  "TERN": {
+    "name": "Ternio",
+    "logo": "/token-logos/tern.png"
+  },
+  "TGCH": {
+    "name": "TrueGalaxyCash",
+    "logo": "/token-logos/tgch.png"
+  },
+  "THETA": {
+    "name": "Theta Network",
+    "logo": "/token-logos/theta.png"
+  },
+  "TIX": {
+    "name": "Blocktix",
+    "logo": "/token-logos/tix.png"
+  },
+  "TKN": {
+    "name": "TokenCard",
+    "logo": "/token-logos/tkn.png"
+  },
+  "TKS": {
+    "name": "Tokes Platform",
+    "logo": "/token-logos/tks.png"
+  },
+  "TNB": {
+    "name": "Time New Bank",
+    "logo": "/token-logos/tnb.png"
+  },
+  "TNC": {
+    "name": "Trinity Network Credit",
+    "logo": "/token-logos/tnc.png"
+  },
+  "TNT": {
+    "name": "Tierion",
+    "logo": "/token-logos/tnt.png"
+  },
+  "TOMO": {
+    "name": "TomoChain",
+    "logo": "/token-logos/tomo.png"
+  },
+  "TPAY": {
+    "name": "TokenPay",
+    "logo": "/token-logos/tpay.png"
+  },
+  "TRIG": {
+    "name": "Triggers",
+    "logo": "/token-logos/trig.png"
+  },
+  "TRTL": {
+    "name": "TurtleCoin",
+    "logo": "/token-logos/trtl.png"
+  },
+  "TRX": {
+    "name": "TRON",
+    "logo": "/token-logos/trx.png"
+  },
+  "TUSD": {
+    "name": "TrueUSD",
+    "logo": "/token-logos/tusd.png"
+  },
+  "TZC": {
+    "name": "TrezarCoin",
+    "logo": "/token-logos/tzc.png"
+  },
+  "UBQ": {
+    "name": "Ubiq",
+    "logo": "/token-logos/ubq.png"
+  },
+  "UMA": {
+    "name": "UMA",
+    "logo": "/token-logos/uma.png"
+  },
+  "UNI": {
+    "name": "Uniswap",
+    "logo": "/token-logos/uni.png"
+  },
+  "UNITY": {
+    "name": "SuperNET",
+    "logo": "/token-logos/unity.png"
+  },
+  "USD": {
+    "name": "USD",
+    "logo": "/token-logos/usd.png"
+  },
+  "USDC": {
+    "name": "USD Coin",
+    "logo": "/token-logos/usdc.png"
+  },
+  "USDT": {
+    "name": "Tether",
+    "logo": "/token-logos/usdt.png"
+  },
+  "UTK": {
+    "name": "UTRUST",
+    "logo": "/token-logos/utk.png"
+  },
+  "VERI": {
+    "name": "Veritaseum",
+    "logo": "/token-logos/veri.png"
+  },
+  "VET": {
+    "name": "VeChain",
+    "logo": "/token-logos/vet.png"
+  },
+  "VIA": {
+    "name": "Viacoin",
+    "logo": "/token-logos/via.png"
+  },
+  "VIB": {
+    "name": "Viberate",
+    "logo": "/token-logos/vib.png"
+  },
+  "VIBE": {
+    "name": "VIBE",
+    "logo": "/token-logos/vibe.png"
+  },
+  "VIVO": {
+    "name": "VIVO",
+    "logo": "/token-logos/vivo.png"
+  },
+  "VRC": {
+    "name": "VeriCoin",
+    "logo": "/token-logos/vrc.png"
+  },
+  "VRSC": {
+    "name": "VerusCoin",
+    "logo": "/token-logos/vrsc.png"
+  },
+  "VTC": {
+    "name": "Vertcoin",
+    "logo": "/token-logos/vtc.png"
+  },
+  "VTHO": {
+    "name": "VeThor Token",
+    "logo": "/token-logos/vtho.png"
+  },
+  "WABI": {
+    "name": "Tael",
+    "logo": "/token-logos/wabi.png"
+  },
+  "WAN": {
+    "name": "Wanchain",
+    "logo": "/token-logos/wan.png"
+  },
+  "WAVES": {
+    "name": "Waves",
+    "logo": "/token-logos/waves.png"
+  },
+  "WAX": {
+    "name": "WAX",
+    "logo": "/token-logos/wax.png"
+  },
+  "WBTC": {
+    "name": "Wrapped Bitcoin",
+    "logo": "/token-logos/wbtc.png"
+  },
+  "WGR": {
+    "name": "Wagerr",
+    "logo": "/token-logos/wgr.png"
+  },
+  "WICC": {
+    "name": "WaykiChain",
+    "logo": "/token-logos/wicc.png"
+  },
+  "WINGS": {
+    "name": "Wings",
+    "logo": "/token-logos/wings.png"
+  },
+  "WPR": {
+    "name": "WePower",
+    "logo": "/token-logos/wpr.png"
+  },
+  "WTC": {
+    "name": "Waltonchain",
+    "logo": "/token-logos/wtc.png"
+  },
+  "X": {
+    "name": "GLX Equity Token",
+    "logo": "/token-logos/x.png"
+  },
+  "XAS": {
+    "name": "Asch",
+    "logo": "/token-logos/xas.png"
+  },
+  "XBC": {
+    "name": "Bitcoin Plus",
+    "logo": "/token-logos/xbc.png"
+  },
+  "XBP": {
+    "name": "BlitzPredict",
+    "logo": "/token-logos/xbp.png"
+  },
+  "XBY": {
+    "name": "XtraBYtes",
+    "logo": "/token-logos/xby.png"
+  },
+  "XCP": {
+    "name": "Counterparty",
+    "logo": "/token-logos/xcp.png"
+  },
+  "XDN": {
+    "name": "DigitalNote",
+    "logo": "/token-logos/xdn.png"
+  },
+  "XEM": {
+    "name": "NEM",
+    "logo": "/token-logos/xem.png"
+  },
+  "XIN": {
+    "name": "Infinity Economics",
+    "logo": "/token-logos/xin.png"
+  },
+  "XLM": {
+    "name": "Stellar",
+    "logo": "/token-logos/xlm.png"
+  },
+  "XMCC": {
+    "name": "Monoeci",
+    "logo": "/token-logos/xmcc.png"
+  },
+  "XMG": {
+    "name": "Magi",
+    "logo": "/token-logos/xmg.png"
+  },
+  "XMO": {
+    "name": "Monero Original",
+    "logo": "/token-logos/xmo.png"
+  },
+  "XMR": {
+    "name": "Monero",
+    "logo": "/token-logos/xmr.png"
+  },
+  "XMY": {
+    "name": "Myriad",
+    "logo": "/token-logos/xmy.png"
+  },
+  "XP": {
+    "name": "XP",
+    "logo": "/token-logos/xp.png"
+  },
+  "XPA": {
+    "name": "XPA",
+    "logo": "/token-logos/xpa.png"
+  },
+  "XPM": {
+    "name": "Primecoin",
+    "logo": "/token-logos/xpm.png"
+  },
+  "XPR": {
+    "name": "Proton",
+    "logo": "/token-logos/xpr.png"
+  },
+  "XRP": {
+    "name": "XRP",
+    "logo": "/token-logos/xrp.png"
+  },
+  "XSG": {
+    "name": "SnowGem",
+    "logo": "/token-logos/xsg.png"
+  },
+  "XTZ": {
+    "name": "Tezos",
+    "logo": "/token-logos/xtz.png"
+  },
+  "XUC": {
+    "name": "Exchange Union",
+    "logo": "/token-logos/xuc.png"
+  },
+  "XVC": {
+    "name": "Vcash",
+    "logo": "/token-logos/xvc.png"
+  },
+  "XVG": {
+    "name": "Verge",
+    "logo": "/token-logos/xvg.png"
+  },
+  "XZC": {
+    "name": "Zcoin",
+    "logo": "/token-logos/xzc.png"
+  },
+  "YFI": {
+    "name": "yearn.finance",
+    "logo": "/token-logos/yfi.png"
+  },
+  "YOYOW": {
+    "name": "YOYOW",
+    "logo": "/token-logos/yoyow.png"
+  },
+  "ZCL": {
+    "name": "Zclassic",
+    "logo": "/token-logos/zcl.png"
+  },
+  "ZEC": {
+    "name": "Zcash",
+    "logo": "/token-logos/zec.png"
+  },
+  "ZEL": {
+    "name": "ZelCash",
+    "logo": "/token-logos/zel.png"
+  },
+  "ZEN": {
+    "name": "Horizen",
+    "logo": "/token-logos/zen.png"
+  },
+  "ZEST": {
+    "name": "Zest",
+    "logo": "/token-logos/zest.png"
+  },
+  "ZIL": {
+    "name": "Zilliqa",
+    "logo": "/token-logos/zil.png"
+  },
+  "ZILLA": {
+    "name": "Chainzilla",
+    "logo": "/token-logos/zilla.png"
+  },
+  "ZRX": {
+    "name": "0x",
+    "logo": "/token-logos/zrx.png"
+  }
+}

@@ -392,3 +392,116 @@
     white-space: normal;
   }
 }
+
+/* The directory is the entry point; research opens beside its cards. */
+.header {
+  margin-bottom: 28px;
+}
+.stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 22px 0 10px;
+}
+.columns {
+  grid-template-columns: minmax(0, 1fr);
+}
+.columns.hasSelection {
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+}
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.hasSelection .cardGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.cardGrid > button {
+  text-align: left;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-recessed);
+  min-width: 0;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease;
+}
+.cardGrid > button:hover,
+.cardGrid > button.selected {
+  border-color: var(--green);
+  background: #193225;
+  transform: translateY(-2px);
+}
+.cardIdentity {
+  min-width: 0;
+}
+.tokenLogo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #22372e;
+  color: var(--green);
+  font-weight: 700;
+  font-size: 15px;
+}
+.tokenName {
+  font-size: 14px;
+  margin: 6px 0 12px;
+  overflow-wrap: anywhere;
+}
+.cardGrid > button > span {
+  display: block;
+  margin-top: 14px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.cardGrid strong {
+  font-size: 19px;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 900px) {
+  .cardGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .columns.hasSelection {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cardGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .stats > div:last-child {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 380px) {
+  .cardGrid > button {
+    padding: 12px;
+  }
+  .list {
+    padding: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cardGrid > button {
+    transition: none;
+  }
+  .cardGrid > button:hover {
+    transform: none;
+  }
+}
+.dataTools {
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}

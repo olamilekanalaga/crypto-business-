@@ -15,6 +15,8 @@ import {
   type Workspace,
 } from "@/lib/browser-discovery";
 import styles from "./BrowserDiscovery.module.css";
+import TokenLogo from "./TokenLogo";
+import tokenDisplay from "@/lib/token-display.json";
 import ProductClassification from "./ProductClassification";
 import {
   CATEGORIES,
@@ -37,6 +39,9 @@ export default function BrowserDiscovery() {
   const [category, setCategory] = useState("all");
   const [review, setReview] = useState("all");
   const [classificationDirty, setClassificationDirty] = useState(false);
+  const categoryRef = useRef<HTMLSelectElement>(null);
+  const displayFor = (code: string) =>
+    (tokenDisplay as Record<string, { name: string; logo: string }>)[code];
   const file = useRef<HTMLInputElement>(null);
   const detailRef = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -110,6 +115,13 @@ export default function BrowserDiscovery() {
       ([asset, items]) =>
         items.length &&
         (asset.toLowerCase().includes(search.toLowerCase()) ||
+          (
+            productFor(asset, workspace.classifications)?.project ||
+            displayFor(asset)?.name ||
+            ""
+          )
+            .toLowerCase()
+            .includes(search.toLowerCase()) ||
           items.some((p) =>
             p.symbol.toLowerCase().includes(search.toLowerCase()),
           )),
@@ -265,7 +277,7 @@ export default function BrowserDiscovery() {
   return (
     <main className={styles.page}>
       <header className={styles.header}>
-        <Link href="/">
+        <Link href="/opportunities">
           <ArrowLeft size={17} /> Opportunity atlas
         </Link>
         <span>
@@ -274,148 +286,65 @@ export default function BrowserDiscovery() {
       </header>
       <span className="eyebrow">BINANCE SPOT · PUBLIC DATA</span>
       <h1>
-        Your asset universe.
-        <br />
-        <span>Collected in your browser.</span>
+        Your crypto <span>data directory.</span>
       </h1>
       <p className={styles.lead}>
-        Fetch the public Binance listings, explore each asset and keep your own
-        notes. No account, API key or backend needed.
+        Explore tokens, discover their products, and classify what they provide.
       </p>
-      <div className={styles.actions}>
-        <button
-          className="button primary"
-          disabled={!ready || busy || dirty}
-          onClick={refresh}
-        >
-          <RefreshCw size={16} />
-          {busy ? "Working…" : "Fetch Binance Spot"}
-        </button>
-        <button
-          className="button secondary"
-          disabled={!ready || busy || dirty}
-          onClick={() => file.current?.click()}
-        >
-          <Upload size={16} />
-          Import JSON
-        </button>
-        <button
-          className="button secondary"
-          disabled={!ready || busy || dirty || !workspace.snapshots.length}
-          onClick={() =>
-            downloadFile("bd-oracle-backup.json", JSON.stringify(workspace))
-          }
-        >
-          <Download size={16} />
-          Download backup
-        </button>
-        <input
-          ref={file}
-          type="file"
-          accept=".json,application/json"
-          aria-label="Import Binance JSON or workspace backup"
-          hidden
-          onChange={(e) => {
-            if (e.target.files?.[0]) void importFile(e.target.files[0]);
-          }}
-        />
-      </div>
-      {dirty && (
-        <p role="status" className={styles.notice}>
-          Save your research and category edits before fetching, importing or
-          downloading a backup.
-        </p>
-      )}
-      <p className={styles.storage}>
-        Saved on this device and browser. Download a backup to keep a file or
-        move it to another device. Clearing browser storage can remove local
-        copies. Refresh runs while this page is open.
-      </p>
-      {error && (
-        <div className={styles.error} role="alert">
-          {error}
-        </div>
-      )}
-      {notice && (
-        <p className={styles.notice} role="status">
-          {notice}
-        </p>
-      )}
-      <section className={styles.stats} aria-label="Snapshot data quality">
+      <section className={styles.stats} aria-label="Directory totals">
         <div>
           <strong>
-            {latest ? matchingPairs.length.toLocaleString() : "—"}
+            {latest
+              ? new Set(
+                  currentPairs.map((p) => p.baseAsset),
+                ).size.toLocaleString()
+              : "—"}
           </strong>
-          <span>
-            {quote === "all" ? "All quotes" : quote} pairs · matching filters
-          </span>
-        </div>
-        <div>
-          <strong>{latest ? currentBases.toLocaleString() : "—"}</strong>
-          <span>Current assets · matching filters</span>
+          <span>Tokens listed · latest snapshot</span>
         </div>
         <div>
           <strong>
             {latest
-              ? matchingPairs
-                  .filter((p) => p.spot && p.status === "TRADING")
+              ? new Set(
+                  currentPairs
+                    .filter((p) => p.quoteAsset === "USDC")
+                    .map((p) => p.baseAsset),
+                ).size.toLocaleString()
+              : "—"}
+          </strong>
+          <span>Tokens paired with USDC</span>
+        </div>
+        <div>
+          <strong>
+            {latest
+              ? currentPairs
+                  .filter(
+                    (p) =>
+                      p.quoteAsset === "USDC" &&
+                      p.spot &&
+                      p.status === "TRADING",
+                  )
                   .length.toLocaleString()
               : "—"}
           </strong>
-          <span>Active pairs · matching filters</span>
-        </div>
-        <div>
-          <strong>{workspace.snapshots.length}</strong>
-          <span>Retained snapshots</span>
+          <span>Active USDC Spot pairs</span>
         </div>
       </section>
-      <details className={styles.help}>
-        <summary>How to load data and keep your files</summary>
-        <ol>
-          <li>
-            Press Fetch Binance Spot. A successful response is saved
-            automatically in this browser.
-          </li>
-          <li>
-            If blocked,{" "}
-            <a href={BINANCE_URL} target="_blank" rel="noreferrer">
-              open Binance’s exchangeInfo JSON ↗
-            </a>
-            . Save the complete response as a .json file, then select Import
-            JSON. A page opening in a tab does not guarantee that Binance
-            permits cross-origin fetches.
-          </li>
-          <li>
-            Download backup includes raw responses, snapshot history and saved
-            notes. Import that backup on another device to continue there.
-          </li>
-        </ol>
-        <p>
-          Imported snapshots carry an import time; their original extraction
-          time is unknown. A backup’s dates are supplied by the file. Assets are
-          Binance identifiers, not verified business identities. CoinGecko
-          enrichment and the local SQLite research graph remain separate.
-        </p>
-      </details>
-      {latest && (
-        <div className={styles.snapshot}>
-          <span>
-            {latest.method === "fetch"
-              ? "Latest snapshot fetched"
-              : "Latest snapshot imported"}
-            : {new Date(latest.obtainedAt).toLocaleString()} · Binance ·{" "}
-            {currentPairs.length.toLocaleString()} full snapshot pairs retained
-          </span>
-          <button
-            className="text-button"
-            onClick={() =>
-              downloadFile("binance-exchangeInfo.json", latest.raw)
-            }
-          >
-            Download original JSON <Download size={14} />
-          </button>
-        </div>
-      )}
+      <p className={styles.scopeNote}>
+        Latest snapshot totals, independent of filters. Listed tokens include
+        inactive pairs; a USDC pair does not mean USDC is the token’s only quote
+        currency.
+      </p>
+      <button
+        className="button primary"
+        disabled={!latest || dirty || busy}
+        onClick={() => {
+          categoryRef.current?.scrollIntoView({ block: "center" });
+          categoryRef.current?.focus();
+        }}
+      >
+        Classification · explore product types
+      </button>
       {!latest ? (
         <section className={styles.empty}>
           <Database size={36} />
@@ -454,6 +383,7 @@ export default function BrowserDiscovery() {
             <label>
               Product category
               <select
+                ref={categoryRef}
                 disabled={dirty || busy}
                 value={category}
                 onChange={(e) =>
@@ -526,43 +456,60 @@ export default function BrowserDiscovery() {
               ? "all quote currencies"
               : `${quote}-quoted pairs only`}
             . Product tags may overlap. Suggestions are ticker candidates, not
-            verified identities; unknown projects stay Unclassified. Filters
+            verified identities. Names and logos are catalogue candidates, not
+            identity verification; unknown projects stay Unclassified. Filters
             never delete your original snapshot.
           </p>
-          <div className={styles.columns}>
+          <div
+            className={`${styles.columns} ${selected ? styles.hasSelection : ""}`}
+          >
             <section className={styles.list} aria-label="Discovered assets">
-              <p>{visible.length} assets · select one to investigate</p>
-              {visible.slice(page * 40, page * 40 + 40).map(([code, items]) => (
-                <button
-                  key={code}
-                  className={selected === code ? styles.selected : ""}
-                  onClick={() => openAsset(code)}
-                >
-                  <div>
-                    <strong>{code}</strong>
-                    <div className={styles.tags}>
-                      {(productFor(code, workspace.classifications)?.categories
-                        .length
-                        ? productFor(code, workspace.classifications)!
-                            .categories
-                        : ["Unclassified"]
-                      ).map((c) => (
-                        <small key={c}>{c}</small>
-                      ))}
-                    </div>
-                    <small className={styles.reviewLabel}>
-                      {productFor(code, workspace.classifications)?.status ===
-                      "reviewed"
-                        ? "Reviewed by you"
-                        : "Needs review"}
-                    </small>
-                  </div>
-                  <span>
-                    {items.filter((p) => p.available).length} current pairs ·
-                    Identity unresolved
-                  </span>
-                </button>
-              ))}
+              <p>
+                {visible.length} assets · {currentBases} in latest snapshot ·{" "}
+                {matchingPairs.length} matching pairs
+              </p>
+              <div className={styles.cardGrid}>
+                {visible
+                  .slice(page * 40, page * 40 + 40)
+                  .map(([code, items]) => (
+                    <button
+                      key={code}
+                      className={selected === code ? styles.selected : ""}
+                      onClick={() => openAsset(code)}
+                    >
+                      <div className={styles.cardIdentity}>
+                        <TokenLogo code={code} src={displayFor(code)?.logo} />
+                        <strong>{code}</strong>
+                        <div className={styles.tokenName}>
+                          {productFor(code, workspace.classifications)
+                            ?.project ||
+                            displayFor(code)?.name ||
+                            "Name unresolved"}
+                        </div>
+                        <div className={styles.tags}>
+                          {(productFor(code, workspace.classifications)
+                            ?.categories.length
+                            ? productFor(code, workspace.classifications)!
+                                .categories
+                            : ["Unclassified"]
+                          ).map((c) => (
+                            <small key={c}>{c}</small>
+                          ))}
+                        </div>
+                        <small className={styles.reviewLabel}>
+                          {productFor(code, workspace.classifications)
+                            ?.status === "reviewed"
+                            ? "Reviewed by you"
+                            : "Needs review"}
+                        </small>
+                      </div>
+                      <span>
+                        {items.filter((p) => p.available).length} current pairs
+                        · Identity unresolved
+                      </span>
+                    </button>
+                  ))}
+              </div>
               {!visible.length && <p>No matching assets.</p>}
               <div className={styles.pagination}>
                 <button
@@ -585,102 +532,214 @@ export default function BrowserDiscovery() {
                 </button>
               </div>
             </section>
-            <section
-              ref={detailRef}
-              className={styles.detail}
-              aria-label="Asset research"
-            >
-              {selected ? (
-                <>
-                  <span className="eyebrow">
-                    BINANCE ASSET · UNRESOLVED IDENTITY
-                  </span>
-                  <h2>{selected}</h2>
-                  <p>
-                    A token does not automatically identify an organisation.
-                    Record what you find and the sources you want to check.
-                  </p>
-                  <p>
-                    {selectedPairs.length} pairs in the selected
-                    quote/availability scope.{" "}
-                    {groups.find(([code]) => code === selected)?.[1].length ||
-                      0}{" "}
-                    total pairs retained.
-                  </p>
-                  <div className={styles.pairs}>
-                    {selectedPairs.map((p) => (
-                      <article key={p.symbol}>
-                        <strong>{p.symbol}</strong>
-                        <span>
-                          {p.baseAsset} / {p.quoteAsset}
-                        </span>
-                        <span>
-                          {!p.available
-                            ? "Unavailable in latest snapshot"
-                            : p.spot && p.status === "TRADING"
-                              ? "Active Spot"
-                              : `${p.status} · ${p.spot ? "Spot enabled" : "Spot unavailable"}`}
-                        </span>
-                      </article>
-                    ))}
-                  </div>
-                  <ProductClassification
-                    key={selected + JSON.stringify(selectedClassification)}
-                    value={selectedClassification}
-                    saved={Object.hasOwn(
-                      workspace.classifications || {},
-                      selected,
-                    )}
-                    busy={busy}
-                    onSave={saveClassification}
-                    onDirty={setClassificationDirty}
-                  />
-                  <label>
-                    Research note · unverified
-                    <textarea
-                      rows={8}
-                      value={draft}
-                      maxLength={20000}
-                      onChange={(e) => setDraft(e.target.value)}
-                      placeholder="What business might this represent? What does it provide? Add source URLs, observations and questions."
+            {selected && (
+              <section
+                ref={detailRef}
+                className={styles.detail}
+                aria-label="Asset research"
+              >
+                {selected ? (
+                  <>
+                    <span className="eyebrow">
+                      BINANCE ASSET · UNRESOLVED IDENTITY
+                    </span>
+                    <h2>{selected}</h2>
+                    <p>
+                      A token does not automatically identify an organisation.
+                      Record what you find and the sources you want to check.
+                    </p>
+                    <p>
+                      {selectedPairs.length} pairs in the selected
+                      quote/availability scope.{" "}
+                      {groups.find(([code]) => code === selected)?.[1].length ||
+                        0}{" "}
+                      total pairs retained.
+                    </p>
+                    <div className={styles.pairs}>
+                      {selectedPairs.map((p) => (
+                        <article key={p.symbol}>
+                          <strong>{p.symbol}</strong>
+                          <span>
+                            {p.baseAsset} / {p.quoteAsset}
+                          </span>
+                          <span>
+                            {!p.available
+                              ? "Unavailable in latest snapshot"
+                              : p.spot && p.status === "TRADING"
+                                ? "Active Spot"
+                                : `${p.status} · ${p.spot ? "Spot enabled" : "Spot unavailable"}`}
+                          </span>
+                        </article>
+                      ))}
+                    </div>
+                    <ProductClassification
+                      key={selected + JSON.stringify(selectedClassification)}
+                      value={selectedClassification}
+                      saved={Object.hasOwn(
+                        workspace.classifications || {},
+                        selected,
+                      )}
+                      busy={busy}
+                      onSave={saveClassification}
+                      onDirty={setClassificationDirty}
                     />
-                  </label>
-                  <button
-                    className="button primary"
-                    disabled={busy}
-                    onClick={async () => {
-                      setBusy(true);
-                      setError("");
-                      try {
-                        await persist(
-                          {
-                            ...workspace,
-                            notes: { ...workspace.notes, [selected]: draft },
-                          },
-                          "Research note saved.",
-                        );
-                      } finally {
-                        setBusy(false);
-                      }
-                    }}
-                  >
-                    Save note
-                  </button>
-                  <small>
-                    Save before downloading a backup. These notes do not verify
-                    a project identity.
-                  </small>
-                </>
-              ) : (
-                <>
-                  <h2>Select an asset</h2>
-                  <p>See all its observed pairs and start a research note.</p>
-                </>
-              )}
-            </section>
+                    <label>
+                      Research note · unverified
+                      <textarea
+                        rows={8}
+                        value={draft}
+                        maxLength={20000}
+                        onChange={(e) => setDraft(e.target.value)}
+                        placeholder="What business might this represent? What does it provide? Add source URLs, observations and questions."
+                      />
+                    </label>
+                    <button
+                      className="button primary"
+                      disabled={busy}
+                      onClick={async () => {
+                        setBusy(true);
+                        setError("");
+                        try {
+                          await persist(
+                            {
+                              ...workspace,
+                              notes: { ...workspace.notes, [selected]: draft },
+                            },
+                            "Research note saved.",
+                          );
+                        } finally {
+                          setBusy(false);
+                        }
+                      }}
+                    >
+                      Save note
+                    </button>
+                    <small>
+                      Save before downloading a backup. These notes do not
+                      verify a project identity.
+                    </small>
+                  </>
+                ) : (
+                  <>
+                    <h2>Select an asset</h2>
+                    <p>See all its observed pairs and start a research note.</p>
+                  </>
+                )}
+              </section>
+            )}
           </div>
         </>
       )}
+      <section className={styles.dataTools} aria-label="Data and backups">
+        <h2>Data & backups</h2>
+        <div className={styles.actions}>
+          <button
+            className="button primary"
+            disabled={!ready || busy || dirty}
+            onClick={refresh}
+          >
+            <RefreshCw size={16} />
+            {busy ? "Working…" : "Fetch Binance Spot"}
+          </button>
+          <button
+            className="button secondary"
+            disabled={!ready || busy || dirty}
+            onClick={() => file.current?.click()}
+          >
+            <Upload size={16} />
+            Import JSON
+          </button>
+          <button
+            className="button secondary"
+            disabled={!ready || busy || dirty || !workspace.snapshots.length}
+            onClick={() =>
+              downloadFile("bd-oracle-backup.json", JSON.stringify(workspace))
+            }
+          >
+            <Download size={16} />
+            Download backup
+          </button>
+          <input
+            ref={file}
+            type="file"
+            accept=".json,application/json"
+            aria-label="Import Binance JSON or workspace backup"
+            hidden
+            onChange={(e) => {
+              if (e.target.files?.[0]) void importFile(e.target.files[0]);
+            }}
+          />
+        </div>
+        {dirty && (
+          <p role="status" className={styles.notice}>
+            Save your research and category edits before fetching, importing or
+            downloading a backup.
+          </p>
+        )}
+        <p className={styles.storage}>
+          Saved on this device and browser. Download a backup to keep a file or
+          move it to another device. Clearing browser storage can remove local
+          copies. Refresh runs while this page is open.
+        </p>
+        {error && (
+          <div className={styles.error} role="alert">
+            {error}
+          </div>
+        )}
+        {notice && (
+          <p className={styles.notice} role="status">
+            {notice}
+          </p>
+        )}
+        <details className={styles.help}>
+          <summary>How to load data and keep your files</summary>
+          <ol>
+            <li>
+              Press Fetch Binance Spot. A successful response is saved
+              automatically in this browser.
+            </li>
+            <li>
+              If blocked,{" "}
+              <a href={BINANCE_URL} target="_blank" rel="noreferrer">
+                open Binance’s exchangeInfo JSON ↗
+              </a>
+              . Save the complete response as a .json file, then select Import
+              JSON. A page opening in a tab does not guarantee that Binance
+              permits cross-origin fetches.
+            </li>
+            <li>
+              Download backup includes raw responses, snapshot history and saved
+              notes. Import that backup on another device to continue there.
+            </li>
+          </ol>
+          <p>
+            Imported snapshots carry an import time; their original extraction
+            time is unknown. A backup’s dates are supplied by the file. Assets
+            are Binance identifiers, not verified business identities. CoinGecko
+            enrichment and the local SQLite research graph remain separate.
+          </p>
+        </details>
+        {latest && (
+          <div className={styles.snapshot}>
+            <span>
+              {latest.method === "fetch"
+                ? "Latest snapshot fetched"
+                : "Latest snapshot imported"}
+              : {new Date(latest.obtainedAt).toLocaleString()} · Binance ·{" "}
+              {currentPairs.length.toLocaleString()} full snapshot pairs
+              retained
+            </span>
+            <button
+              className="text-button"
+              onClick={() =>
+                downloadFile("binance-exchangeInfo.json", latest.raw)
+              }
+            >
+              Download original JSON <Download size={14} />
+            </button>
+          </div>
+        )}
+      </section>
     </main>
   );
 }

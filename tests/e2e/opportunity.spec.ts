@@ -7,7 +7,7 @@ test("opportunity atlas explains the mechanism without reading or writing privat
     if (new URL(request.url()).pathname.startsWith("/api/")) apiRequests.push(request.url());
   });
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/");
+  await page.goto("/opportunities");
   await expect(page.getByRole("heading", { name: "See what a connection makes possible." })).toBeVisible();
   await expect(page.getByText(/Illustrative research case/)).toBeVisible();
   await expect(page.getByRole("heading", { name: "A position already has value." })).toBeVisible();
@@ -32,7 +32,7 @@ test("opportunity atlas explains the mechanism without reading or writing privat
 });
 
 test("opportunity research distinguishes measurements and validates hypothetical compensation", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/opportunities");
   await page.getByRole("tab", { name: "Business needs", exact: true }).click();
   const panel = page.getByRole("tabpanel");
   await expect(panel.getByText("Capacity", { exact: true })).toBeVisible();
@@ -67,7 +67,7 @@ test("opportunity atlas works on small screens and honors reduced motion", async
   await page.emulateMedia({ reducedMotion: "reduce" });
   for (const width of [390, 320]) {
     await page.setViewportSize({ width, height: 844 });
-    await page.goto("/");
+    await page.goto("/opportunities");
     await expect(page.getByRole("button", { name: "Play walkthrough", exact: true })).toBeDisabled();
     await expect(page.getByText("Reduced motion is on. Select each step to explore at your pace.")).toBeVisible();
     await page.getByRole("button", { name: /03 New behaviour/ }).click();

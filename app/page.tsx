@@ -1,6 +1,6 @@
 import Terminal from "@/components/Terminal";
-import OpportunityAtlas from "@/components/OpportunityAtlas";
-import ResearchGate, { isHostedPreview } from "@/components/ResearchGate";
+import BrowserDiscovery from "@/components/BrowserDiscovery";
+import ResearchGate from "@/components/ResearchGate";
 
 export default async function Page({
   searchParams,
@@ -14,5 +14,5 @@ export default async function Page({
         <Terminal />
       </ResearchGate>
     );
-  return <OpportunityAtlas hosted={isHostedPreview()} />;
+  return <BrowserDiscovery />;
 }
