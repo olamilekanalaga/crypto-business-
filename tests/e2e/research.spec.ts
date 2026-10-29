@@ -280,6 +280,7 @@ test("personal research workflow persists evidence, business links, relationship
   );
 
   await page.goto(`/businesses/${organisation.id}`);
+  await page.getByRole("button", { name: "research", exact: true }).click();
   await expect(page.getByText(fixtureFinding, { exact: true })).toBeVisible();
   await expect(
     page

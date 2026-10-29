@@ -2,7 +2,7 @@
 
 ## Boundary and runtime
 
-The Next.js 16 application uses React, TypeScript, Tailwind CSS, and local Python processes. The browser posts JSON to explicit `/api/<action>` handlers. The server invokes `python3 -m terminal rpc` (or `PYTHON_BIN`) with JSON on stdin. Python validates the operation and uses parameterized SQLite statements. No arbitrary SQL, executable paths, or source fetch URLs are accepted from the browser. There is no separate Python HTTP listener.
+BD Oracle, within Cřyptô Business, uses Next.js 16, React, TypeScript, Tailwind CSS, React Flow and local Python processes. SQLite stores the graph alongside the existing research records; no separate graph database or model API is required. The browser posts JSON to explicit `/api/<action>` handlers. The server invokes `python3 -m terminal rpc` (or `PYTHON_BIN`) with JSON on stdin. Python validates the operation and uses parameterized SQLite statements. No arbitrary SQL, executable paths, or source fetch URLs are accepted from the browser. There is no separate Python HTTP listener.
 
 The supplied dev and start scripts bind to `127.0.0.1`. API requests require a local Host header and, when supplied, matching Origin; cross-site browser requests are rejected. This is a **local access boundary, not account authentication**. Do not place this service on a public interface or behind a public proxy. Remote access, account sessions, and multi-user permissions are outside Phase 1.
 
@@ -29,6 +29,9 @@ API calls do not run external data ingestion. The interface's Data refresh panel
 | `relationships` | Two organisations/products, relationship type, reciprocal provisions/value, reason, payment certainty and dates |
 | `relationship_evidence` | Many-to-many evidence association for a business relationship |
 | `opportunities` | Personal opportunity notes: friction, possible solution, buyer, next research step and research stage |
+| `graph_nodes` | Organisation/product wrappers linked to existing entities, or manually defined need/capability/actor/resource concepts |
+| `graph_edges` | Directed, typed research connection with essentiality, existing/potential state, certainty, economic explanation, reciprocal value, payment, evidence and gaps |
+| `graph_edge_events` | Append-only creation, retraction and supersession audit events |
 
 Organisation and product extensions do not need separate tables in this phase: they are distinct `entities.kind` records with typed connections and attached claims. An organisation may operate many products. A product may have many assets, and an asset may be associated with many products. Entities without asset links are valid.
 
@@ -68,11 +71,38 @@ Relationships describe both sides explicitly. Payment has three values (`yes`, `
 
 Evidence and claims are append-only. A correction is new evidence and a new finding, so original research remains inspectable. Identity approvals/resets append review events and expose approval evidence/history on the identity page. Entity links retain submitted observation dates but may be revised; opportunity notes may be edited. Full revision history for mutable links/opportunities and claim-level supersession/retraction are future additions.
 
+## Business Anatomy graph
+
+`terminal/anatomy.py` handles the `anatomy`, `save_graph_node`, `save_graph_edge` and `retract_graph_edge` RPC operations. Graph reads synchronise one wrapper per existing organisation/product entity. Wrapping a record does not verify that business or infer any connection. Assets stay outside the operating-business graph; their organisation/product associations remain in the original model. Concepts are manually created and may be `need`, `capability`, `actor` or `resource`.
+
+Each stored edge has a directed source and target, one of seven meanings (`needs_to_operate`, `needs_to_grow`, `pays_for`, `provides_to`, `partners_with`, `could_benefit_from`, `competes_with`), and independent fields for importance (`essential`, `optional`, `unknown`), state (`existing`, `potential`) and certainty (`confirmed`, `inference`, `hypothesis`, `unknown`). The explanation, value received by each endpoint, payment status, observation date, evidence reference and evidence gaps preserve the economic meaning beyond a visual line.
+
+The service and schema enforce semantic constraints:
+
+- `needs_to_operate` is essential; `needs_to_grow` is optional.
+- `could_benefit_from` remains potential. Potential connections cannot be confirmed or assert known payment.
+- Confirmed edges require confirmed evidence. Explicit payment yes/no requires confirmed evidence. `pays_for` cannot deny payment, and a confirmed `pays_for` edge requires payment yes.
+- Partnership and competition connect two organisation/product nodes, rather than arbitrary concepts.
+- Potential or otherwise unconfirmed edges require explicit evidence gaps. Self-connections and missing endpoints are rejected.
+- New graph research uses manual provenance. AI extraction is not enabled and cannot be claimed through the API.
+
+Existing `relationships` appear as read-only projections with `relation=documented_relationship` and the unchanged `original_type`. The projection retains both sides’ documented provisions/value and all associated evidence. A recorded integration is not converted into a partnership, provider relationship or essential dependency. Its displayed A → B orientation follows the stored relationship ordering, without establishing additional supply or payment semantics.
+
+Reads return the selected node’s immediate, filtered neighbourhood. A need, actor, capability or resource can become the next centre just as an organisation can. Filters cover certainty, essential/growth/existing/potential category, lens and direction. The API bounds a response at 500 nodes, 500 edges, a 5,000-node catalogue and 100 historical edges, with totals and truncation flags. The canvas displays at most 40 nodes and points the researcher to the centre selector and connection list for further exploration.
+
+The React Flow view has semantic node/connection controls and a separate searchable node directory. Body lenses are optional research tags: Oxygen (distribution/access), Blood (capital/value circulation), Brain (information/coordination), Legs (delivery/execution) and Food (recurring inputs). They organise questions, rather than impose a universal dependency model. Four research cards surface recorded dependencies, growth needs, confirmed incoming supplies and proposed possibilities; they do not create an answer where no evidence or finding exists.
+
+The generic illustrative map lives only in client code (`components/anatomy-example.ts`). Its nodes and edges are explicitly hypothetical, are separate from My research, and never enter SQLite. It is not a verified map of Particle Network or another real business.
+
+Retraction marks an edge inactive and appends a reason/timestamp event; it does not delete the source or original record. The API can atomically supersede an active edge using `supersedes_id`, preserving both versions and events. The UI offers retraction and entry of a corrected connection; it does not yet offer a dedicated supersession editor. Original relationship projections remain read-only here.
+
+No document crawler, LLM, continuously running intelligence engine, automatic company matcher or opportunity recommendation engine is included. A future model-assisted extractor must propose editable, evidence-linked hypotheses into this structure and pass the same validation rules; it must not silently convert inferred complementarity into a verified relationship.
+
 ## Migrations and local storage
 
-`terminal/db.py` enables foreign keys, a 30-second SQLite busy timeout and WAL journaling. It creates `schema_migrations` and applies lexically ordered `migrations/*.sql` not already recorded. Each migration uses `BEGIN IMMEDIATE` to serialize its applied-state check and DDL, preventing simultaneous first requests from applying it twice. `001_foundation.sql` establishes the foundation tables, checks and indexes; `002_business_activities.sql` adds separate business activity records; `003_verification_history.sql` adds link observation dates, identity review history, contract verification and enrichment-attempt tracking.
+`terminal/db.py` enables foreign keys, a 30-second SQLite busy timeout and WAL journaling. It creates `schema_migrations` and applies lexically ordered `migrations/*.sql` not already recorded. Each migration uses `BEGIN IMMEDIATE` to serialize its applied-state check and DDL, preventing simultaneous first requests from applying it twice. `001_foundation.sql` establishes the foundation tables, checks and indexes; `002_business_activities.sql` adds separate business activity records; `003_verification_history.sql` adds link observation dates, identity review history, contract verification and enrichment-attempt tracking. `004_business_anatomy.sql` adds graph nodes, directed research edges and audit events; `005_anatomy_semantics.sql` enforces potential-payment and endpoint-kind rules; `006_anatomy_payment_semantics.sql` enforces the meaning of pays-for claims.
 
-Add new changes as `004_*.sql`, `005_*.sql`, and so on. Do not edit an already-applied migration as a deployment strategy. Back up first, test on a copied database, and verify `PRAGMA integrity_check` and representative research flows after applying it. There is no automated down-migration command.
+Add new changes after the latest recorded migration, such as `007_*.sql` and later. Do not edit an already-applied migration as a deployment strategy. Back up first, test on a copied database, and verify `PRAGMA integrity_check` and representative research flows after applying it. There is no automated down-migration command.
 
 Private data and API keys are excluded from Git. Files are protected by the local operating-system account; application-level encryption is not supplied. Use the SQLite backup API rather than copying only the main database file while WAL writes are active. Raw responses must be backed up separately because database records reference them by path.
 

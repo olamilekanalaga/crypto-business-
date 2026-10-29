@@ -84,6 +84,9 @@ def dispatch(db, request):
     action = request.get('action')
     data = request.get('data') or {}
     if not isinstance(data,dict): raise ValueError('Invalid data')
+    if action in ('anatomy','save_graph_node','save_graph_edge','retract_graph_edge'):
+        from .anatomy import dispatch_anatomy
+        return dispatch_anatomy(db,action,data)
     if action=='overview':
         return {'quality':quality(db), 'entities':rows(db,'SELECT * FROM entities ORDER BY kind,name'),
                 'evidence':rows(db,'SELECT * FROM evidence ORDER BY id DESC LIMIT 1000'),

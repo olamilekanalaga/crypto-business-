@@ -1,6 +1,11 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+const Anatomy = dynamic(() => import("./Anatomy"), {
+  ssr: false,
+  loading: () => <div className="loading">Opening Business Anatomy…</div>,
+});
 import {
   ArrowDown,
   ArrowRight,
@@ -43,6 +48,7 @@ import type {
 } from "./types";
 
 type View =
+  | "anatomy"
   | "overview"
   | "assets"
   | "businesses"
@@ -56,6 +62,7 @@ const nav: { view: View; name: string; icon: typeof Boxes }[] = [
   { view: "overview", name: "Research overview", icon: LayoutDashboard },
   { view: "assets", name: "Asset discovery", icon: Boxes },
   { view: "businesses", name: "Business explorer", icon: Globe },
+  { view: "anatomy", name: "Business Anatomy", icon: Network },
   { view: "flow", name: "Economic flow", icon: GitBranch },
   { view: "relationships", name: "Relationships", icon: Network },
 ];
@@ -68,6 +75,12 @@ const headings: Record<
   View,
   { label: string; title: string; description: string }
 > = {
+  anatomy: {
+    label: "BD ORACLE · BUSINESS DEPENDENCY & OPPORTUNITY GRAPH",
+    title: "What keeps this business alive?",
+    description:
+      "Explore its needs, suppliers, growth capabilities and potential connections — one economic relationship at a time.",
+  },
   overview: {
     label: "YOUR PERSONAL RESEARCH TERMINAL",
     title: "See the business behind the asset.",
@@ -304,7 +317,7 @@ export default function Terminal({ entityId }: { entityId?: string }) {
             </span>
           </span>
           <span>
-            Cřyptô<span className="brand-sub">BUSINESS</span>
+            BD Oracle<span className="brand-sub">CŘYPTÔ BUSINESS</span>
           </span>
         </Link>
         <div className="private-label">
@@ -462,6 +475,9 @@ export default function Terminal({ entityId }: { entityId?: string }) {
                   />
                 ) : (
                   <>
+                    {view === "anatomy" && (
+                      <Anatomy overview={overview} onSaved={saved} />
+                    )}
                     {view === "overview" && (
                       <OverviewPage
                         overview={overview}
@@ -1413,10 +1429,13 @@ function DetailPage({
   overview: Overview;
   onSaved: () => void;
 }) {
-  const [tab, setTab] = useState("research"),
+  const [tab, setTab] = useState(
+      d.kind === "asset" ? "research" : "business anatomy",
+    ),
     [resolveError, setResolveError] = useState("");
   const tabs = [
     "research",
+    ...(d.asset ? [] : ["business anatomy"]),
     "economic flow",
     "connections",
     ...(d.asset ? ["listings", "identity"] : []),
@@ -1483,6 +1502,9 @@ function DetailPage({
           </button>
         ))}
       </div>
+      {tab === "business anatomy" && (
+        <Anatomy overview={overview} initialEntityId={d.id} onSaved={onSaved} />
+      )}
       {tab === "research" && (
         <>
           {d.kind === "product" && (

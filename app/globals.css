@@ -2793,3 +2793,670 @@ pre {
 .contracts details > .source-link {
   margin: 12px 10px 0 0;
 }
+/* BD Oracle — Business Anatomy */
+.anatomy-explorer {
+  min-width: 0;
+}
+.anatomy-titlebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.anatomy-mode {
+  display: flex;
+  padding: 4px;
+  background: #eaf0e1;
+  border: 1px solid #dce5d0;
+  border-radius: 8px;
+  gap: 4px;
+}
+.anatomy-mode button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 13px;
+  font-size: 11px;
+  border-radius: 5px;
+  color: #899b75;
+}
+.anatomy-mode button.selected {
+  background: white;
+  color: #3c6547;
+  box-shadow: 0 1px 4px #2b4b2f10;
+}
+.illustrative {
+  background: #fbf4e6;
+  border-color: #ebddbe;
+  color: #9b804c;
+}
+.illustrative strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.anatomy-lens-panel {
+  background: linear-gradient(120deg, #f1f6e8, #fff);
+}
+.anatomy-lens-panel > .section-head > svg {
+  color: #8b9d76;
+}
+.anatomy-lenses {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 9px;
+}
+.anatomy-lenses button {
+  border: 1px solid #dce5d0;
+  background: #ffffff96;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 14px 12px;
+  border-radius: 7px;
+  min-height: 80px;
+  gap: 8px;
+  color: #6b8456;
+}
+.anatomy-lenses button.selected {
+  background: #214d39;
+  color: #d8e8ba;
+  border-color: #214d39;
+}
+.anatomy-lenses button span {
+  font-size: 13px;
+  font-weight: 500;
+}
+.anatomy-lenses button small {
+  font-size: 9px;
+  line-height: 1.7;
+  opacity: 0.8;
+}
+.lens-question {
+  margin-top: 20px;
+  border-top: 1px solid #e1e9d6;
+  padding-top: 16px;
+}
+.lens-question .eyebrow {
+  font-size: 8px;
+}
+.lens-question p {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #7f936a;
+  margin-top: 8px;
+}
+.anatomy-controls {
+  display: grid;
+  grid-template-columns: 1.6fr repeat(4, 1fr);
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding: 18px 0 20px;
+}
+.anatomy-controls .field {
+  font-size: 9px;
+  gap: 7px;
+}
+.anatomy-controls select {
+  font-size: 10px;
+  padding: 10px 8px;
+  height: 36px;
+}
+.anatomy-canvas {
+  height: 490px;
+  width: 100%;
+  background: #fafcf5;
+  border: 1px solid #e1e8d6;
+  border-radius: 9px;
+  overflow: hidden;
+  position: relative;
+}
+.anatomy-canvas .react-flow__pane {
+  background: #f8fbf3;
+}
+.anatomy-canvas .react-flow__node {
+  width: 215px;
+}
+.anatomy-node {
+  border: 1px solid #cbd9bb;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px #28462c0a;
+}
+.anatomy-node.is-centre {
+  background: #244d38;
+  border-color: #244d38;
+  box-shadow: 0 0 0 5px #60814912;
+}
+.anatomy-node button {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  gap: 12px;
+  padding: 17px;
+  width: 100%;
+  border-radius: 10px;
+}
+.anatomy-node-icon {
+  background: #edf3e3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  width: 32px;
+  height: 32px;
+  color: #7d9862;
+  flex-shrink: 0;
+}
+.anatomy-node small {
+  display: block;
+  font-size: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #98a787;
+  line-height: 1.6;
+}
+.anatomy-node strong {
+  display: block;
+  font-size: 12px;
+  color: #4b6e3e;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+}
+.anatomy-node.is-centre strong {
+  color: #e4efcf;
+}
+.anatomy-node.is-centre small {
+  color: #a2bd8a;
+}
+.anatomy-node.is-centre .anatomy-node-icon {
+  background: #dbe9bd;
+  color: #3e6540;
+}
+.anatomy-node .react-flow__handle {
+  width: 5px;
+  height: 5px;
+  min-width: 5px;
+  min-height: 5px;
+  background: #9eaf8b;
+  border: 0;
+}
+.react-flow__attribution {
+  font-size: 8px !important;
+  background: #f8fbf3 !important;
+  color: #9eac90 !important;
+}
+.map-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 9px;
+  color: #98a68a;
+  margin-top: 16px;
+}
+.map-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.map-legend i {
+  width: 23px;
+  display: inline-block;
+  border-top: 2px solid #698c61;
+}
+.map-legend .dashed-line {
+  border-color: #bda879;
+  border-top-style: dashed;
+}
+.anatomy-empty-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.anatomy-context {
+  padding: 3px 0 23px;
+}
+.anatomy-context .eyebrow {
+  font-size: 8px;
+}
+.anatomy-context > p {
+  font-size: 11px;
+  color: #98a58a;
+  margin: 9px 0;
+}
+.anatomy-questions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.anatomy-questions .panel {
+  padding: 20px 17px;
+  margin: 0;
+}
+.anatomy-questions h3 {
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+.question-note {
+  font-size: 10px;
+  color: #99a58d;
+  margin: 10px 0 20px;
+  line-height: 1.8;
+}
+.anatomy-unknown {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #a2af94;
+  font-size: 9px;
+  line-height: 1.8;
+  padding: 14px 0;
+}
+.anatomy-questions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.anatomy-questions li > button {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 11px;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 0;
+  text-align: left;
+  color: #6f885d;
+  border-top: 1px solid #edf1e5;
+  line-height: 1.6;
+}
+.anatomy-questions .badge {
+  font-size: 8px;
+}
+.anatomy-claim {
+  font-size: 11px;
+  border-top: 1px solid var(--line);
+  padding: 13px 0;
+}
+.anatomy-claim p {
+  margin: 8px 0;
+  color: #7b9366;
+}
+.anatomy-summary > p {
+  font-size: 13px;
+  line-height: 1.9;
+  color: #728a5d;
+  white-space: pre-wrap;
+  margin-bottom: 15px;
+}
+.anatomy-edge-list {
+  max-height: 400px;
+  overflow: auto;
+}
+.anatomy-edge-list > button {
+  padding: 17px 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-top: 1px solid var(--line);
+  width: 100%;
+  text-align: left;
+}
+.anatomy-edge-list > button:hover,
+.anatomy-edge-list > button.selected {
+  background: #f5f9ec;
+}
+.anatomy-edge-list > button > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: #6d8658;
+  line-height: 1.7;
+}
+.anatomy-edge-list > button > div:first-child {
+  min-width: 0;
+  flex: 1;
+}
+.anatomy-edge-list > button > div:first-child span {
+  overflow-wrap: anywhere;
+}
+.connection-kind {
+  font-size: 10px;
+  color: #a4af97;
+}
+.anatomy-inspector {
+  border-left: 3px solid #a5bc85;
+}
+.anatomy-inspector .tags {
+  margin-bottom: 25px;
+}
+.anatomy-inspector > h3 {
+  font-size: 13px;
+  color: #7b9167;
+}
+.edge-explanation {
+  font-size: 13px;
+  color: #728a60;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  margin-top: 12px;
+}
+.evidence-gap {
+  background: #faf7ed;
+  border: 1px solid #eae2ca;
+  border-radius: 7px;
+  padding: 17px;
+  margin: 20px 0;
+}
+.evidence-gap .eyebrow {
+  color: #a3956f;
+  font-size: 8px;
+}
+.evidence-gap p {
+  font-size: 12px;
+  color: #9d926f;
+  margin-top: 9px;
+  white-space: pre-wrap;
+}
+.anatomy-inspector > .small {
+  margin: 18px 0;
+}
+.anatomy-inspector > .text-button {
+  margin-top: 22px;
+}
+.retraction-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px;
+  border-top: 1px solid var(--line);
+  margin-top: 22px;
+  padding-top: 22px;
+}
+.retraction-form label {
+  flex: 1;
+  min-width: 180px;
+}
+.retraction-form > p {
+  flex-basis: 100%;
+  font-size: 9px;
+}
+.anatomy-audit {
+  font-size: 11px;
+  color: #8b9e76;
+  margin-top: 22px;
+  border-top: 1px solid var(--line);
+  padding-top: 15px;
+}
+.anatomy-audit summary {
+  cursor: pointer;
+}
+.anatomy-audit p {
+  font-size: 10px;
+  margin: 12px 0;
+}
+.anatomy-history > summary,
+.node-directory > summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: #70885f;
+  line-height: 1.7;
+}
+.anatomy-history > div {
+  border-top: 1px solid var(--line);
+  padding: 17px 0;
+  margin-top: 15px;
+  font-size: 12px;
+  color: #8a9b79;
+}
+.anatomy-history p {
+  margin: 10px 0;
+}
+.node-directory .search-field {
+  margin: 20px 0;
+}
+.node-directory > div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-height: 300px;
+  overflow: auto;
+}
+.node-directory > div > button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 13px;
+  background: #f7faf1;
+  border: 1px solid #e5ecd9;
+  border-radius: 6px;
+  text-align: left;
+  color: #7b9464;
+  font-size: 11px;
+  line-height: 1.7;
+}
+.node-directory small {
+  display: block;
+  font-size: 9px;
+  color: #a2af93;
+  margin-top: 4px;
+}
+.anatomy-form .form-footer {
+  align-items: center;
+  flex-wrap: wrap;
+}
+.anatomy-form .form-footer .small {
+  font-size: 10px;
+}
+.brand {
+  font-size: 23px;
+}
+.brand-sub {
+  font-size: 7px;
+  letter-spacing: 2px;
+}
+.anatomy-inspector .relationship-evidence {
+  margin-top: 16px;
+}
+.anatomy-canvas .react-flow__controls-button {
+  width: 29px;
+  height: 29px;
+  border-color: #e1e9d5;
+  color: #7c9368;
+  background: white;
+}
+.anatomy-canvas .react-flow__controls {
+  box-shadow: 0 1px 8px #173d3014;
+  border: 1px solid #e0e8d5;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.anatomy-explorer .field input[readonly] {
+  background: #f3f6ec;
+  color: #95a681;
+}
+@media (max-width: 1200px) {
+  .anatomy-lenses {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .anatomy-controls {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .anatomy-controls > .field:first-child {
+    grid-column: span 2;
+  }
+  .anatomy-questions {
+    grid-template-columns: 1fr 1fr;
+  }
+  .anatomy-canvas {
+    height: 440px;
+  }
+  .anatomy-edge-list > button {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .anatomy-edge-list > button > div {
+    flex-wrap: wrap;
+  }
+  .anatomy-titlebar .button {
+    font-size: 10px;
+  }
+  .anatomy-questions .panel {
+    padding: 19px;
+  }
+}
+@media (max-width: 640px) {
+  .anatomy-titlebar {
+    gap: 12px;
+  }
+  .anatomy-mode {
+    width: 100%;
+  }
+  .anatomy-mode button {
+    flex: 1;
+    justify-content: center;
+    padding: 10px 8px;
+    font-size: 10px;
+  }
+  .anatomy-titlebar > .button {
+    padding: 11px 13px;
+    font-size: 10px;
+  }
+  .anatomy-lenses {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 7px;
+  }
+  .anatomy-lenses button {
+    padding: 12px 9px;
+    min-height: 80px;
+    gap: 7px;
+  }
+  .anatomy-lenses button span {
+    font-size: 11px;
+  }
+  .anatomy-lenses button small {
+    font-size: 8px;
+    line-height: 1.6;
+  }
+  .lens-question p {
+    font-size: 11px;
+  }
+  .anatomy-controls {
+    grid-template-columns: 1fr 1fr;
+    gap: 13px;
+  }
+  .anatomy-controls > .field:first-child {
+    grid-column: 1/-1;
+  }
+  .anatomy-controls select {
+    font-size: 10px;
+    padding: 9px 7px;
+  }
+  .anatomy-controls > .field:last-child {
+    grid-column: 1/-1;
+  }
+  .anatomy-canvas {
+    height: 360px;
+  }
+  .map-legend {
+    font-size: 8px;
+    gap: 11px;
+  }
+  .anatomy-questions {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .anatomy-questions .panel {
+    padding: 20px;
+  }
+  .anatomy-questions h3 {
+    font-size: 15px;
+  }
+  .anatomy-questions .question-note {
+    font-size: 10px;
+    margin-bottom: 12px;
+  }
+  .anatomy-questions .anatomy-unknown {
+    font-size: 10px;
+    padding: 9px 0;
+  }
+  .anatomy-empty-actions > .button {
+    font-size: 10px;
+  }
+  .anatomy-graph-panel > .section-head h2 {
+    font-size: 18px;
+    overflow-wrap: anywhere;
+  }
+  .anatomy-graph-panel > .section-head > div {
+    min-width: 0;
+  }
+  .anatomy-edge-list > button {
+    padding: 17px 5px;
+    gap: 12px;
+  }
+  .anatomy-edge-list > button > div {
+    font-size: 11px;
+    gap: 8px;
+  }
+  .anatomy-edge-list .connection-kind {
+    font-size: 9px;
+  }
+  .anatomy-inspector .section-head h2 {
+    font-size: 17px;
+    overflow-wrap: anywhere;
+  }
+  .edge-explanation {
+    font-size: 12px;
+  }
+  .evidence-gap p {
+    font-size: 11px;
+  }
+  .node-directory > div {
+    grid-template-columns: 1fr 1fr;
+  }
+  .node-directory > div > button {
+    font-size: 10px;
+    padding: 11px;
+  }
+  .node-directory .search-field {
+    margin: 20px 0;
+  }
+  .retraction-form {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .retraction-form > p {
+    line-height: 1.8;
+  }
+  .anatomy-canvas .react-flow__attribution {
+    font-size: 7px !important;
+  }
+  .anatomy-form .section-head h2 {
+    font-size: 17px;
+  }
+  .brand {
+    font-size: 23px;
+  }
+}
+
+.sidebar {
+  overflow-y: auto;
+}
+.sidebar nav,
+.sidebar-bottom {
+  flex-shrink: 0;
+}

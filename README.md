@@ -1,19 +1,19 @@
-# Cřyptô Business
+# BD Oracle · Cřyptô Business
 
-A private, local-first economic intelligence terminal for your own business research. Start with Binance assets, establish project identities, then investigate products, customers, repeated consumption, dependencies, value exchanges, and opportunities you might serve.
+BD Oracle is your private, local-first Business Dependency & Opportunity Graph within Cřyptô Business. Start with assets, establish project identities, then investigate products, customers, repeated consumption, dependencies, value exchanges, and opportunities you might serve. Business Anatomy makes those needs and connections explorable, with any recorded node becoming the centre of another economic map.
 
 The asset universe is a starting point. This is not a trading or investment tool. There are no prices, signals, portfolios, wallet trackers, public directories, or automated partnership recommendations.
 
 **Extraction status:** the implementation attempted the official Binance and CoinGecko APIs in the build environment. Both were blocked by the environment proxy with `403 Forbidden` before an upstream response was received. There is no successful live extraction or fabricated replacement dataset. [Observed data-quality report](docs/QUALITY_REPORT.md) records the actual outcome. Run the collectors from a machine whose network permits those APIs to populate the real universe.
 
-[Desktop preview](docs/images/terminal-desktop.png) · [Mobile preview](docs/images/terminal-mobile.png)
+[Business Anatomy preview](docs/images/anatomy-desktop.png) · [Desktop preview](docs/images/terminal-desktop.png) · [Mobile preview](docs/images/terminal-mobile.png)
 
 ## Run locally
 
 Requirements: Python 3.12+, Node.js 20.9+ (Node.js 22 or 24 recommended), npm, and SQLite support in Python. Python uses only its standard library. No model API, paid hosting, or separate API server is required.
 
 ```bash
-git clone https://github.com/olamilekanalaga/crypto-business-.git
+git clone --branch feat/personal-economic-intelligence-terminal https://github.com/olamilekanalaga/crypto-business-.git
 cd crypto-business-
 npm install
 cp .env.example .env.local
@@ -72,7 +72,8 @@ The coin index is cached for one day; detail responses are cached for seven days
 ## Research your economic machine
 
 - **Asset discovery:** searchable, paginated Binance base assets, trading pairs, status, and identity resolution.
-- **Business explorer:** separate organisation and product records, with research pages. A business can exist without a token.
+- **Business explorer:** separate organisation and product records, with research pages. A business can exist without a token. Business pages open Business Anatomy; the Research tab retains the detailed economic questions.
+- **Business Anatomy:** click through organisations, products, needs, capabilities, actors and resources. Distinguish essential dependencies, growth needs, existing relationships and potential connections. Inspect the economic explanation, both sides’ value, sources, evidence gaps and certainty. See the [Business Anatomy guide](docs/BUSINESS_ANATOMY.md).
 - **Research workspace:** record all fifteen economic questions, distinct business activities, source excerpts, interpretations, hypotheses, and organisation/product/asset associations.
 - **Economic flow:** Actor → Want → Behaviour → Problem → Provider → Transaction → Value → Next actor. Every step is a separate finding; unknown steps stay empty.
 - **Relationships:** record what both businesses provide, what each gains, why the relationship exists, whether payment is known, dates, evidence, and certainty.
@@ -84,6 +85,18 @@ Create organisation and product records separately. Use **Connect records** for 
 Confirmed claims, confirmed activities/associations, verified identities/contracts, and supported opportunity notes require confirmed source evidence. Stating that money does or does not change hands also requires confirmed evidence, even when the overall relationship is still a hypothesis; otherwise leave payment unknown. The system enforces the presence/status of evidence; **you** determine whether the source truly supports the specific claim. An integration announcement is not proof of payment. Technical compatibility is not proof of a formal partnership.
 
 Evidence and findings are append-only: add corrected evidence and a new finding to retain the audit trail. Identity approvals and returns to unresolved have timestamped review records. Associations retain their observation dates and can be revised; opportunity notes are editable. Whole-page source archiving and automated source verification are not implemented. Store a faithful source excerpt or observation in the evidence field.
+
+## Explore Business Anatomy
+
+Open **Business Anatomy** in the sidebar, or open an organisation/product page. Choose a centre, click neighbouring nodes, and use Back one step to retrace your investigation. Filter by evidence status, essential/growth/existing/potential connection, direction, or body lens.
+
+The Oxygen, Blood, Brain, Legs and Food lenses organise questions about access, capital, coordination, execution and recurring inputs. They do not establish that every business needs the same things. Four cards surface recorded answers to what keeps a business alive, what helps it grow, who supplies it, and who else might help or benefit; unresearched answers remain unknown.
+
+Use **Record nodes & connections** to add concepts and directed research connections. Existing organisation/product records appear as graph nodes automatically, without generating dependencies. Confirmed connections require confirmed evidence; potential connections remain unconfirmed with unknown payment and explicit evidence gaps. Existing relationship records remain read-only graph projections with their original type, so an integration is never silently relabelled as a partnership.
+
+**Illustrative example** is a generic, client-only navigation demonstration. It is clearly labelled hypothetical, contains no verified contractual claims about Particle Network or another real company, and is never inserted into SQLite. **My research** shows only your records and documented relationship projections.
+
+The implementation uses SQLite and React Flow. It does not run an LLM, analyse documents automatically, match companies automatically, or generate opportunities. Those are later research-assistance capabilities; basic collection and manual graph work require no model API or paid graph database.
 
 ## Local files and checks
 
@@ -108,6 +121,6 @@ npm run build
 npm run test:e2e
 ```
 
-The browser suite uses its own local server on port 3100 and a disposable database (`E2E_DATA_DIR`, default `/tmp/crypto-business-browser`). Avoid reusing that port with a server pointed at your real research data. Set `CHROMIUM_PATH` if Chromium is not installed at `/usr/bin/chromium`.
+The browser suite starts its own local server on port 3100 and creates a fresh temporary database by default. `E2E_DATA_DIR` selects a specific disposable directory; `E2E_REUSE_SERVER=1` explicitly permits reusing a server already pointed at that same isolated directory. Never reuse a server or directory containing your real research data. Set `CHROMIUM_PATH` if Chromium is not installed at `/usr/bin/chromium`.
 
-The implementation passed 39 offline Python tests and four browser journeys, plus TypeScript and production-build checks; see [verification evidence](docs/VERIFICATION.md). Tests use isolated fixture data, not a claimed live extraction. See [architecture](docs/ARCHITECTURE.md) for the model and [handoff](docs/HANDOFF.md) for operations, limitations, backup, and next steps.
+The original foundation passed the checks recorded in [verification evidence](docs/VERIFICATION.md). Consult that record and the final handoff for the latest graph-extension validation results. Tests use isolated fixture data, not a claimed live extraction. See [architecture](docs/ARCHITECTURE.md) for the model and [handoff](docs/HANDOFF.md) for operations, limitations, backup, and next steps.

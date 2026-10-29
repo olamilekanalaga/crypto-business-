@@ -1,10 +1,30 @@
-# Phase 1 handoff
+# BD Oracle handoff
 
 ## What is implemented
 
-The local terminal includes the Binance Spot connector, repeatable SQLite ingestion, original-response audit trail, listing snapshots and exports, CoinGecko candidate indexing and incremental detail enrichment, manual identity approval and review history, evidence-backed contract verification, organisation/product records and associations, distinct product-enabled business activities, structured economic research, evidence entry, relationship records, economic-flow views, personal opportunity notes, and a live data-quality view.
+The local terminal includes the Binance Spot connector, repeatable SQLite ingestion, original-response audit trail, listing snapshots and exports, CoinGecko candidate indexing and incremental detail enrichment, manual identity approval and review history, evidence-backed contract verification, organisation/product records and associations, distinct product-enabled business activities, structured economic research, evidence entry, relationship records, economic-flow views, personal opportunity notes, a live data-quality view, and the Business Anatomy dependency graph.
 
 The interface is designed for one person's research: identify a business need, understand who wants what, inspect the exchange of value, capture how you might help, and choose the next investigation. Opportunity notes are hypotheses or personal assessments, not automated recommendations.
+
+## Business Anatomy extension
+
+Open **Business Anatomy** from the sidebar or an organisation/product page. Business pages now start with this view; their Research tab still contains the original fifteen economic questions. Any recorded organisation, product, need, capability, actor or resource can become the centre of the next map.
+
+The extension adds typed directed connections, independent dependency importance/existing-or-potential/certainty fields, original evidence and interpretation, economic value for both sides, explicit evidence gaps, body-question lenses, four research summary cards, and retraction/audit history. Existing documented relationships appear read-only with their original type, without upgraded partnership, payment or dependency claims. The database remains SQLite and the canvas uses React Flow.
+
+For a first map:
+
+1. Create a business/product and supporting sources in the research workspace. Existing business records gain graph wrappers automatically, without inferred dependencies.
+2. Open **Record nodes & connections → Nodes** to define a need, capability, actor or resource in plain language.
+3. Use **Connections** to select source/target, relationship meaning, importance, existing/potential state, certainty, both sides’ value, evidence and unresolved questions.
+4. Click a node or use the centre selector, inspect a connection, and follow its evidence before relying on it. Filters affect the current neighbourhood; an empty answer means not established in that view.
+5. Retract a mistaken connection with a reason. Its original record and source remain in history; record the corrected connection separately. API-level supersession is available but has no dedicated UI editor yet.
+
+Confirmed edges require confirmed evidence. Potential connections stay unconfirmed, leave payment unknown and require evidence gaps. Partnerships/competition require business endpoints. A confirmed pays-for claim requires evidenced payment yes. These rules constrain the stored interpretation; they do not prove that a source supports it.
+
+The **Illustrative example** is a generic, clearly labelled client-only demonstration. It never populates the research database and makes no verified contractual claim about Particle Network or another company. The body analogy organises questions rather than defining a universal business model. See [BUSINESS_ANATOMY.md](BUSINESS_ANATOMY.md) for the full workflow and limits.
+
+The extension introduces no AI calls, model key, automatic dependency inference, document-analysis service, company-matching engine or recommendation engine. Those are later capabilities once the research base is reliable. An LLM is not continuously running inside this application.
 
 ## What has not been established
 
@@ -39,7 +59,7 @@ npm run build
 npm run test:e2e
 ```
 
-The Python suite uses temporary fixture databases. The browser suite starts a local server on port 3100 using a disposable database (`E2E_DATA_DIR`, default `/tmp/crypto-business-browser`) and system Chromium (`CHROMIUM_PATH`, default `/usr/bin/chromium`). Reuse only a server already configured with that isolated data directory. Do not run browser fixtures against your research database. A passing fixture suite verifies defined software behaviour; it is not evidence of a successful live extraction. Browser checks should cover creating a source, a business and product, adding a confirmed finding, linking records, recording a relationship, and editing an opportunity across a page reload. Also verify empty states and mobile navigation. See [VERIFICATION.md](VERIFICATION.md) for the actual checks completed: 39 offline Python tests, four browser tests, TypeScript validation, production compilation, and SQLite integrity. Live collection remains blocked, so fixture success does not establish real coverage.
+The Python suite uses temporary fixture databases. The browser suite starts a local server on port 3100 using a fresh temporary database by default (`E2E_DATA_DIR` can select a specific disposable directory) and system Chromium (`CHROMIUM_PATH`, default `/usr/bin/chromium`). Server reuse requires `E2E_REUSE_SERVER=1`; reuse only a server already configured with that same isolated data directory. Do not run browser fixtures against your research database. A passing fixture suite verifies defined software behaviour; it is not evidence of a successful live extraction. Browser checks should cover creating a source, a business and product, adding a confirmed finding, linking records, recording a relationship, and editing an opportunity across a page reload. Also verify empty states and mobile navigation. See [VERIFICATION.md](VERIFICATION.md) for the checks actually completed and the final handoff for the latest graph-extension results. The original foundation checks do not by themselves validate new graph behaviour. Live collection remains blocked, so fixture success does not establish real coverage.
 
 ## Backup and restore
 
@@ -78,14 +98,16 @@ To restore, stop Next.js and all collectors, preserve the existing data director
 - Permanent CoinGecko per-ID failures are recorded without blocking later identities. Quota/authentication/transport/server errors stop a batch; last-attempt ordering permits fair resumptions. Review retained `enrichment_error` values before treating a missing profile as absent project information.
 - A CoinGecko detail response provides a subset of exchange tickers. Binance's observed listing table remains the exchange-universe authority in this phase.
 - Base assets are unique within an exchange namespace; symbol reuse, migrations and renames require manual review. Cross-exchange consolidation uses approved canonical identifiers rather than ticker equality.
+- Graph responses are bounded to 500 nodes, 500 connections, 5,000 catalogue entries and 100 historical edges; the canvas displays at most 40 nodes. Inspect limits/truncation flags and refine the centre or filters rather than assuming a bounded view is the entire graph.
+- The four research cards describe the current filtered neighbourhood and recorded findings. Unknown answers and absence of a connection are not proof that a business has no dependency.
 - There is no exchange scheduler, automatic research writer, multi-exchange connector implementation, automated opportunity scoring, recommendation engine or model API dependency.
 
 ## Extension order
 
 1. Obtain a successful Binance snapshot and independently verify a small set of project identities and operating businesses.
-2. Add research revision/retraction tools and finer-grained evidence support for separate relationship claims if the personal workflow needs them.
+2. Accumulate verified dependency research in Business Anatomy; use retraction and source gaps as you correct it. Add a dedicated supersession editor and finer-grained source support if useful.
 3. Add the next exchange as its own `ExchangeConnector`, with normalization fixtures, raw audit retention and verified identity association. Retain its complete listing relationships.
 4. Add documented source-specific evidence adapters where they reduce manual work, preserving source text separately from interpretations.
-5. Consider richer business/network visualisation and opportunity investigation aids only after the underlying business evidence is useful and trustworthy.
+5. Consider an opt-in model-assisted document extractor and hypothesis proposer only after the underlying business evidence is useful and trustworthy. Preserve source citations, uncertainty, manual corrections and the graph’s semantic constraints; validate proposed connections against real evidence before treating them as opportunities.
 
 No branch push, public deployment, external messages, paid resources or live partner outreach is required for local operation.

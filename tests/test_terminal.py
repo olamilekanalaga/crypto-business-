@@ -668,7 +668,7 @@ class TransportAndReportTests(OfflineCase):
     def test_migrations_apply_once_and_foreign_keys_are_enforced(self):
         second = connect()
         try:
-            self.assertEqual(second.execute('SELECT COUNT(*) FROM schema_migrations').fetchone()[0], 3)
+            self.assertEqual(second.execute('SELECT COUNT(*) FROM schema_migrations').fetchone()[0], len(list((Path(__file__).resolve().parents[1] / 'migrations').glob('*.sql'))))
             self.assertEqual(second.execute('PRAGMA foreign_keys').fetchone()[0], 1)
             with self.assertRaises(sqlite3.IntegrityError):
                 second.execute('INSERT INTO claims(entity_id,field,statement,status,observed_at,created_at) VALUES(999,?,?,?,?,?)',
